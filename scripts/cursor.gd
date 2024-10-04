@@ -35,7 +35,8 @@ func update_cursor_size():
 
 func update_cursor_color(skein: Skein):
 	active_skein = skein
-	cursor_color_changed.emit(skein.color)
+	if skein != null:
+		cursor_color_changed.emit(skein.color)
 
 func resize_cursor(delta: int):
 	var new_size = cursor_size + delta

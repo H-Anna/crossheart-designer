@@ -33,6 +33,9 @@ func _load_colors(palette: Palette) -> void:
 		if !selected:
 			ui.select_color()
 			selected = true
+	
+	if !selected:
+		SignalBus.skein_selected.emit(null)
 
 func _remove_skein(skein: Skein):
 	confirm_window.show()
