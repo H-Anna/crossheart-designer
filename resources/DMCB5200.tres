@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Skein" load_steps=2 format=3 uid="uid://cv2piylv8r1vf"]
+
+[ext_resource type="Script" path="res://scripts/skein.gd" id="1_mcitc"]
+
+[resource]
+script = ExtResource("1_mcitc")
+brand = "DMC"
+id = "B5200"
+color_name = "Snow White"
+color = Color(1, 1, 1, 1)

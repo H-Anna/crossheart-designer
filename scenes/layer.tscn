@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=3 uid="uid://flpd06xap3sw"]
+
+[ext_resource type="Texture2D" uid="uid://d2cnmslfcklya" path="res://tile.png" id="1_kc5q5"]
+[ext_resource type="Script" path="res://scripts/stitches_layer.gd" id="2_75vv7"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uash4"]
+texture = ExtResource("1_kc5q5")
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_v1ilj"]
+sources/0 = SubResource("TileSetAtlasSource_uash4")
+
+[node name="Layer0" type="TileMapLayer" groups=["Persist"]]
+tile_set = SubResource("TileSet_v1ilj")
+script = ExtResource("2_75vv7")

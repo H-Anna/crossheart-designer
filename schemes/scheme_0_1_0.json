@@ -1,0 +1,17 @@
+{
+	"name" : "Sparrow Stitch JSON",
+	"version" : "0.1.0",
+	"content" : {
+		"canvas" : {
+			"size_x" : "2",
+			"size_y" : "2",
+			"layers" : "28:4"
+		},
+		"layers" : [
+			{
+				"name" : "4",
+				"tiles" : "28:6"
+			}
+		]
+	}
+}

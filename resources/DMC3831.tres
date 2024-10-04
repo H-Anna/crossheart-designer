@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Skein" load_steps=2 format=3 uid="uid://c5mgdyon7p8xd"]
+
+[ext_resource type="Script" path="res://scripts/skein.gd" id="1_axw7b"]
+
+[resource]
+script = ExtResource("1_axw7b")
+brand = "DMC"
+id = "3831"
+color_name = "Raspberry Dark"
+color = Color(0.701961, 0.184314, 0.282353, 1)
