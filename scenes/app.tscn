@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://cboxkf6180ais"]
+[gd_scene load_steps=16 format=4 uid="uid://cboxkf6180ais"]
 
 [ext_resource type="Script" path="res://scripts/app.gd" id="1_h4wb0"]
 [ext_resource type="Script" path="res://scripts/scheme_parser.gd" id="2_gbw5y"]
@@ -10,8 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://7k1cuftoo1om" path="res://background.png" id="6_scn2b"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="7_eenpl"]
 [ext_resource type="PackedScene" uid="uid://bv8vy48g54jcs" path="res://scenes/palette_skein_ui.tscn" id="10_yy6uj"]
-[ext_resource type="Script" path="res://scripts/palette_manager_window.gd" id="11_s2bit"]
+[ext_resource type="Script" path="res://scripts/add_skein_window.gd" id="11_s2bit"]
 [ext_resource type="PackedScene" uid="uid://c8ch4mdg82a6f" path="res://scenes/skein_picker_ui.tscn" id="12_i0pcd"]
+[ext_resource type="Script" path="res://scripts/swap_skein_window.gd" id="13_t16kn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rda43"]
 resource_name = "background"
@@ -161,14 +162,21 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Add skein..."
 
-[node name="ConfirmationDialog" type="ConfirmationDialog" parent="PaletteWindow"]
-title = "Remove color from Palette"
+[node name="RemoveConfirmDialog" type="ConfirmationDialog" parent="PaletteWindow"]
+title = "Remove color from Palette?"
 initial_position = 2
 size = Vector2i(300, 106)
 ok_button_text = "Yes"
 dialog_text = "All stitches made with this color will be removed. Are you sure?"
 dialog_autowrap = true
 cancel_button_text = "No"
+
+[node name="SwapConfirmDialog" type="ConfirmationDialog" parent="PaletteWindow"]
+title = "Confirm Swap?"
+initial_position = 2
+size = Vector2i(435, 106)
+dialog_text = "All existing stitches will be converted to the new color.
+If the color is in the palette, the colors will be merged."
 
 [node name="PreviewWindow" type="Window" parent="."]
 title = "Preview"
@@ -227,17 +235,18 @@ ok_button_text = "Save"
 access = 2
 filters = PackedStringArray("*.json")
 
-[node name="PaletteManagerWindow" type="Window" parent="." node_paths=PackedStringArray("palette")]
+[node name="AddSkeinWindow" type="Window" parent="." node_paths=PackedStringArray("palette")]
 title = "Click a color to add!"
 initial_position = 2
 size = Vector2i(400, 300)
 visible = false
 popup_window = true
 script = ExtResource("11_s2bit")
+script_path = "res://scripts/pick_skein_btn.gd"
 palette = NodePath("../Palette")
 skein_picker_ui = ExtResource("12_i0pcd")
 
-[node name="GridContainer" type="GridContainer" parent="PaletteManagerWindow"]
+[node name="GridContainer" type="GridContainer" parent="AddSkeinWindow"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -245,28 +254,28 @@ grow_horizontal = 2
 grow_vertical = 2
 columns = 5
 
-[node name="SkeinPickerButton" parent="PaletteManagerWindow/GridContainer" instance=ExtResource("12_i0pcd")]
+[node name="SkeinPickerButton" parent="AddSkeinWindow/GridContainer" instance=ExtResource("12_i0pcd")]
 layout_mode = 2
 
-[node name="SkeinPickerButton2" parent="PaletteManagerWindow/GridContainer" instance=ExtResource("12_i0pcd")]
+[node name="SkeinPickerButton2" parent="AddSkeinWindow/GridContainer" instance=ExtResource("12_i0pcd")]
 layout_mode = 2
 
-[node name="SkeinPickerButton3" parent="PaletteManagerWindow/GridContainer" instance=ExtResource("12_i0pcd")]
+[node name="SkeinPickerButton3" parent="AddSkeinWindow/GridContainer" instance=ExtResource("12_i0pcd")]
 layout_mode = 2
 
-[node name="SkeinPickerButton4" parent="PaletteManagerWindow/GridContainer" instance=ExtResource("12_i0pcd")]
+[node name="SkeinPickerButton4" parent="AddSkeinWindow/GridContainer" instance=ExtResource("12_i0pcd")]
 layout_mode = 2
 
-[node name="SkeinPickerButton5" parent="PaletteManagerWindow/GridContainer" instance=ExtResource("12_i0pcd")]
+[node name="SkeinPickerButton5" parent="AddSkeinWindow/GridContainer" instance=ExtResource("12_i0pcd")]
 layout_mode = 2
 
-[node name="SkeinPickerButton6" parent="PaletteManagerWindow/GridContainer" instance=ExtResource("12_i0pcd")]
+[node name="SkeinPickerButton6" parent="AddSkeinWindow/GridContainer" instance=ExtResource("12_i0pcd")]
 layout_mode = 2
 
-[node name="SkeinPickerButton7" parent="PaletteManagerWindow/GridContainer" instance=ExtResource("12_i0pcd")]
+[node name="SkeinPickerButton7" parent="AddSkeinWindow/GridContainer" instance=ExtResource("12_i0pcd")]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PaletteManagerWindow"]
+[node name="Label" type="Label" parent="AddSkeinWindow"]
 visible = false
 anchors_preset = 8
 anchor_left = 0.5
@@ -286,12 +295,56 @@ colors to the Palette."
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="SwapSkeinWindow" type="Window" parent="." node_paths=PackedStringArray("palette")]
+auto_translate_mode = 1
+title = "Click a color to swap your current one!"
+initial_position = 2
+size = Vector2i(400, 300)
+visible = false
+popup_window = true
+script = ExtResource("13_t16kn")
+script_path = "res://scripts/pick_skein_btn.gd"
+palette = NodePath("../Palette")
+skein_picker_ui = ExtResource("12_i0pcd")
+
+[node name="GridContainer" type="GridContainer" parent="SwapSkeinWindow"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 5
+
+[node name="SkeinPickerButton" parent="SwapSkeinWindow/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton2" parent="SwapSkeinWindow/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton3" parent="SwapSkeinWindow/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton4" parent="SwapSkeinWindow/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton5" parent="SwapSkeinWindow/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton6" parent="SwapSkeinWindow/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton7" parent="SwapSkeinWindow/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
 [connection signal="focus_entered" from="." to="." method="_on_app_window_focus_entered"]
 [connection signal="focus_entered" from="LayersWindow" to="." method="_on_layers_window_focus_entered"]
 [connection signal="focus_entered" from="PaletteWindow" to="." method="_on_layers_window_focus_entered"]
-[connection signal="pressed" from="PaletteWindow/VBoxContainer/HBoxContainer/Button" to="PaletteManagerWindow" method="toggle_visibility"]
+[connection signal="pressed" from="PaletteWindow/VBoxContainer/HBoxContainer/Button" to="AddSkeinWindow" method="toggle_visibility"]
 [connection signal="focus_entered" from="PreviewWindow" to="." method="_on_preview_window_focus_entered"]
 [connection signal="focus_entered" from="PreviewWindow" to="PreviewWindow/SubViewportContainer/Preview/PreviewCanvas" method="_on_preview_window_focus_entered"]
 [connection signal="file_selected" from="LoadFileDialog" to="." method="load_file_selected"]
 [connection signal="file_selected" from="SaveFileDialog" to="." method="save_file_selected"]
-[connection signal="close_requested" from="PaletteManagerWindow" to="PaletteManagerWindow" method="toggle_visibility"]
+[connection signal="close_requested" from="AddSkeinWindow" to="AddSkeinWindow" method="toggle_visibility"]
+[connection signal="visibility_changed" from="AddSkeinWindow" to="AddSkeinWindow" method="_on_visibility_changed"]
+[connection signal="close_requested" from="SwapSkeinWindow" to="SwapSkeinWindow" method="toggle_visibility"]
+[connection signal="visibility_changed" from="SwapSkeinWindow" to="SwapSkeinWindow" method="_on_visibility_changed"]
