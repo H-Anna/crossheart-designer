@@ -20,6 +20,18 @@ func get_neighbor_cells(source: TileMapLayer, coords: Vector2i) -> Array[Vector2
 	cells.append(source.get_neighbor_cell(coords, TileSet.CELL_NEIGHBOR_LEFT_SIDE))
 	return cells
 
+#endregion
+
+#region SIGNAL OPERATIONS
+
+func disconnect_callable(sig: Signal, callable: Callable):
+	if sig.is_connected(callable):
+		sig.disconnect(callable)
+
+#endregion
+
+#region MATH
+
 func vector2i_is_within_rect2i(coords: Vector2i, rect: Rect2i) -> bool:
 	return coords.x >= rect.position.x && coords.y >= rect.position.y && coords.x < rect.end.x && coords.y < rect.end.y
 
