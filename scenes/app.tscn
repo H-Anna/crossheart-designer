@@ -157,7 +157,7 @@ layout_mode = 2
 layout_mode = 2
 alignment = 2
 
-[node name="Button" type="Button" parent="PaletteWindow/VBoxContainer/HBoxContainer"]
+[node name="AddSkeinButton" type="Button" parent="PaletteWindow/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Add skein..."
@@ -339,12 +339,12 @@ layout_mode = 2
 [connection signal="focus_entered" from="." to="." method="_on_app_window_focus_entered"]
 [connection signal="focus_entered" from="LayersWindow" to="." method="_on_layers_window_focus_entered"]
 [connection signal="focus_entered" from="PaletteWindow" to="." method="_on_layers_window_focus_entered"]
-[connection signal="pressed" from="PaletteWindow/VBoxContainer/HBoxContainer/Button" to="AddSkeinWindow" method="toggle_visibility"]
+[connection signal="pressed" from="PaletteWindow/VBoxContainer/HBoxContainer/AddSkeinButton" to="AddSkeinWindow" method="toggle_visibility"]
 [connection signal="focus_entered" from="PreviewWindow" to="." method="_on_preview_window_focus_entered"]
 [connection signal="focus_entered" from="PreviewWindow" to="PreviewWindow/SubViewportContainer/Preview/PreviewCanvas" method="_on_preview_window_focus_entered"]
 [connection signal="file_selected" from="LoadFileDialog" to="." method="load_file_selected"]
 [connection signal="file_selected" from="SaveFileDialog" to="." method="save_file_selected"]
-[connection signal="close_requested" from="AddSkeinWindow" to="AddSkeinWindow" method="toggle_visibility"]
+[connection signal="close_requested" from="AddSkeinWindow" to="AddSkeinWindow" method="hide"]
 [connection signal="visibility_changed" from="AddSkeinWindow" to="AddSkeinWindow" method="_on_visibility_changed"]
-[connection signal="close_requested" from="SwapSkeinWindow" to="SwapSkeinWindow" method="toggle_visibility"]
+[connection signal="close_requested" from="SwapSkeinWindow" to="SwapSkeinWindow" method="hide"]
 [connection signal="visibility_changed" from="SwapSkeinWindow" to="SwapSkeinWindow" method="_on_visibility_changed"]

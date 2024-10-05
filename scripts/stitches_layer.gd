@@ -6,6 +6,7 @@ var bounding_rect : Rect2i
 const cursor_tile := Vector2i(0,0)
 
 var _modulated_tile_cache: Dictionary
+var _is_dirty = false
 
 func _ready() -> void:
 	SignalBus.skein_removed_from_palette.connect(_erase_cells_with_skein)
@@ -18,15 +19,15 @@ func _input(event: InputEvent) -> void:
 	execute_cursor_action()
 	
 	if event is InputEventMouseButton:
-		if event.pressed == false && (event.button_index == MOUSE_BUTTON_LEFT || event.button_index == MOUSE_BUTTON_RIGHT):
+		if _is_dirty && event.pressed == false && (event.button_index == MOUSE_BUTTON_LEFT || event.button_index == MOUSE_BUTTON_RIGHT):
 			SignalBus.layer_changed.emit(self)
+			_is_dirty = false
 
 func _enter_tree() -> void:
 	SignalBus.layer_added.emit(self)
 
 func _exit_tree() -> void:
 	SignalBus.layer_removed.emit(self)
-
 
 func initialize(_cursor: Node2D, _rect : Rect2i) -> void:
 	cursor = _cursor
@@ -47,9 +48,11 @@ func execute_cursor_action() -> void:
 func _draw_with_cursor(cell: Vector2i, depth: int, current_depth : int) -> void:
 	if current_depth > depth:
 		return
+	
 	if Extensions.vector2i_is_within_rect2i(cell, bounding_rect):
 		_set_cell_modulated(cell, cursor.active_skein)
-		#set_cell(cell, 0, cursor_tile)
+		_is_dirty = true
+	
 	for neighbor in Extensions.get_neighbor_cells(self, cell):
 		_draw_with_cursor(neighbor, depth, current_depth + 1)
 
@@ -57,8 +60,11 @@ func _draw_with_cursor(cell: Vector2i, depth: int, current_depth : int) -> void:
 func _erase_with_cursor(cell: Vector2i, depth: int, current_depth : int) -> void:
 	if current_depth > depth:
 		return
+	
 	if Extensions.vector2i_is_within_rect2i(cell, bounding_rect):
 		erase_cell(cell)
+		_is_dirty = true
+	
 	for neighbor in Extensions.get_neighbor_cells(self, cell):
 		_erase_with_cursor(neighbor, depth, current_depth + 1)
 
