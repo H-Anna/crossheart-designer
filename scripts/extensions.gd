@@ -1,10 +1,16 @@
 extends Node
 
+#region DATA CONVERSION
+
 func to_packedvector2array(input: Array) -> PackedVector2Array:
 	var array : PackedVector2Array = []
 	for elem in input:
 		array.append(elem)
 	return array
+
+#endregion
+
+#region CELL OPERATIONS
 
 func get_neighbor_cells(source: TileMapLayer, coords: Vector2i) -> Array[Vector2i]:
 	var cells : Array[Vector2i]
@@ -17,6 +23,9 @@ func get_neighbor_cells(source: TileMapLayer, coords: Vector2i) -> Array[Vector2
 func vector2i_is_within_rect2i(coords: Vector2i, rect: Rect2i) -> bool:
 	return coords.x >= rect.position.x && coords.y >= rect.position.y && coords.x < rect.end.x && coords.y < rect.end.y
 
+#endregion
+
+#region VERSION NUMBERS
 func higher_version(v1: String, v2: String):
 	var vsep1 = v1.split(".")
 	var vsep2 = v2.split(".")
@@ -49,3 +58,5 @@ func _get_version_number(v: String, i: int):
 	if i >= vsep.size():
 		return -1
 	return vsep[i].to_int()
+
+#endregion
