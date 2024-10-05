@@ -9,6 +9,7 @@ var _modulated_tile_cache: Dictionary
 
 func _ready() -> void:
 	SignalBus.skein_removed_from_palette.connect(_erase_cells_with_skein)
+	SignalBus.skein_swapped.connect(_swap_cells_with_skein)
 
 func _input(event: InputEvent) -> void:
 	if !cursor || cursor.active_skein == null:
@@ -84,6 +85,16 @@ func _erase_cells_with_skein(skein: Skein):
 			erase_cell(cell)
 		_modulated_tile_cache.erase(skein)
 		SignalBus.layer_changed.emit(self, false)
+
+func _swap_cells_with_skein(old_skein: Skein, new_skein: Skein):
+	if !_modulated_tile_cache.has(old_skein):
+		return
+	
+	var old_alt_id = _modulated_tile_cache[old_skein]
+	for cell in get_used_cells_by_id(0, cursor_tile, old_alt_id):
+		_set_cell_modulated(cell, new_skein)
+	
+	SignalBus.layer_changed.emit(self, false)
 
 func serialize() -> Dictionary:
 	var tiles_arr: Array[Dictionary]

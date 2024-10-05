@@ -2,10 +2,13 @@ class_name Palette
 extends Node
 
 @export var colors : Array[Skein]
+var selected_idx : int
 
 func _ready() -> void:
 	SignalBus.skein_added_to_palette.connect(add_skein)
 	SignalBus.skein_removed_from_palette.connect(remove_skein)
+	SignalBus.skein_swapped.connect(swap_skein)
+	SignalBus.skein_selected.connect(select_skein)
 	SignalBus.current_snapshot_changed.connect(deserialize)
 
 func clear():
@@ -39,5 +42,34 @@ func add_skein(skein: Skein):
 
 func remove_skein(skein: Skein):
 	colors.erase(skein)
+	SignalBus.palette_changed.emit(self)
+	SignalBus.palette_ui_changed.emit(self)
+
+func select_skein(skein: Skein):
+	selected_idx = colors.find(skein)
+
+func get_selected_skein():
+	return colors[selected_idx]
+
+func swap_skein(old_skein: Skein, new_skein: Skein):
+	# New skein is in skeins -> select new skein, delete old one
+	# New skein is not in skeins -> add the skein
+	# Old skein
+	
+	var old_selected = old_skein == colors[selected_idx]
+	var idx = colors.find(new_skein)
+	var new_skein_in_colors = idx != -1
+	
+	if new_skein_in_colors:
+		if old_selected:
+			selected_idx = idx
+	else:
+		if old_selected:
+			colors.insert(selected_idx, new_skein)
+		else:
+			colors.append(new_skein)
+	colors.erase(old_skein)
+	print_debug("Swapped %s with %s" % [old_skein.id, new_skein.id])
+	
 	SignalBus.palette_changed.emit(self)
 	SignalBus.palette_ui_changed.emit(self)
