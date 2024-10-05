@@ -50,10 +50,15 @@ texture = ExtResource("1_qc81l")
 expand_mode = 2
 
 [node name="Label" type="Label" parent="MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(120, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Black"
 horizontal_alignment = 1
+
+[node name="SwapButton" type="Button" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+text = "..."
 
 [node name="XButton" type="Button" parent="MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(30, 0)

@@ -2,6 +2,7 @@ extends Control
 
 @onready var color_rect = $MarginContainer/HBoxContainer/ColorRect
 @onready var label = $MarginContainer/HBoxContainer/Label
+@onready var swap_button = $MarginContainer/HBoxContainer/SwapButton
 @onready var x_button = $MarginContainer/HBoxContainer/XButton
 var skein : Skein
 
@@ -12,5 +13,5 @@ func set_values(_skein: Skein):
 	color_rect.self_modulate = _skein.color
 
 func select_color():
-	print_debug("%s (%s) selected" % [skein.get_identifying_name(), skein.color_name])
+	print_debug("Now painting with: %s (%s)" % [skein.get_identifying_name(), skein.color_name])
 	SignalBus.skein_selected.emit(skein)
