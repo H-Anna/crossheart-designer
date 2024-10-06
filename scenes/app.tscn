@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://cboxkf6180ais"]
+[gd_scene load_steps=18 format=4 uid="uid://cboxkf6180ais"]
 
 [ext_resource type="Script" path="res://scripts/app.gd" id="1_h4wb0"]
 [ext_resource type="Script" path="res://scripts/scheme_parser.gd" id="2_gbw5y"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://u5hw3ynykb0r" path="res://scenes/canvas.tscn" id="3_n865v"]
 [ext_resource type="Script" path="res://scripts/preview_canvas.gd" id="4_p0eee"]
 [ext_resource type="Script" path="res://scripts/palette_window.gd" id="5_pn718"]
+[ext_resource type="Script" path="res://scripts/layers_window.gd" id="6_6dibs"]
+[ext_resource type="PackedScene" uid="uid://o1q2hiudogvu" path="res://scenes/layer_ui.tscn" id="6_iatfl"]
 [ext_resource type="Texture2D" uid="uid://7k1cuftoo1om" path="res://background.png" id="6_scn2b"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="7_eenpl"]
 [ext_resource type="PackedScene" uid="uid://bv8vy48g54jcs" path="res://scenes/palette_skein_ui.tscn" id="10_yy6uj"]
@@ -42,11 +44,14 @@ script = ExtResource("3_5ip4a")
 
 [node name="LayersWindow" type="Window" parent="."]
 title = "Layers"
-position = Vector2i(1000, 100)
-size = Vector2i(200, 300)
+position = Vector2i(1020, 100)
+size = Vector2i(220, 300)
 exclusive = true
-unresizable = true
 always_on_top = true
+min_size = Vector2i(165, 165)
+max_size = Vector2i(300, 16384)
+script = ExtResource("6_6dibs")
+layer_ui = ExtResource("6_iatfl")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="LayersWindow"]
 anchors_preset = 15
@@ -55,46 +60,67 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="LayersWindow/VBoxContainer"]
-custom_minimum_size = Vector2(0, 50)
+[node name="ScrollContainer" type="ScrollContainer" parent="LayersWindow/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 2
-color = Color(0.190762, 0.190762, 0.190762, 1)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+follow_focus = true
+horizontal_scroll_mode = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="LayersWindow/VBoxContainer/ColorRect"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -37.0
-offset_top = -15.5
-offset_right = 37.0
-offset_bottom = 15.5
-grow_horizontal = 2
-grow_vertical = 2
+[node name="LayersList" type="VBoxContainer" parent="LayersWindow/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="LayersWindow/VBoxContainer/ColorRect/MarginContainer"]
+[node name="LayerUI" parent="LayersWindow/VBoxContainer/ScrollContainer/LayersList" instance=ExtResource("6_iatfl")]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="LayersWindow/VBoxContainer/ColorRect/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(150, 0)
+[node name="LayerUI2" parent="LayersWindow/VBoxContainer/ScrollContainer/LayersList" instance=ExtResource("6_iatfl")]
 layout_mode = 2
-text = "Layer0"
 
-[node name="Button" type="Button" parent="LayersWindow/VBoxContainer/ColorRect/MarginContainer/HBoxContainer"]
+[node name="LayerUI3" parent="LayersWindow/VBoxContainer/ScrollContainer/LayersList" instance=ExtResource("6_iatfl")]
 layout_mode = 2
-text = "X"
+
+[node name="LayerUI4" parent="LayersWindow/VBoxContainer/ScrollContainer/LayersList" instance=ExtResource("6_iatfl")]
+layout_mode = 2
+
+[node name="LayerUI5" parent="LayersWindow/VBoxContainer/ScrollContainer/LayersList" instance=ExtResource("6_iatfl")]
+layout_mode = 2
+
+[node name="LayerUI6" parent="LayersWindow/VBoxContainer/ScrollContainer/LayersList" instance=ExtResource("6_iatfl")]
+layout_mode = 2
+
+[node name="LayerUI7" parent="LayersWindow/VBoxContainer/ScrollContainer/LayersList" instance=ExtResource("6_iatfl")]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LayersWindow/VBoxContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="AddLayerButton" type="Button" parent="LayersWindow/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Add layer"
+
+[node name="UpButton" type="Button" parent="LayersWindow/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+text = "^"
+
+[node name="DownButton" type="Button" parent="LayersWindow/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+text = "v"
 
 [node name="PaletteWindow" type="Window" parent="."]
 auto_translate_mode = 1
 title = "Palette"
-position = Vector2i(70, 100)
-size = Vector2i(220, 300)
+position = Vector2i(20, 100)
+size = Vector2i(230, 300)
 exclusive = true
-unresizable = true
 always_on_top = true
+min_size = Vector2i(125, 200)
+max_size = Vector2i(360, 16384)
 script = ExtResource("5_pn718")
 skein_ui = ExtResource("10_yy6uj")
 
@@ -180,7 +206,7 @@ If the color is in the palette, the colors will be merged."
 
 [node name="PreviewWindow" type="Window" parent="."]
 title = "Preview"
-position = Vector2i(1000, 450)
+position = Vector2i(1040, 450)
 size = Vector2i(200, 200)
 exclusive = true
 unresizable = true
@@ -338,10 +364,17 @@ layout_mode = 2
 
 [connection signal="focus_entered" from="." to="." method="_on_app_window_focus_entered"]
 [connection signal="focus_entered" from="LayersWindow" to="." method="_on_layers_window_focus_entered"]
+[connection signal="mouse_entered" from="LayersWindow" to="LayersWindow" method="grab_focus"]
+[connection signal="pressed" from="LayersWindow/VBoxContainer/HBoxContainer/AddLayerButton" to="Canvas" method="create_layer"]
+[connection signal="pressed" from="LayersWindow/VBoxContainer/HBoxContainer/UpButton" to="Canvas" method="reorder_selected_layer" binds= [1]]
+[connection signal="pressed" from="LayersWindow/VBoxContainer/HBoxContainer/UpButton" to="LayersWindow" method="_reorder_selected_element" binds= [-1]]
+[connection signal="pressed" from="LayersWindow/VBoxContainer/HBoxContainer/DownButton" to="Canvas" method="reorder_selected_layer" binds= [-1]]
+[connection signal="pressed" from="LayersWindow/VBoxContainer/HBoxContainer/DownButton" to="LayersWindow" method="_reorder_selected_element" binds= [1]]
 [connection signal="focus_entered" from="PaletteWindow" to="." method="_on_layers_window_focus_entered"]
+[connection signal="mouse_entered" from="PaletteWindow" to="PaletteWindow" method="grab_focus"]
 [connection signal="pressed" from="PaletteWindow/VBoxContainer/HBoxContainer/AddSkeinButton" to="AddSkeinWindow" method="toggle_visibility"]
 [connection signal="focus_entered" from="PreviewWindow" to="." method="_on_preview_window_focus_entered"]
-[connection signal="focus_entered" from="PreviewWindow" to="PreviewWindow/SubViewportContainer/Preview/PreviewCanvas" method="_on_preview_window_focus_entered"]
+[connection signal="mouse_entered" from="PreviewWindow" to="PreviewWindow" method="grab_focus"]
 [connection signal="file_selected" from="LoadFileDialog" to="." method="load_file_selected"]
 [connection signal="file_selected" from="SaveFileDialog" to="." method="save_file_selected"]
 [connection signal="close_requested" from="AddSkeinWindow" to="AddSkeinWindow" method="hide"]

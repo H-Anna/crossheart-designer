@@ -12,15 +12,17 @@ func _ready() -> void:
 	swap_skein_window.swap_callable = _swap_skein
 
 func _on_palette_changed(palette: Palette):
+	_delete_elements()
 	_load_colors(palette)
 
-func _load_colors(palette: Palette) -> void:
-	# Delete all ui elements
+# Deletes all ui elements
+func _delete_elements():
 	for ui in skeins_list.get_children():
 		ui.queue_free()
-	
+
+func _load_colors(palette: Palette) -> void:
 	## TODO: refactor
-	# Load them again
+	# Loads ui elements
 	var selected = false
 	for skein in palette.colors:
 		var ui = skein_ui.instantiate()

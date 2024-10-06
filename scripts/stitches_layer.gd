@@ -1,12 +1,23 @@
 extends TileMapLayer
 
+const cursor_tile := Vector2i(0,0)
+
 var cursor : Node2D
 var bounding_rect : Rect2i
 
-const cursor_tile := Vector2i(0,0)
-
+var active := false
+var _is_dirty := false
+var _display_name : String = ""
 var _modulated_tile_cache: Dictionary
-var _is_dirty = false
+
+func get_display_name() -> String:
+	return _display_name
+
+func set_display_name(_new_name: String):
+	if _display_name != _new_name:
+		_display_name = _new_name
+		SignalBus.layer_changed.emit(self)
+		print_debug("Layer renamed to %s" % _new_name)
 
 func _ready() -> void:
 	SignalBus.skein_removed_from_palette.connect(_erase_cells_with_skein)
@@ -14,6 +25,9 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if !cursor || cursor.active_skein == null:
+		return
+	
+	if !active:
 		return
 	
 	execute_cursor_action()
@@ -24,14 +38,19 @@ func _input(event: InputEvent) -> void:
 			_is_dirty = false
 
 func _enter_tree() -> void:
-	SignalBus.layer_added.emit(self)
+	#SignalBus.layer_added.emit(self)
+	pass
 
 func _exit_tree() -> void:
 	SignalBus.layer_removed.emit(self)
+	pass
 
-func initialize(_cursor: Node2D, _rect : Rect2i) -> void:
+func initialize(_cursor: Node2D, _rect : Rect2i, _active: bool, _name: String) -> void:
 	cursor = _cursor
 	bounding_rect = _rect
+	active = _active
+	_display_name = _name
+	SignalBus.layer_added.emit(self)
 
 func execute_cursor_action() -> void:
 	match cursor.tool_mode:
@@ -112,7 +131,7 @@ func serialize() -> Dictionary:
 		tiles_arr.append(skein_dict)
 	
 	var dict: Dictionary
-	dict.get_or_add("name", name)
+	dict.get_or_add("name", _display_name)
 	dict.get_or_add("tiles", tiles_arr)
 	return dict
 

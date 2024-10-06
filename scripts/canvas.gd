@@ -9,12 +9,16 @@ var cursor : Node2D
 @export var stitch_layers_group : Node2D
 
 var canvas_rect: Rect2i
+var selected_layer: TileMapLayer
 
 signal canvas_size_changed(new_rect: Rect2i)
 
 func _ready() -> void:
 	SignalBus.current_snapshot_changed.connect(deserialize)
 	cursor = $Cursor
+
+func _exit_tree() -> void:
+	SignalBus.current_snapshot_changed.disconnect(deserialize)
 
 func create_canvas(rect: Rect2i):
 	canvas_rect = rect
@@ -31,15 +35,21 @@ func create_canvas(rect: Rect2i):
 func delete_all_layers():
 	for i in stitch_layers_group.get_children():
 		i.queue_free()
-	#SignalBus.canvas_changed.emit(self)
 
 func create_layer() -> Node2D:
 	var layer = layer_scene.instantiate()
 	stitch_layers_group.add_child(layer)
+	stitch_layers_group.move_child(layer, 0)
 	layer.owner = stitch_layers_group
-	layer.initialize(cursor, canvas_rect)
-	#SignalBus.canvas_changed.emit(self)
+	var is_active = stitch_layers_group.get_children().any(func(child): return child.active)
+	layer.initialize(cursor, canvas_rect, !is_active, "New layer")
 	return layer
+
+func delete_layer(layer: TileMapLayer):
+	if layer in stitch_layers_group.get_children():
+		layer.queue_free()
+	else:
+		print_debug("Can't delete layer %s" % layer.name)
 
 func serialize() -> Dictionary:
 	var dict : Dictionary
@@ -75,3 +85,35 @@ func deserialize(snapshot: Snapshot):
 
 func get_layer_order() -> Array:
 	return stitch_layers_group.get_children().map(func(node) : return node.name)
+
+func get_layers() -> Array[TileMapLayer]:
+	var arr: Array[TileMapLayer]
+	for child in stitch_layers_group.get_children():
+		if child is TileMapLayer && !child.is_queued_for_deletion():
+			arr.append(child)
+	return arr
+
+func rename_layer(layer: TileMapLayer, display_name: String):
+	var old_name = layer.get_display_name()
+	layer.set_display_name(display_name)
+	print_debug("Layer renamed: %s -> %s" % [old_name, display_name])
+
+func select_layer(layer: TileMapLayer):
+	for child in stitch_layers_group.get_children():
+		child.active = false
+	layer.active = true
+	selected_layer = layer
+	print_debug("Layer '%s' selected" % layer.get_display_name())
+
+func toggle_layer_visibility(layer: TileMapLayer, is_visible: bool):
+	if is_visible:
+		layer.show()
+	else:
+		layer.hide()
+
+func reorder_selected_layer(delta: int):
+	var idx = selected_layer.get_index()
+	stitch_layers_group.move_child(selected_layer, idx + delta)
+
+func get_layer_index(layer: TileMapLayer):
+	return get_layers().find(layer)

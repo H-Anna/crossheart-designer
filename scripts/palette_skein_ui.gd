@@ -1,9 +1,9 @@
 extends Control
 
-@onready var color_rect = $MarginContainer/HBoxContainer/ColorRect
-@onready var label = $MarginContainer/HBoxContainer/Label
-@onready var swap_button = $MarginContainer/HBoxContainer/SwapButton
-@onready var x_button = $MarginContainer/HBoxContainer/XButton
+@onready var color_rect = $HBoxContainer/ColorRect
+@onready var label = $HBoxContainer/Label
+@onready var swap_button = $HBoxContainer/SwapButton
+@onready var x_button = $HBoxContainer/XButton
 var skein : Skein
 
 func set_values(_skein: Skein):

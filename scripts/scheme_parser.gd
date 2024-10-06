@@ -59,6 +59,7 @@ func _construct_scheme(subset: Dictionary) -> Dictionary:
 					res[key] = type_convert(null, _get_scheme_type(subset[key]))
 			var invalid_type: # This shouldn't happen.
 				res[key] = null
+				print_debug("Invalid type: %s" % type_string(invalid_type))
 	return res
 
 func data_to_scheme(data: Dictionary):
