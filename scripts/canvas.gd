@@ -29,7 +29,7 @@ func create_canvas(rect: Rect2i, emit_signals: bool = true):
 	canvas_size_changed.emit(background_layer.get_used_rect())
 	
 	delete_all_layers()
-	create_layer(emit_signals)
+	selected_layer = create_layer(emit_signals)
 	if emit_signals:
 		SignalBus.canvas_changed.emit(self)
 
@@ -44,7 +44,7 @@ func create_layer(emit_signals: bool = true) -> Node2D:
 	stitch_layers_group.move_child(layer, 0)
 	layer.owner = stitch_layers_group
 	layer.name = Extensions.generate_unique_string(Extensions.layer_name_length)
-	var is_active = stitch_layers_group.get_children().any(func(child): return child.active)
+	var is_active = selected_layer != null
 	layer.initialize(cursor, canvas_rect, !is_active, "New layer")
 	
 	if emit_signals:

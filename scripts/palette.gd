@@ -13,6 +13,7 @@ func _ready() -> void:
 
 func clear():
 	colors.clear()
+	selected_idx = -1
 	SignalBus.palette_changed.emit(self)
 	SignalBus.palette_ui_changed.emit(self)
 
