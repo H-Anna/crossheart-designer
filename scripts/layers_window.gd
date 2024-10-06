@@ -13,13 +13,14 @@ var selected_element: Node
 func _ready() -> void:
 	SignalBus.layer_added.connect(_on_layers_changed)
 	SignalBus.layer_removed.connect(_on_layers_changed)
+	SignalBus.layer_ui_changed.connect(_on_layers_changed)
 	_delete_elements()
 
 func _exit_tree() -> void:
 	SignalBus.layer_added.disconnect(_on_layers_changed)
 	SignalBus.layer_removed.disconnect(_on_layers_changed)
 
-func _on_layers_changed(_layer):
+func _on_layers_changed(_layer = null):
 	layers = canvas.get_layers()
 	layers.reverse()
 	refresh()

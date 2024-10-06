@@ -42,7 +42,7 @@ func _enter_tree() -> void:
 	pass
 
 func _exit_tree() -> void:
-	SignalBus.layer_removed.emit(self)
+	#SignalBus.layer_removed.emit(self)
 	pass
 
 func initialize(_cursor: Node2D, _rect : Rect2i, _active: bool, _name: String) -> void:
@@ -50,7 +50,6 @@ func initialize(_cursor: Node2D, _rect : Rect2i, _active: bool, _name: String) -
 	bounding_rect = _rect
 	active = _active
 	_display_name = _name
-	SignalBus.layer_added.emit(self)
 
 func execute_cursor_action() -> void:
 	match cursor.tool_mode:
@@ -131,15 +130,18 @@ func serialize() -> Dictionary:
 		tiles_arr.append(skein_dict)
 	
 	var dict: Dictionary
-	dict.get_or_add("name", _display_name)
+	dict.get_or_add("name", name)
+	dict.get_or_add("display_name", _display_name)
 	dict.get_or_add("tiles", tiles_arr)
+	dict.get_or_add("visible", visible)
 	return dict
 
 func deserialize(dict: Dictionary):
 	name = dict["name"]
+	_display_name = dict["display_name"]
+	visible = dict["visible"]
 	clear()
 	for tiles_collection in dict["tiles"]:
-		## TODO: get skein by global id
 		var id = tiles_collection["skein_global_id"]
 		var skein = SkeinsAtlas.get_skein_by_global_id(id)
 		for cell in tiles_collection["coordinates"]:

@@ -23,9 +23,11 @@ func store_layer(layer: TileMapLayer):
 		return
 	
 	## TODO: does this work??
-	var old_data = layers_array.filter(func(x): return layer.name == x["name"]).front()
-	
-	if old_data != null:
+	var filter = layers_array.filter(func(x): return layer.name == x["name"])
+	if filter.is_empty():
+		layers_array.append(layer_data)
+	else:
+		var old_data = filter.front()
 		var idx = layers_array.find(old_data)
 		layers_array[idx] = layer_data
 

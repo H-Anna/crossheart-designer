@@ -4,11 +4,11 @@ extends Canvas
 func _ready() -> void:
 	pass
 
-func create_canvas(rect: Rect2i):
+func create_canvas(rect: Rect2i, _emit_signals: bool = true):
 	super.create_canvas(rect)
 	fit_camera_zoom()
 
-func create_layer() -> Node2D:
+func create_layer(_emit_signals: bool = true) -> Node2D:
 	var layer = layer_scene.instantiate()
 	stitch_layers_group.add_child(layer)
 	return layer

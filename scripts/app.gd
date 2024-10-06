@@ -21,6 +21,9 @@ func _input(event: InputEvent) -> void:
 		SignalBus.undo_pressed.emit()
 	elif event.is_action_pressed("ui_redo"):
 		SignalBus.redo_pressed.emit()
+	elif event.is_action_pressed("debug_clear_history"):
+		AppSnapshotManager.clear_history()
+		print_debug("DEBUG: History cleared")
 
 func create_new_canvas(rect: Rect2i):
 	$CanvasInterface.show()

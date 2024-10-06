@@ -20,7 +20,7 @@ func _ready() -> void:
 func _exit_tree() -> void:
 	SignalBus.current_snapshot_changed.disconnect(deserialize)
 
-func create_canvas(rect: Rect2i):
+func create_canvas(rect: Rect2i, emit_signals: bool = true):
 	canvas_rect = rect
 	background_layer.clear()
 	for x in range(canvas_rect.position.x, canvas_rect.size.x):
@@ -29,25 +29,38 @@ func create_canvas(rect: Rect2i):
 	canvas_size_changed.emit(background_layer.get_used_rect())
 	
 	delete_all_layers()
-	create_layer()
-	SignalBus.canvas_changed.emit(self)
+	create_layer(emit_signals)
+	if emit_signals:
+		SignalBus.canvas_changed.emit(self)
 
 func delete_all_layers():
 	for i in stitch_layers_group.get_children():
 		i.queue_free()
+		SignalBus.layer_removed.emit(i)
 
-func create_layer() -> Node2D:
+func create_layer(emit_signals: bool = true) -> Node2D:
 	var layer = layer_scene.instantiate()
 	stitch_layers_group.add_child(layer)
 	stitch_layers_group.move_child(layer, 0)
 	layer.owner = stitch_layers_group
+	layer.name = Extensions.generate_unique_string(Extensions.layer_name_length)
 	var is_active = stitch_layers_group.get_children().any(func(child): return child.active)
 	layer.initialize(cursor, canvas_rect, !is_active, "New layer")
+	
+	if emit_signals:
+		SignalBus.layer_added.emit(layer)
+		SignalBus.canvas_changed.emit(self, false)
 	return layer
 
 func delete_layer(layer: TileMapLayer):
-	if layer in stitch_layers_group.get_children():
+	var children = stitch_layers_group.get_children()
+	if layer in children:
+		if layer.active:
+			var idx = (layer.get_index() - 1) % children.size()
+			children[idx].active = true
+		
 		layer.queue_free()
+		SignalBus.layer_removed.emit(layer)
 	else:
 		print_debug("Can't delete layer %s" % layer.name)
 
@@ -61,7 +74,6 @@ func serialize() -> Dictionary:
 func deserialize(snapshot: Snapshot):
 	var dict = snapshot.state
 	var canvas_data = dict["canvas"]
-	#var layers_data = dict["layers"]
 	
 	# Restore canvas size
 	var pos = canvas_rect.position
@@ -69,22 +81,49 @@ func deserialize(snapshot: Snapshot):
 	var rect = Rect2i(pos, size)
 	
 	if canvas_rect != rect:
-		create_canvas(Rect2i(pos, size))
+		create_canvas(Rect2i(pos, size), false)
 	
-	#Restore layers	
+	#Restore layers and their order
 	var layers_data = dict["layers"]
-	var layer_nodes = stitch_layers_group.get_children()
-	for data in layers_data:
-		var matches = layer_nodes.filter(func(node): return node.name == data["name"])
-		var layer
-		if matches.is_empty():
-			layer = create_layer()
+	var ordered_array = canvas_data["layers"].duplicate()
+	var layers_to_create = canvas_data["layers"].duplicate()
+	var layers_to_deserialize: Array
+	var layers_to_free: Array
+	
+	for layer in stitch_layers_group.get_children():
+		if layer.name in layers_to_create:
+			layers_to_deserialize.append(layer)
+			layers_to_create.erase(layer.name)
 		else:
-			layer = matches.front()
+			layers_to_free.append(layer)
+	
+	for data in layers_data:
+		var layer
+		if data["name"] in layers_to_create:
+			layer = create_layer(false)
+		else:
+			layer = layers_to_deserialize.filter(func(l): return l.name == data["name"]).front()
 		layer.deserialize(data)
+	
+	for node in layers_to_free:
+		node.queue_free()
+	
+	#Restore layer order
+	for layer in stitch_layers_group.get_children():
+		if layer.is_queued_for_deletion():
+			continue
+		var idx = ordered_array.find(layer.name)
+		if idx != -1:
+			stitch_layers_group.move_child(layer, idx)
+	
+	SignalBus.layer_ui_changed.emit()
 
 func get_layer_order() -> Array:
-	return stitch_layers_group.get_children().map(func(node) : return node.name)
+	var arr: Array
+	for child in stitch_layers_group.get_children():
+		if child is TileMapLayer && !child.is_queued_for_deletion():
+			arr.append(child.name)
+	return arr
 
 func get_layers() -> Array[TileMapLayer]:
 	var arr: Array[TileMapLayer]
@@ -110,10 +149,12 @@ func toggle_layer_visibility(layer: TileMapLayer, is_visible: bool):
 		layer.show()
 	else:
 		layer.hide()
+	SignalBus.layer_changed.emit(layer)
 
 func reorder_selected_layer(delta: int):
 	var idx = selected_layer.get_index()
 	stitch_layers_group.move_child(selected_layer, idx + delta)
+	SignalBus.canvas_changed.emit(self)
 
 func get_layer_index(layer: TileMapLayer):
 	return get_layers().find(layer)

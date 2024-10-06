@@ -5,6 +5,8 @@ signal scheme_parser_ready(parser: SchemeParser, content: Dictionary)
 
 ## Window signals
 signal focus_changed(focus_mode: Helpers.MouseFocusMode)
+signal palette_ui_changed(palette: Palette)
+signal layer_ui_changed()
 
 ## View signals
 #signal zoom_level_changed(value: float)
@@ -14,7 +16,6 @@ signal skein_selected(skein: Skein)
 signal skein_added_to_palette(skein: Skein)
 signal skein_swapped(old_skein: Skein, new_skein: Skein)
 signal skein_removed_from_palette(skein: Skein)
-signal palette_ui_changed(palette: Palette)
 
 ## Content swapping signals
 signal new_canvas_opened(size: Rect2i)

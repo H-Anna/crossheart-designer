@@ -61,8 +61,10 @@ func roll_back():
 		return
 	
 	# Clamp history index to prevent index out of range error
+	var old_index = history_index
 	history_index = clamp(history_index - 1, 0, snapshot_history.size() - 1)
-	SignalBus.current_snapshot_changed.emit(current_snapshot)
+	if old_index != history_index:
+		SignalBus.current_snapshot_changed.emit(current_snapshot)
 
 func roll_forward():
 	# Can't roll forward if history is empty
@@ -70,8 +72,10 @@ func roll_forward():
 		return
 	
 	# Clamp history index to prevent index out of range error
+	var old_index = history_index
 	history_index = clamp(history_index + 1, 0, snapshot_history.size() - 1)
-	SignalBus.current_snapshot_changed.emit(current_snapshot)
+	if old_index != history_index:
+		SignalBus.current_snapshot_changed.emit(current_snapshot)
 
 func store_data(data: Dictionary, new_snapshot: bool = true):
 	if new_snapshot:
