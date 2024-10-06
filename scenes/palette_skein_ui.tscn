@@ -12,6 +12,8 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.190762, 0.190762, 0.190762, 1)
 script = ExtResource("1_oy1bc")
+selected_color = Color(0.359069, 0.359069, 0.359069, 1)
+default_color = Color(0.190762, 0.190762, 0.190762, 1)
 
 [node name="SkeinButton" type="Button" parent="."]
 layout_mode = 1
@@ -22,6 +24,7 @@ offset_top = -1.0
 offset_bottom = -1.0
 grow_horizontal = 2
 grow_vertical = 2
+flat = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -58,4 +61,5 @@ layout_mode = 2
 size_flags_horizontal = 8
 text = "X"
 
+[connection signal="pressed" from="SkeinButton" to="." method="select"]
 [connection signal="pressed" from="SkeinButton" to="." method="select_color"]

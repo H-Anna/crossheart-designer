@@ -40,7 +40,7 @@ func _load_elements():
 		ui.set_values(layer)
 		ui.layer_renamed.connect(canvas.rename_layer as Callable)
 		ui.layer_selected.connect(canvas.select_layer as Callable)
-		ui.layer_selected.connect(_ui_layer_selected)
+		ui.ui_layer_selected.connect(_ui_layer_selected)
 		ui.layer_visibility_toggled.connect(canvas.toggle_layer_visibility as Callable)
 		if single:
 			ui.x_button.disabled = true
@@ -48,19 +48,24 @@ func _load_elements():
 			ui.layer_deleted.connect(canvas.delete_layer as Callable)
 		
 		if !selected && layer.active:
-			ui.select()
+			ui.select(false)
 			selected = true
 
 func _delete_elements():
 	for child in container.get_children():
 		child.queue_free()
 
-func _ui_layer_selected(layer: TileMapLayer):
-	for child in container.get_children():
-		if child.layer != layer:
-			child.deselect()
-		else:
-			selected_element = child
+func _ui_layer_selected(control: Control):
+	if selected_element == null:
+		for child in container.get_children():
+			if child != control:
+				child.deselect()
+			else:
+				selected_element = child
+	elif control != selected_element:
+		selected_element.deselect()
+		selected_element = control
+	
 	_update_move_buttons()
 
 func _update_move_buttons():

@@ -3,7 +3,7 @@ extends Node2D
 
 var cursor_position : Vector2
 var cursor_size : int = 1
-var active_skein : Skein
+var active_skein : Skein = null
 @export var minimum_cursor_size := 1
 @export var maximum_cursor_size := 5
 var tool_mode : = Helpers.ToolMode.NONE
@@ -37,6 +37,8 @@ func update_cursor_color(skein: Skein):
 	active_skein = skein
 	if skein != null:
 		cursor_color_changed.emit(skein.color)
+	else:
+		cursor_color_changed.emit(Color.TRANSPARENT)
 
 func resize_cursor(delta: int):
 	var new_size = cursor_size + delta

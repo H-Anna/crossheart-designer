@@ -2,7 +2,7 @@ class_name Palette
 extends Node
 
 @export var colors : Array[Skein]
-var selected_idx : int
+var selected_idx : int = -1
 
 func _ready() -> void:
 	SignalBus.skein_added_to_palette.connect(add_skein)
@@ -37,11 +37,20 @@ func deserialize(snapshot: Snapshot):
 
 func add_skein(skein: Skein):
 	colors.append(skein)
+	if selected_idx == -1:
+		select_skein(skein)
 	SignalBus.palette_changed.emit(self)
 	SignalBus.palette_ui_changed.emit(self)
 
 func remove_skein(skein: Skein):
+	var idx = colors.find(skein)
 	colors.erase(skein)
+	if idx == selected_idx:
+		if colors.size() == 0:
+			selected_idx = -1
+		else:
+			selected_idx = clamp(selected_idx, 0, colors.size())
+		
 	SignalBus.palette_changed.emit(self)
 	SignalBus.palette_ui_changed.emit(self)
 
@@ -49,6 +58,11 @@ func select_skein(skein: Skein):
 	selected_idx = colors.find(skein)
 
 func get_selected_skein():
+	if colors.is_empty():
+		return null
+	# Fallback
+	if selected_idx < 0 || selected_idx >= colors.size():
+		selected_idx = 0
 	return colors[selected_idx]
 
 func swap_skein(old_skein: Skein, new_skein: Skein):

@@ -14,6 +14,7 @@ var layer_visible: bool = true
 var selected: bool = false
 
 signal layer_selected(layer: TileMapLayer)
+signal ui_layer_selected(control: Control)
 signal layer_renamed(layer: TileMapLayer, new_name: String)
 #signal layer_reordered(layer: TileMapLayer, order: int)
 signal layer_deleted(layer: TileMapLayer)
@@ -36,10 +37,12 @@ func set_values(_layer: TileMapLayer):
 	layer_visible = layer.visible
 	_update_show_hide_button()
 
-func select():
+func select(emit_signal: bool = true):
 	selected = true
-	layer_selected.emit(layer)
 	_update_active_color()
+	if emit_signal:
+		layer_selected.emit(layer)
+	ui_layer_selected.emit(self)
 
 func deselect():
 	selected = false

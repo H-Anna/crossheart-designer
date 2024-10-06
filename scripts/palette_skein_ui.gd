@@ -4,7 +4,14 @@ extends Control
 @onready var label = $HBoxContainer/Label
 @onready var swap_button = $HBoxContainer/SwapButton
 @onready var x_button = $HBoxContainer/XButton
+
+@export var selected_color : Color
+@export var default_color : Color
+
 var skein : Skein
+var selected: bool = false
+
+signal ui_skein_selected(control: Control)
 
 func set_values(_skein: Skein):
 	self.skein = _skein
@@ -12,6 +19,19 @@ func set_values(_skein: Skein):
 	label.text = _skein.color_name
 	color_rect.self_modulate = _skein.color
 
-func select_color():
-	print_debug("Now painting with: %s (%s)" % [skein.get_identifying_name(), skein.color_name])
-	SignalBus.skein_selected.emit(skein)
+func select(emit_signal: bool = true):
+	selected = true
+	_update_active_color()
+	if emit_signal:
+		SignalBus.skein_selected.emit(skein)
+	ui_skein_selected.emit(self)
+
+func deselect():
+	selected = false
+	_update_active_color()
+
+func _update_active_color():
+	if selected:
+		self.color = selected_color
+	else:
+		self.color = default_color

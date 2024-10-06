@@ -2,10 +2,12 @@ extends Window
 
 @export var skein_ui : PackedScene
 
-@onready var skeins_list := $VBoxContainer/ScrollContainer/SkeinsList
+@onready var container := $VBoxContainer/ScrollContainer/SkeinsList
 @onready var remove_confirm_dialog := $RemoveConfirmDialog
 @onready var swap_confirm_dialog := $SwapConfirmDialog
 @onready var swap_skein_window := $"../SwapSkeinWindow" #TODO: race condition
+
+var selected_element: Control
 
 func _ready() -> void:
 	SignalBus.palette_ui_changed.connect(_on_palette_changed)
@@ -17,29 +19,51 @@ func _on_palette_changed(palette: Palette):
 
 # Deletes all ui elements
 func _delete_elements():
-	for ui in skeins_list.get_children():
+	for ui in container.get_children():
 		ui.queue_free()
 
 func _load_colors(palette: Palette) -> void:
 	## TODO: refactor
 	# Loads ui elements
 	var selected = false
+	var selected_skein = palette.get_selected_skein()
 	for skein in palette.colors:
 		var ui = skein_ui.instantiate()
-		skeins_list.add_child(ui)
+		container.add_child(ui)
 		ui.set_values(skein)
 		ui.swap_button.pressed.connect(swap_skein_window.set_skein_to_swap.bind(ui.skein))
 		ui.swap_button.pressed.connect(swap_skein_window.show)
 		ui.x_button.pressed.connect(_remove_skein.bind(ui.skein))
+		ui.ui_skein_selected.connect(_ui_skein_selected)
 		
-		# Select first color in list
-		## TODO: reroute color selection to palette object
 		if !selected:
-			ui.select_color()
-			selected = true
+			if selected_skein == null:
+				ui.select(false)
+				selected = true
+			elif skein == selected_skein:
+				ui.select()
+				selected = true
+		
+		## Select first color in list
+		### TODO: reroute color selection to palette object
+		#if !selected:
+			#ui.select(false)
+			#selected = true
 	
+	# If there's nothing in the palette just send a null.
 	if !selected:
 		SignalBus.skein_selected.emit(null)
+
+func _ui_skein_selected(control: Control):
+	if selected_element == null:
+		for child in container.get_children():
+			if child != control:
+				child.deselect()
+			else:
+				selected_element = child
+	elif control != selected_element:
+		selected_element.deselect()
+		selected_element = control
 
 func _remove_skein(skein: Skein):
 	var confirm_sig = remove_confirm_dialog.confirmed

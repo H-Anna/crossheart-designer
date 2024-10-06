@@ -5,11 +5,13 @@ extends TileMapLayer
 const cursor_tile := Vector2i(0,0)
 var active_cell := Vector2i(0,0)
 
+var active := false
+
 func _ready() -> void:
 	SignalBus.focus_changed.connect(_apply_focus_change)
 
 func _input(_event: InputEvent) -> void:
-	if %Cursor.active_skein == null:
+	if !active:
 		return
 	
 	# Get mouse position on tilemap
@@ -45,4 +47,8 @@ func _on_cursor_size_changed(new_size: int) -> void:
 	_draw_cursor(active_cell, new_size, 1)
 
 func _on_cursor_color_changed(new_color: Color) -> void:
-	self_modulate = new_color
+	if new_color == Color.TRANSPARENT:
+		active = false
+	else:
+		active = true
+		self_modulate = new_color
