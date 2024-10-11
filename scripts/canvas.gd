@@ -85,13 +85,14 @@ func deserialize(snapshot: Snapshot):
 	
 	#Restore layers and their order
 	var layers_data = dict["layers"]
-	var ordered_array = canvas_data["layers"].duplicate()
-	var layers_to_create = canvas_data["layers"].duplicate()
+	# These have to be converted to StringName so that Array.erase() works properly
+	var ordered_array = canvas_data["layers"].duplicate().map(func(x): return StringName(x))
+	var layers_to_create = canvas_data["layers"].duplicate().map(func(x): return StringName(x))
 	var layers_to_deserialize: Array
 	var layers_to_free: Array
 	
 	for layer in stitch_layers_group.get_children():
-		if layer.name in layers_to_create:
+		if layers_to_create.has(layer.name):
 			layers_to_deserialize.append(layer)
 			layers_to_create.erase(layer.name)
 		else:
@@ -115,6 +116,8 @@ func deserialize(snapshot: Snapshot):
 		var idx = ordered_array.find(layer.name)
 		if idx != -1:
 			stitch_layers_group.move_child(layer, idx)
+		if idx == ordered_array.size() - 1:
+			select_layer(layer)
 	
 	SignalBus.layer_ui_changed.emit()
 
