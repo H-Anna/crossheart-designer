@@ -6,7 +6,7 @@ var cursor : Node2D
 
 @export var layer_scene : PackedScene
 @export var background_layer : TileMapLayer
-@export var stitch_layers_group : Node2D
+@export var layers_container : Node2D
 
 var canvas_rect: Rect2i
 var selected_layer: TileMapLayer
@@ -34,15 +34,15 @@ func create_canvas(rect: Rect2i, emit_signals: bool = true):
 		SignalBus.canvas_changed.emit(self)
 
 func delete_all_layers():
-	for i in stitch_layers_group.get_children():
+	for i in layers_container.get_children():
 		i.queue_free()
 		SignalBus.layer_removed.emit(i)
 
 func create_layer(emit_signals: bool = true) -> Node2D:
 	var layer = layer_scene.instantiate()
-	stitch_layers_group.add_child(layer)
-	stitch_layers_group.move_child(layer, 0)
-	layer.owner = stitch_layers_group
+	layers_container.add_child(layer)
+	layers_container.move_child(layer, 0)
+	layer.owner = layers_container
 	layer.name = Extensions.generate_unique_string(Extensions.layer_name_length)
 	var is_active = selected_layer != null
 	layer.initialize(cursor, canvas_rect, !is_active, "New layer")
@@ -53,7 +53,7 @@ func create_layer(emit_signals: bool = true) -> Node2D:
 	return layer
 
 func delete_layer(layer: TileMapLayer):
-	var children = stitch_layers_group.get_children()
+	var children = layers_container.get_children()
 	if layer in children:
 		if layer.active:
 			var idx = (layer.get_index() - 1) % children.size()
@@ -91,7 +91,7 @@ func deserialize(snapshot: Snapshot):
 	var layers_to_deserialize: Array
 	var layers_to_free: Array
 	
-	for layer in stitch_layers_group.get_children():
+	for layer in layers_container.get_children():
 		if layers_to_create.has(layer.name):
 			layers_to_deserialize.append(layer)
 			layers_to_create.erase(layer.name)
@@ -110,12 +110,12 @@ func deserialize(snapshot: Snapshot):
 		node.queue_free()
 	
 	#Restore layer order
-	for layer in stitch_layers_group.get_children():
+	for layer in layers_container.get_children():
 		if layer.is_queued_for_deletion():
 			continue
 		var idx = ordered_array.find(layer.name)
 		if idx != -1:
-			stitch_layers_group.move_child(layer, idx)
+			layers_container.move_child(layer, idx)
 		if idx == ordered_array.size() - 1:
 			select_layer(layer)
 	
@@ -123,14 +123,14 @@ func deserialize(snapshot: Snapshot):
 
 func get_layer_order() -> Array:
 	var arr: Array
-	for child in stitch_layers_group.get_children():
+	for child in layers_container.get_children():
 		if child is TileMapLayer && !child.is_queued_for_deletion():
 			arr.append(child.name)
 	return arr
 
 func get_layers() -> Array[TileMapLayer]:
 	var arr: Array[TileMapLayer]
-	for child in stitch_layers_group.get_children():
+	for child in layers_container.get_children():
 		if child is TileMapLayer && !child.is_queued_for_deletion():
 			arr.append(child)
 	return arr
@@ -141,7 +141,7 @@ func rename_layer(layer: TileMapLayer, display_name: String):
 	print_debug("Layer renamed: %s -> %s" % [old_name, display_name])
 
 func select_layer(layer: TileMapLayer):
-	for child in stitch_layers_group.get_children():
+	for child in layers_container.get_children():
 		child.active = false
 	layer.active = true
 	selected_layer = layer
@@ -156,7 +156,7 @@ func toggle_layer_visibility(layer: TileMapLayer, is_visible: bool):
 
 func reorder_selected_layer(delta: int):
 	var idx = selected_layer.get_index()
-	stitch_layers_group.move_child(selected_layer, idx + delta)
+	layers_container.move_child(selected_layer, idx + delta)
 	SignalBus.canvas_changed.emit(self)
 
 func get_layer_index(layer: TileMapLayer):

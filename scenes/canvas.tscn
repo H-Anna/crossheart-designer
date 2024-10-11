@@ -24,11 +24,10 @@ texture = ExtResource("3_bctri")
 [sub_resource type="TileSet" id="TileSet_qa2dr"]
 sources/0 = SubResource("TileSetAtlasSource_cb7h1")
 
-[node name="Canvas" type="Node2D" node_paths=PackedStringArray("background_layer", "stitch_layers_group")]
+[node name="Canvas" type="Node2D" node_paths=PackedStringArray("background_layer")]
 script = ExtResource("1_ddolc")
 layer_scene = ExtResource("4_o25h7")
 background_layer = NodePath("BackgroundLayer")
-stitch_layers_group = NodePath("StitchesLayers")
 
 [node name="BackgroundLayer" type="TileMapLayer" parent="."]
 texture_filter = 1

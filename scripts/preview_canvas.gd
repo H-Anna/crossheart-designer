@@ -10,7 +10,7 @@ func create_canvas(rect: Rect2i, _emit_signals: bool = true):
 
 func create_layer(_emit_signals: bool = true) -> Node2D:
 	var layer = layer_scene.instantiate()
-	stitch_layers_group.add_child(layer)
+	layers_container.add_child(layer)
 	return layer
 
 func fit_camera_zoom():
