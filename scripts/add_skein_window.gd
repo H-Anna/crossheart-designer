@@ -1,6 +1,9 @@
 extends Window
 
-@onready var container := $GridContainer
+@onready var container := $VBoxContainer/ScrollContainer/GridContainer
+@onready var search_bar := $VBoxContainer/SearchBar
+@onready var all_colors_added_label := $AllColorsAddedLabel
+@onready var no_search_results_label := $NoSearchResultsLabel
 
 @export_file("*.gd") var script_path : String
 @export var palette : Palette
@@ -15,9 +18,9 @@ func toggle_visibility() -> void:
 func _load_elements(except: Array):
 	var skeins = SkeinsAtlas.skeins.values()
 	if except == skeins:
-		$Label.show()
+		all_colors_added_label.show()
 	else:
-		$Label.hide()
+		all_colors_added_label.hide()
 		var script = load(script_path)
 		for skein in skeins:
 			if skein not in except:
@@ -39,4 +42,28 @@ func _on_visibility_changed() -> void:
 	if visible:
 		_load_elements(palette.colors)
 	else:
+		search_bar.text = ""
 		_delete_elements()
+
+func _on_search_bar_text_changed(new_text: String) -> void:
+	new_text = new_text.strip_edges().to_lower()
+	var no_results = true
+	
+	for child in container.get_children():
+		if (new_text.is_empty()):
+			child.show()
+			no_results = false
+		else:
+			var skein = child.skein as Skein
+			var id = skein.id.to_lower()
+			var color_name = skein.color_name.to_lower()
+			if id.contains(new_text) or color_name.contains(new_text):
+				child.show()
+				no_results = false
+			else:
+				child.hide()
+	
+	if no_results:
+		no_search_results_label.show()
+	else:
+		no_search_results_label.hide()
