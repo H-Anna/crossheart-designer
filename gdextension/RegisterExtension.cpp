@@ -6,7 +6,7 @@
 #include "godot_cpp/core/defs.hpp"
 #include "godot_cpp/godot.hpp"
 
-#include "HaruClass.h"
+#include "PdfServer.h"
 
 /// @file
 /// Register our classes with Godot.
@@ -23,7 +23,7 @@ void initializeExtension(godot::ModuleInitializationLevel p_level)
         return;
     }
 
-    godot::ClassDB::register_class<HaruClass>();
+    godot::ClassDB::register_class<PdfServer>();
 }
 
 /// @brief Called by Godot to let us do any cleanup.
@@ -48,7 +48,7 @@ extern "C" {
 /// @param r_initialization the intialization (need more info)
 ///
 /// @returns GDExtensionBool
-GDExtensionBool GDE_EXPORT GDExtensionInit(
+GDExtensionBool GDE_EXPORT PdfServerGDExtensionInit(
     GDExtensionInterfaceGetProcAddress p_get_proc_address, GDExtensionClassLibraryPtr p_library,
     GDExtensionInitialization* r_initialization)
 {
