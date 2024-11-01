@@ -1,23 +1,34 @@
 extends Control
 
 @onready var color_rect = $HBoxContainer/ColorRect
+@onready var symbol_rect = $HBoxContainer/ColorRect/SymbolRect
 @onready var label = $HBoxContainer/Label
 @onready var swap_button = $HBoxContainer/SwapButton
+@onready var symbol_button = $HBoxContainer/SymbolButton
 @onready var x_button = $HBoxContainer/XButton
 
 @export var selected_color : Color
 @export var default_color : Color
 
 var skein : Skein
+var symbol : Symbol
 var selected: bool = false
 
 signal ui_skein_selected(control: Control)
 
-func set_values(_skein: Skein):
+func set_values(_skein: Skein, _symbol: Symbol):
 	self.skein = _skein
+	self.symbol = _symbol
 	name = _skein.id
 	label.text = _skein.color_name
 	color_rect.self_modulate = _skein.color
+	
+	symbol_rect.texture = _symbol.data
+	var luminance = _skein.color.get_luminance()
+	if luminance > 0.5:
+		symbol_rect.self_modulate = Color.BLACK
+	else:
+		symbol_rect.self_modulate = Color.WHITE
 
 func select(emit_signal: bool = true):
 	selected = true

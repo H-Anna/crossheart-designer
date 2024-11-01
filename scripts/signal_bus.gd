@@ -16,6 +16,7 @@ signal skein_selected(skein: Skein)
 signal skein_added_to_palette(skein: Skein)
 signal skein_swapped(old_skein: Skein, new_skein: Skein)
 signal skein_removed_from_palette(skein: Skein)
+signal symbol_swapped(skein: Skein, old_symbol: Symbol, new_symbol: Symbol)
 
 ## Content swapping signals
 signal new_canvas_opened(size: Rect2i)

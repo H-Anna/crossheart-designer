@@ -1,12 +1,12 @@
 extends Node
 
+const colors_file := "res://resources/dmc_colors.json"
 var skeins: Dictionary
-var colors_file := "res://resources/dmc_colors.json"
 
 func _ready() -> void:
-	_load_skeins()
+	_load_data()
 
-func _load_skeins():
+func _load_data():
 	FileHandler.load_file(FileHandler.Format.FORMAT_JSON, colors_file)
 	if FileHandler.get_error() != OK:
 		# Fallback
@@ -27,6 +27,4 @@ func _load_skeins():
 		skeins.get_or_add(skein.get_identifying_name(), skein)
 
 func get_skein_by_global_id(id: String) -> Skein:
-	if id in skeins:
-		return skeins[id]
-	return null
+	return skeins.get(id, null)

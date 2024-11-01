@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bv8vy48g54jcs"]
+[gd_scene load_steps=4 format=3 uid="uid://bv8vy48g54jcs"]
 
 [ext_resource type="Script" path="res://scripts/palette_skein_ui.gd" id="1_oy1bc"]
 [ext_resource type="Texture2D" uid="uid://d2cnmslfcklya" path="res://tile.png" id="1_qc81l"]
+[ext_resource type="Texture2D" uid="uid://wl4x50k0m64i" path="res://resources/svg-symbols/cross-outline.svg" id="3_b4y6b"]
 
 [node name="PaletteSkeinUI" type="ColorRect"]
 custom_minimum_size = Vector2(0, 50)
@@ -42,6 +43,17 @@ mouse_filter = 2
 texture = ExtResource("1_qc81l")
 expand_mode = 2
 
+[node name="SymbolRect" type="TextureRect" parent="HBoxContainer/ColorRect"]
+self_modulate = Color(0.533037, 0.533037, 0.533037, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_b4y6b")
+expand_mode = 1
+
 [node name="Label" type="Label" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -54,6 +66,12 @@ custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_horizontal = 8
 text = "..."
+
+[node name="SymbolButton" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+text = "S"
 
 [node name="XButton" type="Button" parent="HBoxContainer"]
 custom_minimum_size = Vector2(30, 0)

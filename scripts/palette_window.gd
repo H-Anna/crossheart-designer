@@ -6,12 +6,14 @@ extends Window
 @onready var remove_confirm_dialog := $RemoveConfirmDialog
 @onready var swap_confirm_dialog := $SwapConfirmDialog
 @onready var swap_skein_window := $"../SwapSkeinWindow" #TODO: race condition
+@onready var swap_symbol_window := $"../SwapSymbolWindow" #TODO: race condition
 
 var selected_element: Control
 
 func _ready() -> void:
 	SignalBus.palette_ui_changed.connect(_on_palette_changed)
 	swap_skein_window.swap_callable = _swap_skein
+	swap_symbol_window.swap_callable = _swap_symbol
 
 func _on_palette_changed(palette: Palette):
 	_delete_elements()
@@ -28,11 +30,16 @@ func _load_colors(palette: Palette) -> void:
 	var selected = false
 	var selected_skein = palette.get_selected_skein()
 	for skein in palette.colors:
+		var symbol = palette.colors_to_symbols_dict.get(skein)
 		var ui = skein_ui.instantiate()
 		container.add_child(ui)
-		ui.set_values(skein)
-		ui.swap_button.pressed.connect(swap_skein_window.set_skein_to_swap.bind(ui.skein))
+		ui.set_values(skein, symbol)
+		ui.swap_button.pressed.connect(swap_skein_window.set_values.bind(ui.skein))
 		ui.swap_button.pressed.connect(swap_skein_window.show)
+		
+		ui.symbol_button.pressed.connect(swap_symbol_window.set_values.bind(ui.skein, ui.symbol))
+		ui.symbol_button.pressed.connect(swap_symbol_window.show)
+		
 		ui.x_button.pressed.connect(_remove_skein.bind(ui.skein))
 		ui.ui_skein_selected.connect(_ui_skein_selected)
 		
@@ -88,3 +95,6 @@ func _swap_skein(old_skein: Skein, new_skein: Skein):
 	
 	confirm_sig.connect(emit_callable.bind(old_skein, new_skein))
 	cancel_sig.connect(Extensions.disconnect_callable.bind(confirm_sig, emit_callable))
+
+func _swap_symbol(skein: Skein, old_symbol: Symbol, new_symbol: Symbol):
+	SignalBus.symbol_swapped.emit(skein, old_symbol, new_symbol)

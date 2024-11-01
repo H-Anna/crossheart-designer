@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://cboxkf6180ais"]
+[gd_scene load_steps=20 format=4 uid="uid://cboxkf6180ais"]
 
 [ext_resource type="Script" path="res://scripts/app.gd" id="1_h4wb0"]
 [ext_resource type="Script" path="res://scripts/scheme_parser.gd" id="2_gbw5y"]
@@ -15,6 +15,8 @@
 [ext_resource type="Script" path="res://scripts/add_skein_window.gd" id="11_s2bit"]
 [ext_resource type="PackedScene" uid="uid://c8ch4mdg82a6f" path="res://scenes/skein_picker_ui.tscn" id="12_i0pcd"]
 [ext_resource type="Script" path="res://scripts/swap_skein_window.gd" id="13_t16kn"]
+[ext_resource type="Script" path="res://scripts/swap_symbol_window.gd" id="16_lfceq"]
+[ext_resource type="PackedScene" uid="uid://kfusq7letgim" path="res://scenes/symbol_picker_ui.tscn" id="17_vi4rb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rda43"]
 resource_name = "background"
@@ -668,6 +670,199 @@ layout_mode = 2
 [node name="SkeinPickerButton48" parent="SwapSkeinWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
 layout_mode = 2
 
+[node name="SwapSymbolWindow" type="Window" parent="."]
+auto_translate_mode = 1
+title = "Click a symbol to swap your current one!"
+initial_position = 2
+size = Vector2i(400, 300)
+visible = false
+popup_window = true
+script = ExtResource("16_lfceq")
+script_path = "res://scripts/pick_symbol_btn.gd"
+symbol_picker_ui = ExtResource("17_vi4rb")
+
+[node name="NoSearchResultsLabel" type="Label" parent="SwapSymbolWindow"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -63.0
+offset_top = -11.5
+offset_right = 63.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.450648, 0.450648, 0.450648, 1)
+theme_override_font_sizes/font_size = 20
+text = "No results"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SwapSymbolWindow"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SearchBar" type="LineEdit" parent="SwapSymbolWindow/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Search colors..."
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SwapSymbolWindow/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="GridContainer" type="GridContainer" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+columns = 7
+
+[node name="SkeinPickerButton" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton2" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton3" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton4" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton5" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton6" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton7" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton8" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton9" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton10" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton11" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton12" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton13" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton14" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton15" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton16" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton17" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton18" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton19" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton20" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton21" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton22" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton23" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton24" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton25" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton26" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton27" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton28" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton29" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton30" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton31" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton32" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton33" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton34" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton35" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton36" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton37" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton38" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton39" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton40" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton41" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton42" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton43" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton44" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton45" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton46" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton47" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
+[node name="SkeinPickerButton48" parent="SwapSymbolWindow/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("12_i0pcd")]
+layout_mode = 2
+
 [connection signal="focus_entered" from="." to="." method="_on_app_window_focus_entered"]
 [connection signal="focus_entered" from="LayersWindow" to="." method="_on_layers_window_focus_entered"]
 [connection signal="mouse_entered" from="LayersWindow" to="LayersWindow" method="grab_focus"]
@@ -689,3 +884,6 @@ layout_mode = 2
 [connection signal="close_requested" from="SwapSkeinWindow" to="SwapSkeinWindow" method="hide"]
 [connection signal="visibility_changed" from="SwapSkeinWindow" to="SwapSkeinWindow" method="_on_visibility_changed"]
 [connection signal="text_changed" from="SwapSkeinWindow/VBoxContainer/SearchBar" to="SwapSkeinWindow" method="_on_search_bar_text_changed"]
+[connection signal="close_requested" from="SwapSymbolWindow" to="SwapSymbolWindow" method="hide"]
+[connection signal="visibility_changed" from="SwapSymbolWindow" to="SwapSymbolWindow" method="_on_visibility_changed"]
+[connection signal="text_changed" from="SwapSymbolWindow/VBoxContainer/SearchBar" to="SwapSymbolWindow" method="_on_search_bar_text_changed"]

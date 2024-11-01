@@ -145,7 +145,7 @@ func select_layer(layer: TileMapLayer):
 		child.active = false
 	layer.active = true
 	selected_layer = layer
-	print_debug("Layer '%s' selected" % layer.get_display_name())
+	#print_debug("Layer '%s' selected" % layer.get_display_name())
 
 func toggle_layer_visibility(layer: TileMapLayer, is_visible: bool):
 	if is_visible:

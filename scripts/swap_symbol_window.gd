@@ -5,46 +5,47 @@ extends Window
 @onready var no_search_results_label := $NoSearchResultsLabel
 
 @export_file("*.gd") var script_path : String
-@export var palette : Palette
-@export var skein_picker_ui : PackedScene
+@export var symbol_picker_ui : PackedScene
 
-var skein_to_swap : Skein
+var symbol_to_swap : Symbol
+var skein_for_symbol : Skein
 var swap_callable : Callable
 
 func _ready() -> void:
 	_delete_elements()
 
-func set_values(skein: Skein):
-	skein_to_swap = skein
+func set_values(skein: Skein, symbol: Symbol):
+	skein_for_symbol = skein
+	symbol_to_swap = symbol
 	if visible:
 		_delete_elements()
-		_load_elements(skein)
+		_load_elements(symbol)
 
 func toggle_visibility() -> void:
 	visible = !visible
 
-func _load_elements(except: Skein):
-	var skeins = SkeinsAtlas.skeins.values()
-	skeins.erase(except)
+func _load_elements(except: Symbol):
+	var symbols = SymbolsAtlas.symbols.values()
+	symbols.erase(except)
 	var script = load(script_path)
-	for skein in skeins:
-		var ui = skein_picker_ui.instantiate()
+	for symbol in symbols:
+		var ui = symbol_picker_ui.instantiate()
 		ui.set_script(script)
 		container.add_child(ui)
-		ui.set_values(skein)
-		ui.skein_selected.connect(_on_symbol_selected)
+		ui.set_values(symbol, skein_for_symbol.color)
+		ui.symbol_selected.connect(_on_symbol_selected)
 
 func _delete_elements():
 	for child in container.get_children():
 		child.queue_free()
 
-func _on_symbol_selected(new_skein: Skein):
-	swap_callable.call(skein_to_swap, new_skein)
+func _on_symbol_selected(new_symbol: Symbol):
+	swap_callable.call(skein_for_symbol, symbol_to_swap, new_symbol)
 	hide()
 
 func _on_visibility_changed() -> void:
 	if visible:
-		_load_elements(skein_to_swap)
+		_load_elements(symbol_to_swap)
 	else:
 		_delete_elements()
 
@@ -57,9 +58,9 @@ func _on_search_bar_text_changed(new_text: String) -> void:
 			child.show()
 			no_results = false
 		else:
-			var skein = child.skein as Skein
-			var id = skein.id.to_lower()
-			var color_name = skein.color_name.to_lower()
+			var symbol = child.symbol as Symbol
+			var id = symbol.id.to_lower()
+			var color_name = symbol.symbol_name.to_lower()
 			if id.contains(new_text) or color_name.contains(new_text):
 				child.show()
 				no_results = false
