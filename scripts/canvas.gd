@@ -58,6 +58,7 @@ func delete_layer(layer: TileMapLayer):
 		if layer.active:
 			var idx = (layer.get_index() - 1) % children.size()
 			children[idx].active = true
+			selected_layer = children[idx]
 		
 		layer.queue_free()
 		SignalBus.layer_removed.emit(layer)
