@@ -1,0 +1,1198 @@
+[gd_scene load_steps=22 format=3 uid="uid://bx0h6obdnsah7"]
+
+[ext_resource type="ButtonGroup" uid="uid://wvnm3xi2ta32" path="res://resources/tool_button_group.tres" id="2_bqs8j"]
+[ext_resource type="Texture2D" uid="uid://duba8w62maq15" path="res://resources/icons/cursor-marquee-svgrepo-com.svg" id="2_m06qq"]
+[ext_resource type="Texture2D" uid="uid://1bjbsjetsgf0" path="res://resources/icons/cross-icon.svg" id="3_5rwsp"]
+[ext_resource type="Texture2D" uid="uid://d2cnmslfcklya" path="res://tile.png" id="3_ea02f"]
+[ext_resource type="Texture2D" uid="uid://brvl7shde4jk7" path="res://resources/icons/halfcross-ltr-icon.svg" id="4_0p1n6"]
+[ext_resource type="Texture2D" uid="uid://iun3wcxblamr" path="res://resources/svg-symbols/moon-outline.svg" id="4_23h8x"]
+[ext_resource type="ButtonGroup" uid="uid://5m4cps4hjh3w" path="res://resources/palette_button_group.tres" id="5_m8m22"]
+[ext_resource type="Texture2D" uid="uid://u3lrn5bi4i3i" path="res://resources/icons/smallfullcross-icon.svg" id="5_wvulc"]
+[ext_resource type="Texture2D" uid="uid://hjub8afgui3d" path="res://resources/icons/plus-svgrepo-com.svg" id="6_eg85p"]
+[ext_resource type="Script" path="res://tmp_scripts/palette_rmb.gd" id="7_2p5s0"]
+[ext_resource type="Texture2D" uid="uid://bg3vbvo600vk1" path="res://resources/icons/eye-svgrepo-com.svg" id="8_ev35w"]
+[ext_resource type="ButtonGroup" uid="uid://d1buff5clisav" path="res://resources/layer_button_group.tres" id="8_isspg"]
+[ext_resource type="Texture2D" uid="uid://jmmr1xap6tda" path="res://resources/icons/lock-open-svgrepo-com.svg" id="9_u8x4d"]
+[ext_resource type="Script" path="res://tmp_scripts/layer_rmb.gd" id="10_14e3q"]
+[ext_resource type="Texture2D" uid="uid://bd5x3pfdgjdke" path="res://resources/arbys.jpg" id="12_c2d5n"]
+[ext_resource type="Script" path="res://scripts/camera.gd" id="12_m1dt2"]
+
+[sub_resource type="Theme" id="Theme_5dpkv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jpx58"]
+content_margin_left = 7.0
+content_margin_top = 7.0
+content_margin_right = 7.0
+content_margin_bottom = 7.0
+bg_color = Color(0.144063, 0.144063, 0.144062, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.442911, 0.442911, 0.442911, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dc6du"]
+bg_color = Color(0.315508, 0.650428, 0.76172, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ac6l"]
+bg_color = Color(0.28485, 0.28485, 0.28485, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p4k3h"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.439049, 0.439049, 0.439049, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0.158472, 0.158472, 0.158472, 0.6)
+shadow_size = 4
+shadow_offset = Vector2(2, 2)
+
+[node name="NewUiMockup" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainUi" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="TopMenu" type="PanelContainer" parent="MainUi"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainUi/TopMenu"]
+layout_mode = 2
+
+[node name="MenuBar" type="MenuBar" parent="MainUi/TopMenu/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="File" type="PopupMenu" parent="MainUi/TopMenu/VBoxContainer/MenuBar"]
+item_count = 3
+item_0/text = "Element 1"
+item_1/text = "Element 2"
+item_1/id = 1
+item_2/text = "Element 3"
+item_2/id = 2
+
+[node name="Edit" type="PopupMenu" parent="MainUi/TopMenu/VBoxContainer/MenuBar"]
+auto_translate_mode = 1
+item_count = 3
+item_0/text = "Element 1"
+item_1/text = "Element 2"
+item_1/id = 1
+item_2/text = "Element 3"
+item_2/id = 2
+
+[node name="View" type="PopupMenu" parent="MainUi/TopMenu/VBoxContainer/MenuBar"]
+auto_translate_mode = 1
+item_count = 3
+item_0/text = "Element 1"
+item_1/text = "Element 2"
+item_1/id = 1
+item_2/text = "Element 3"
+item_2/id = 2
+
+[node name="Help" type="PopupMenu" parent="MainUi/TopMenu/VBoxContainer/MenuBar"]
+auto_translate_mode = 1
+item_count = 3
+item_0/text = "Element 1"
+item_1/text = "Element 2"
+item_1/id = 1
+item_2/text = "Element 3"
+item_2/id = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainUi/TopMenu/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="ToolButtons" type="HBoxContainer" parent="MainUi/TopMenu/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Button" type="Button" parent="MainUi/TopMenu/VBoxContainer/HBoxContainer/ToolButtons"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("2_bqs8j")
+icon = ExtResource("2_m06qq")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Button2" type="Button" parent="MainUi/TopMenu/VBoxContainer/HBoxContainer/ToolButtons"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("2_bqs8j")
+icon = ExtResource("2_m06qq")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Button3" type="Button" parent="MainUi/TopMenu/VBoxContainer/HBoxContainer/ToolButtons"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("2_bqs8j")
+icon = ExtResource("2_m06qq")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Button4" type="Button" parent="MainUi/TopMenu/VBoxContainer/HBoxContainer/ToolButtons"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("2_bqs8j")
+icon = ExtResource("2_m06qq")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Button5" type="Button" parent="MainUi/TopMenu/VBoxContainer/HBoxContainer/ToolButtons"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("2_bqs8j")
+icon = ExtResource("2_m06qq")
+icon_alignment = 1
+expand_icon = true
+
+[node name="ToolSettings" type="HBoxContainer" parent="MainUi/TopMenu/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_constants/separation = 50
+alignment = 2
+
+[node name="ModeSetting" type="HBoxContainer" parent="MainUi/TopMenu/VBoxContainer/HBoxContainer/ToolSettings"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label2" type="Label" parent="MainUi/TopMenu/VBoxContainer/HBoxContainer/ToolSettings/ModeSetting"]
+layout_mode = 2
+theme = SubResource("Theme_5dpkv")
+text = "Mode:"
+
+[node name="OptionButton" type="OptionButton" parent="MainUi/TopMenu/VBoxContainer/HBoxContainer/ToolSettings/ModeSetting"]
+layout_mode = 2
+selected = 0
+item_count = 6
+popup/item_0/text = "Full stitch"
+popup/item_0/icon = ExtResource("3_5rwsp")
+popup/item_1/text = "Half stitch"
+popup/item_1/icon = ExtResource("4_0p1n6")
+popup/item_1/id = 1
+popup/item_2/text = "1/4 stitch"
+popup/item_2/id = 2
+popup/item_3/text = "3/4 stitch"
+popup/item_3/id = 3
+popup/item_4/text = "Small full stitch"
+popup/item_4/icon = ExtResource("5_wvulc")
+popup/item_4/id = 4
+popup/item_5/text = "Small half stitch"
+popup/item_5/id = 5
+
+[node name="SizeSetting" type="HBoxContainer" parent="MainUi/TopMenu/VBoxContainer/HBoxContainer/ToolSettings"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="MainUi/TopMenu/VBoxContainer/HBoxContainer/ToolSettings/SizeSetting"]
+layout_mode = 2
+text = "Size:"
+
+[node name="SpinBox" type="SpinBox" parent="MainUi/TopMenu/VBoxContainer/HBoxContainer/ToolSettings/SizeSetting"]
+layout_mode = 2
+min_value = 1.0
+max_value = 20.0
+value = 1.0
+suffix = "px"
+
+[node name="HSplitContainer" type="HSplitContainer" parent="MainUi"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainUi/HSplitContainer"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+
+[node name="PaletteMenu" type="PanelContainer" parent="MainUi/HSplitContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Palette"
+
+[node name="PaletteLayout2" type="ScrollContainer" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="FlowContainer" type="FlowContainer" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ColorRect" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("3_ea02f")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="SymbolRect" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer/ColorRect"]
+self_modulate = Color(0.533037, 0.533037, 0.533037, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_23h8x")
+expand_mode = 1
+
+[node name="ColorRect2" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("3_ea02f")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="SymbolRect" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer/ColorRect2"]
+self_modulate = Color(0.533037, 0.533037, 0.533037, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_23h8x")
+expand_mode = 1
+
+[node name="ColorRect3" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("3_ea02f")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="SymbolRect" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer/ColorRect3"]
+self_modulate = Color(0.533037, 0.533037, 0.533037, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_23h8x")
+expand_mode = 1
+
+[node name="ColorRect4" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("3_ea02f")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="SymbolRect" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer/ColorRect4"]
+self_modulate = Color(0.533037, 0.533037, 0.533037, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_23h8x")
+expand_mode = 1
+
+[node name="ColorRect5" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("3_ea02f")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="SymbolRect" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer/ColorRect5"]
+self_modulate = Color(0.533037, 0.533037, 0.533037, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_23h8x")
+expand_mode = 1
+
+[node name="ColorRect6" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("3_ea02f")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="SymbolRect" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer/ColorRect6"]
+self_modulate = Color(0.533037, 0.533037, 0.533037, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_23h8x")
+expand_mode = 1
+
+[node name="ColorRect7" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("3_ea02f")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="SymbolRect" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer/ColorRect7"]
+self_modulate = Color(0.533037, 0.533037, 0.533037, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_23h8x")
+expand_mode = 1
+
+[node name="ColorRect8" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("3_ea02f")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="SymbolRect" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer/ColorRect8"]
+self_modulate = Color(0.533037, 0.533037, 0.533037, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_23h8x")
+expand_mode = 1
+
+[node name="ColorRect9" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("3_ea02f")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="SymbolRect" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer/ColorRect9"]
+self_modulate = Color(0.533037, 0.533037, 0.533037, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_23h8x")
+expand_mode = 1
+
+[node name="ColorRect10" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("3_ea02f")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="SymbolRect" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer/ColorRect10"]
+self_modulate = Color(0.533037, 0.533037, 0.533037, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_23h8x")
+expand_mode = 1
+
+[node name="ColorRect11" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("3_ea02f")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="SymbolRect" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer/ColorRect11"]
+self_modulate = Color(0.533037, 0.533037, 0.533037, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_23h8x")
+expand_mode = 1
+
+[node name="ColorRect12" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("3_ea02f")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="SymbolRect" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer/ColorRect12"]
+self_modulate = Color(0.533037, 0.533037, 0.533037, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_23h8x")
+expand_mode = 1
+
+[node name="ColorRect13" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("3_ea02f")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="SymbolRect" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer/ColorRect13"]
+self_modulate = Color(0.533037, 0.533037, 0.533037, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_23h8x")
+expand_mode = 1
+
+[node name="ColorRect14" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("3_ea02f")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="SymbolRect" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer/ColorRect14"]
+self_modulate = Color(0.533037, 0.533037, 0.533037, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_23h8x")
+expand_mode = 1
+
+[node name="ColorRect15" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("3_ea02f")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="SymbolRect" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer/ColorRect15"]
+self_modulate = Color(0.533037, 0.533037, 0.533037, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_23h8x")
+expand_mode = 1
+
+[node name="ColorRect16" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("3_ea02f")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="SymbolRect" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer/ColorRect16"]
+self_modulate = Color(0.533037, 0.533037, 0.533037, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_23h8x")
+expand_mode = 1
+
+[node name="ColorRect17" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("3_ea02f")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="SymbolRect" type="TextureRect" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer/ColorRect17"]
+self_modulate = Color(0.533037, 0.533037, 0.533037, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_23h8x")
+expand_mode = 1
+
+[node name="FlowContainer2" type="FlowContainer" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="AddButton" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+tooltip_text = "Light Baby Blue"
+theme_override_styles/normal = SubResource("StyleBoxFlat_jpx58")
+icon = ExtResource("6_eg85p")
+icon_alignment = 1
+expand_icon = true
+
+[node name="PopupMenu" type="PopupMenu" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer2/AddButton"]
+
+[node name="Button2" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+tooltip_text = "Light Baby Blue"
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_dc6du")
+toggle_mode = true
+button_group = ExtResource("5_m8m22")
+icon = ExtResource("4_23h8x")
+icon_alignment = 1
+expand_icon = true
+
+[node name="RMB" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer2/Button2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+button_mask = 2
+flat = true
+script = ExtResource("7_2p5s0")
+
+[node name="Button3" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+tooltip_text = "Light Baby Blue"
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_dc6du")
+toggle_mode = true
+button_group = ExtResource("5_m8m22")
+icon = ExtResource("4_23h8x")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Button4" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+tooltip_text = "Light Baby Blue"
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_dc6du")
+toggle_mode = true
+button_group = ExtResource("5_m8m22")
+icon = ExtResource("4_23h8x")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Button5" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+tooltip_text = "Light Baby Blue"
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_dc6du")
+toggle_mode = true
+button_group = ExtResource("5_m8m22")
+icon = ExtResource("4_23h8x")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Button6" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+tooltip_text = "Light Baby Blue"
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_dc6du")
+toggle_mode = true
+button_group = ExtResource("5_m8m22")
+icon = ExtResource("4_23h8x")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Button7" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+tooltip_text = "Light Baby Blue"
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_dc6du")
+toggle_mode = true
+button_group = ExtResource("5_m8m22")
+icon = ExtResource("4_23h8x")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Button8" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+tooltip_text = "Light Baby Blue"
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_dc6du")
+toggle_mode = true
+button_group = ExtResource("5_m8m22")
+icon = ExtResource("4_23h8x")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Button9" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+tooltip_text = "Light Baby Blue"
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_dc6du")
+toggle_mode = true
+button_group = ExtResource("5_m8m22")
+icon = ExtResource("4_23h8x")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Button10" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+tooltip_text = "Light Baby Blue"
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_dc6du")
+toggle_mode = true
+button_group = ExtResource("5_m8m22")
+icon = ExtResource("4_23h8x")
+icon_alignment = 1
+expand_icon = true
+
+[node name="SkeinPopupMenu" type="PopupMenu" parent="MainUi/HSplitContainer/VBoxContainer/PaletteMenu"]
+unique_name_in_owner = true
+size = Vector2i(153, 100)
+item_count = 4
+item_0/text = "Swap..."
+item_1/text = "Change Symbol..."
+item_1/id = 1
+item_2/id = 2
+item_2/separator = true
+item_3/text = "Delete"
+item_3/id = 3
+
+[node name="LayersMenu" type="PanelContainer" parent="MainUi/HSplitContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Layers"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LayerButton" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_6ac6l")
+toggle_mode = true
+button_group = ExtResource("8_isspg")
+text = "Layer 1"
+alignment = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2
+
+[node name="EyeButton" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton/HBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+icon = ExtResource("8_ev35w")
+flat = true
+expand_icon = true
+
+[node name="LockButton" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton/HBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+icon = ExtResource("9_u8x4d")
+flat = true
+expand_icon = true
+
+[node name="RMB" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+button_mask = 2
+flat = true
+script = ExtResource("10_14e3q")
+
+[node name="LayerButton2" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_6ac6l")
+toggle_mode = true
+button_group = ExtResource("8_isspg")
+text = "Layer 1"
+alignment = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2
+
+[node name="EyeButton" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton2/HBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+icon = ExtResource("8_ev35w")
+flat = true
+expand_icon = true
+
+[node name="LockButton" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton2/HBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+icon = ExtResource("9_u8x4d")
+flat = true
+expand_icon = true
+
+[node name="RMB" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+button_mask = 2
+flat = true
+script = ExtResource("10_14e3q")
+
+[node name="LayerButton3" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_6ac6l")
+toggle_mode = true
+button_group = ExtResource("8_isspg")
+text = "Layer 1"
+alignment = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2
+
+[node name="EyeButton" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton3/HBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+icon = ExtResource("8_ev35w")
+flat = true
+expand_icon = true
+
+[node name="LockButton" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton3/HBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+icon = ExtResource("9_u8x4d")
+flat = true
+expand_icon = true
+
+[node name="RMB" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+button_mask = 2
+flat = true
+script = ExtResource("10_14e3q")
+
+[node name="LayerButton4" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_6ac6l")
+toggle_mode = true
+button_group = ExtResource("8_isspg")
+text = "Layer 1"
+alignment = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2
+
+[node name="EyeButton" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton4/HBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+icon = ExtResource("8_ev35w")
+flat = true
+expand_icon = true
+
+[node name="LockButton" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton4/HBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+icon = ExtResource("9_u8x4d")
+flat = true
+expand_icon = true
+
+[node name="RMB" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+button_mask = 2
+flat = true
+script = ExtResource("10_14e3q")
+
+[node name="LayerButton5" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_6ac6l")
+toggle_mode = true
+button_group = ExtResource("8_isspg")
+text = "Layer 1"
+alignment = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton5"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2
+
+[node name="EyeButton" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton5/HBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+icon = ExtResource("8_ev35w")
+flat = true
+expand_icon = true
+
+[node name="LockButton" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton5/HBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+icon = ExtResource("9_u8x4d")
+flat = true
+expand_icon = true
+
+[node name="RMB" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton5"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+button_mask = 2
+flat = true
+script = ExtResource("10_14e3q")
+
+[node name="LayerButton6" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_6ac6l")
+toggle_mode = true
+button_group = ExtResource("8_isspg")
+text = "Layer 1"
+alignment = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton6"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2
+
+[node name="EyeButton" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton6/HBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+icon = ExtResource("8_ev35w")
+flat = true
+expand_icon = true
+
+[node name="LockButton" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton6/HBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+icon = ExtResource("9_u8x4d")
+flat = true
+expand_icon = true
+
+[node name="RMB" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton6"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+button_mask = 2
+flat = true
+script = ExtResource("10_14e3q")
+
+[node name="LayerButton7" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_6ac6l")
+toggle_mode = true
+button_group = ExtResource("8_isspg")
+text = "Layer 1"
+alignment = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton7"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2
+
+[node name="EyeButton" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton7/HBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+icon = ExtResource("8_ev35w")
+flat = true
+expand_icon = true
+
+[node name="LockButton" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton7/HBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+icon = ExtResource("9_u8x4d")
+flat = true
+expand_icon = true
+
+[node name="RMB" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton7"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+button_mask = 2
+flat = true
+script = ExtResource("10_14e3q")
+
+[node name="LayerButton8" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_6ac6l")
+toggle_mode = true
+button_group = ExtResource("8_isspg")
+text = "Layer 1"
+alignment = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton8"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2
+
+[node name="EyeButton" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton8/HBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+icon = ExtResource("8_ev35w")
+flat = true
+expand_icon = true
+
+[node name="LockButton" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton8/HBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+icon = ExtResource("9_u8x4d")
+flat = true
+expand_icon = true
+
+[node name="RMB" type="Button" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton8"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+button_mask = 2
+flat = true
+script = ExtResource("10_14e3q")
+
+[node name="LayerPopupMenu" type="PopupMenu" parent="MainUi/HSplitContainer/VBoxContainer/LayersMenu"]
+unique_name_in_owner = true
+item_count = 3
+item_0/text = "Add..."
+item_1/id = 1
+item_1/separator = true
+item_2/text = "Delete"
+item_2/id = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="MainUi/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.0
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="MainUi/HSplitContainer/SubViewportContainer"]
+handle_input_locally = false
+gui_disable_input = true
+size = Vector2i(1134, 659)
+render_target_update_mode = 4
+
+[node name="Camera2D" type="Camera2D" parent="MainUi/HSplitContainer/SubViewportContainer/SubViewport"]
+script = ExtResource("12_m1dt2")
+
+[node name="Sprite2D" type="Sprite2D" parent="MainUi/HSplitContainer/SubViewportContainer/SubViewport"]
+texture = ExtResource("12_c2d5n")
+
+[node name="StatusBar" type="PanelContainer" parent="MainUi"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainUi/StatusBar"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="MainUi/StatusBar/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "14.5in x 14.5in"
+
+[node name="Label2" type="Label" parent="MainUi/StatusBar/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "100 x 100 px"
+
+[node name="NotificationToast" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -320.0
+offset_top = -76.0
+offset_right = -20.0
+offset_bottom = -53.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_p4k3h")
+
+[node name="Label" type="Label" parent="NotificationToast"]
+custom_minimum_size = Vector2(352.01, 0)
+layout_mode = 2
+text = "This is a notification! Wake me up (wake me up inside)"
+horizontal_alignment = 3
+
+[connection signal="pressed" from="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer2/Button2/RMB" to="MainUi/HSplitContainer/VBoxContainer/PaletteMenu/VBoxContainer/PaletteLayout2/FlowContainer2/Button2/RMB" method="_on_pressed"]
+[connection signal="pressed" from="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton/RMB" to="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton/RMB" method="_on_pressed"]
+[connection signal="pressed" from="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton2/RMB" to="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton2/RMB" method="_on_pressed"]
+[connection signal="pressed" from="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton3/RMB" to="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton3/RMB" method="_on_pressed"]
+[connection signal="pressed" from="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton4/RMB" to="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton4/RMB" method="_on_pressed"]
+[connection signal="pressed" from="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton5/RMB" to="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton5/RMB" method="_on_pressed"]
+[connection signal="pressed" from="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton6/RMB" to="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton6/RMB" method="_on_pressed"]
+[connection signal="pressed" from="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton7/RMB" to="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton7/RMB" method="_on_pressed"]
+[connection signal="pressed" from="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton8/RMB" to="MainUi/HSplitContainer/VBoxContainer/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton8/RMB" method="_on_pressed"]
+[connection signal="mouse_entered" from="MainUi/HSplitContainer/SubViewportContainer" to="MainUi/HSplitContainer/SubViewportContainer" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="MainUi/HSplitContainer/SubViewportContainer" to="MainUi/HSplitContainer/SubViewportContainer" method="_on_mouse_exited"]
