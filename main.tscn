@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://s1bmq54ffm5f"]
+
+[ext_resource type="PackedScene" uid="uid://bx0h6obdnsah7" path="res://user_interface/scenes/user_interface.tscn" id="1_4xewr"]
+[ext_resource type="PackedScene" uid="uid://u5hw3ynykb0r" path="res://scenes/canvas.tscn" id="2_lewdv"]
+
+[node name="Main" type="Node"]
+
+[node name="UserInterface" parent="." instance=ExtResource("1_4xewr")]
+canvas_scene = ExtResource("2_lewdv")

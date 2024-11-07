@@ -1,6 +1,6 @@
 extends Window
 
-@onready var container := $VBoxContainer/ScrollContainer/GridContainer
+@onready var container := $VBoxContainer/ScrollContainer/FlowContainer
 @onready var search_bar := $VBoxContainer/SearchBar
 @onready var all_colors_added_label := $AllColorsAddedLabel
 @onready var no_search_results_label := $NoSearchResultsLabel
