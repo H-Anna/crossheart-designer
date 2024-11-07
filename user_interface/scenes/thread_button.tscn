@@ -8,7 +8,7 @@
 
 [node name="ThreadButton" type="Button"]
 custom_minimum_size = Vector2(40, 40)
-tooltip_text = "Light Baby Blue"
+tooltip_text = "Thread Color"
 theme = ExtResource("1_w375h")
 toggle_mode = true
 button_group = ExtResource("2_mvevd")
