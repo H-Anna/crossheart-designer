@@ -26,5 +26,11 @@ func _load_data():
 		skein.color = Color(r, g, b)
 		skeins.get_or_add(skein.get_identifying_name(), skein)
 
+func get_all_skeins() -> Array[Skein]:
+	var arr: Array[Skein]
+	for s in skeins.values():
+		arr.append(s)
+	return arr
+
 func get_skein_by_global_id(id: String) -> Skein:
 	return skeins.get(id, null)

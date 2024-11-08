@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bx0h6obdnsah7"]
+[gd_scene load_steps=15 format=3 uid="uid://bx0h6obdnsah7"]
 
 [ext_resource type="Script" path="res://user_interface/scripts/user_interface.gd" id="1_u6dhp"]
 [ext_resource type="ButtonGroup" uid="uid://wvnm3xi2ta32" path="res://user_interface/resources/tool_button_group.tres" id="2_pe23o"]
@@ -7,11 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://brvl7shde4jk7" path="res://resources/icons/halfcross-ltr-icon.svg" id="5_te4is"]
 [ext_resource type="Texture2D" uid="uid://u3lrn5bi4i3i" path="res://resources/icons/smallfullcross-icon.svg" id="6_ltunq"]
 [ext_resource type="Texture2D" uid="uid://hjub8afgui3d" path="res://resources/icons/plus-svgrepo-com.svg" id="7_l3gsq"]
-[ext_resource type="ButtonGroup" uid="uid://5m4cps4hjh3w" path="res://user_interface/resources/thread_button_group.tres" id="8_ixvl6"]
+[ext_resource type="Script" path="res://user_interface/scripts/palette_thread_button_container.gd" id="7_xol4m"]
 [ext_resource type="PackedScene" uid="uid://skecvvmk7e26" path="res://user_interface/scenes/thread_button.tscn" id="8_j7jxf"]
-[ext_resource type="Texture2D" uid="uid://iun3wcxblamr" path="res://resources/svg-symbols/moon-outline.svg" id="9_fhjej"]
+[ext_resource type="Script" path="res://user_interface/scripts/add_thread_button_container.gd" id="10_ww78o"]
 [ext_resource type="Texture2D" uid="uid://brursbtjqwkfw" path="res://resources/icons/back-curved-arrow-svgrepo-com.svg" id="11_tud68"]
-[ext_resource type="StyleBox" uid="uid://dj7y1echd756o" path="res://user_interface/resources/thread_button_pressed_stylebox.tres" id="13_2d74d"]
 [ext_resource type="PackedScene" uid="uid://d3fimv4fp01uq" path="res://user_interface/scenes/layer_button.tscn" id="13_lbi11"]
 
 [sub_resource type="Theme" id="Theme_5dpkv"]
@@ -202,7 +201,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="SideBar" type="VBoxContainer" parent="VBoxContainer/HSplitContainer"]
-custom_minimum_size = Vector2(220, 0)
+custom_minimum_size = Vector2(225, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.5
@@ -229,6 +228,8 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource("7_xol4m")
+thread_button = ExtResource("8_j7jxf")
 
 [node name="AddButton" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/PaletteMenu/VBoxContainer/ScrollContainer/PaletteContainer"]
 custom_minimum_size = Vector2(40, 40)
@@ -238,12 +239,6 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_jpx58")
 icon = ExtResource("7_l3gsq")
 icon_alignment = 1
 expand_icon = true
-
-[node name="ThreadButton" parent="VBoxContainer/HSplitContainer/SideBar/PaletteMenu/VBoxContainer/ScrollContainer/PaletteContainer" instance=ExtResource("8_j7jxf")]
-layout_mode = 2
-
-[node name="ThreadButton2" parent="VBoxContainer/HSplitContainer/SideBar/PaletteMenu/VBoxContainer/ScrollContainer/PaletteContainer" instance=ExtResource("8_j7jxf")]
-layout_mode = 2
 
 [node name="SkeinPopupMenu" type="PopupMenu" parent="VBoxContainer/HSplitContainer/SideBar/PaletteMenu"]
 unique_name_in_owner = true
@@ -276,125 +271,20 @@ text = "Add New Thread"
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="FlowContainer2" type="FlowContainer" parent="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer"]
+[node name="AddThreadContainer" type="FlowContainer" parent="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource("10_ww78o")
+thread_button = ExtResource("8_j7jxf")
 
-[node name="BackButton" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/FlowContainer2"]
+[node name="BackButton" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/AddThreadContainer"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 tooltip_text = "Back to Palette"
 theme_override_styles/normal = SubResource("StyleBoxFlat_jpx58")
 icon = ExtResource("11_tud68")
-icon_alignment = 1
-expand_icon = true
-
-[node name="Button2" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/FlowContainer2"]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-tooltip_text = "Light Baby Blue"
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_styles/normal = ExtResource("13_2d74d")
-toggle_mode = true
-button_group = ExtResource("8_ixvl6")
-icon = ExtResource("9_fhjej")
-icon_alignment = 1
-expand_icon = true
-
-[node name="Button3" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/FlowContainer2"]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-tooltip_text = "Light Baby Blue"
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_styles/normal = ExtResource("13_2d74d")
-toggle_mode = true
-button_group = ExtResource("8_ixvl6")
-icon = ExtResource("9_fhjej")
-icon_alignment = 1
-expand_icon = true
-
-[node name="Button4" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/FlowContainer2"]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-tooltip_text = "Light Baby Blue"
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_styles/normal = ExtResource("13_2d74d")
-toggle_mode = true
-button_group = ExtResource("8_ixvl6")
-icon = ExtResource("9_fhjej")
-icon_alignment = 1
-expand_icon = true
-
-[node name="Button5" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/FlowContainer2"]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-tooltip_text = "Light Baby Blue"
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_styles/normal = ExtResource("13_2d74d")
-toggle_mode = true
-button_group = ExtResource("8_ixvl6")
-icon = ExtResource("9_fhjej")
-icon_alignment = 1
-expand_icon = true
-
-[node name="Button6" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/FlowContainer2"]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-tooltip_text = "Light Baby Blue"
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_styles/normal = ExtResource("13_2d74d")
-toggle_mode = true
-button_group = ExtResource("8_ixvl6")
-icon = ExtResource("9_fhjej")
-icon_alignment = 1
-expand_icon = true
-
-[node name="Button7" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/FlowContainer2"]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-tooltip_text = "Light Baby Blue"
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_styles/normal = ExtResource("13_2d74d")
-toggle_mode = true
-button_group = ExtResource("8_ixvl6")
-icon = ExtResource("9_fhjej")
-icon_alignment = 1
-expand_icon = true
-
-[node name="Button8" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/FlowContainer2"]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-tooltip_text = "Light Baby Blue"
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_styles/normal = ExtResource("13_2d74d")
-toggle_mode = true
-button_group = ExtResource("8_ixvl6")
-icon = ExtResource("9_fhjej")
-icon_alignment = 1
-expand_icon = true
-
-[node name="Button9" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/FlowContainer2"]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-tooltip_text = "Light Baby Blue"
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_styles/normal = ExtResource("13_2d74d")
-toggle_mode = true
-button_group = ExtResource("8_ixvl6")
-icon = ExtResource("9_fhjej")
-icon_alignment = 1
-expand_icon = true
-
-[node name="Button10" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/FlowContainer2"]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-tooltip_text = "Light Baby Blue"
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_styles/normal = ExtResource("13_2d74d")
-toggle_mode = true
-button_group = ExtResource("8_ixvl6")
-icon = ExtResource("9_fhjej")
 icon_alignment = 1
 expand_icon = true
 
@@ -421,125 +311,17 @@ text = "Swap Thread"
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="FlowContainer" type="FlowContainer" parent="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer"]
+[node name="SwapThreadContainer" type="FlowContainer" parent="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="BackButton" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer/FlowContainer"]
+[node name="BackButton" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer/SwapThreadContainer"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 tooltip_text = "Back to Palette"
 theme_override_styles/normal = SubResource("StyleBoxFlat_jpx58")
 icon = ExtResource("11_tud68")
-icon_alignment = 1
-expand_icon = true
-
-[node name="Button2" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer/FlowContainer"]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-tooltip_text = "Light Baby Blue"
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_styles/normal = ExtResource("13_2d74d")
-toggle_mode = true
-button_group = ExtResource("8_ixvl6")
-icon = ExtResource("9_fhjej")
-icon_alignment = 1
-expand_icon = true
-
-[node name="Button3" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer/FlowContainer"]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-tooltip_text = "Light Baby Blue"
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_styles/normal = ExtResource("13_2d74d")
-toggle_mode = true
-button_group = ExtResource("8_ixvl6")
-icon = ExtResource("9_fhjej")
-icon_alignment = 1
-expand_icon = true
-
-[node name="Button4" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer/FlowContainer"]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-tooltip_text = "Light Baby Blue"
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_styles/normal = ExtResource("13_2d74d")
-toggle_mode = true
-button_group = ExtResource("8_ixvl6")
-icon = ExtResource("9_fhjej")
-icon_alignment = 1
-expand_icon = true
-
-[node name="Button5" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer/FlowContainer"]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-tooltip_text = "Light Baby Blue"
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_styles/normal = ExtResource("13_2d74d")
-toggle_mode = true
-button_group = ExtResource("8_ixvl6")
-icon = ExtResource("9_fhjej")
-icon_alignment = 1
-expand_icon = true
-
-[node name="Button6" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer/FlowContainer"]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-tooltip_text = "Light Baby Blue"
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_styles/normal = ExtResource("13_2d74d")
-toggle_mode = true
-button_group = ExtResource("8_ixvl6")
-icon = ExtResource("9_fhjej")
-icon_alignment = 1
-expand_icon = true
-
-[node name="Button7" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer/FlowContainer"]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-tooltip_text = "Light Baby Blue"
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_styles/normal = ExtResource("13_2d74d")
-toggle_mode = true
-button_group = ExtResource("8_ixvl6")
-icon = ExtResource("9_fhjej")
-icon_alignment = 1
-expand_icon = true
-
-[node name="Button8" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer/FlowContainer"]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-tooltip_text = "Light Baby Blue"
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_styles/normal = ExtResource("13_2d74d")
-toggle_mode = true
-button_group = ExtResource("8_ixvl6")
-icon = ExtResource("9_fhjej")
-icon_alignment = 1
-expand_icon = true
-
-[node name="Button9" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer/FlowContainer"]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-tooltip_text = "Light Baby Blue"
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_styles/normal = ExtResource("13_2d74d")
-toggle_mode = true
-button_group = ExtResource("8_ixvl6")
-icon = ExtResource("9_fhjej")
-icon_alignment = 1
-expand_icon = true
-
-[node name="Button10" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer/FlowContainer"]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-tooltip_text = "Light Baby Blue"
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_styles/normal = ExtResource("13_2d74d")
-toggle_mode = true
-button_group = ExtResource("8_ixvl6")
-icon = ExtResource("9_fhjej")
 icon_alignment = 1
 expand_icon = true
 
@@ -591,7 +373,7 @@ stretch = true
 unique_name_in_owner = true
 handle_input_locally = false
 gui_disable_input = true
-size = Vector2i(1134, 659)
+size = Vector2i(1129, 659)
 render_target_update_mode = 4
 
 [node name="StatusBar" type="PanelContainer" parent="VBoxContainer"]
@@ -617,9 +399,11 @@ text = "100 x 100 px"
 [connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/PaletteMenu/VBoxContainer/ScrollContainer/PaletteContainer/AddButton" to="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu" method="show"]
 [connection signal="id_pressed" from="VBoxContainer/HSplitContainer/SideBar/PaletteMenu/SkeinPopupMenu" to="VBoxContainer/HSplitContainer/SideBar/PaletteMenu" method="hide" unbinds=1]
 [connection signal="id_pressed" from="VBoxContainer/HSplitContainer/SideBar/PaletteMenu/SkeinPopupMenu" to="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu" method="show" unbinds=1]
-[connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/FlowContainer2/BackButton" to="VBoxContainer/HSplitContainer/SideBar/PaletteMenu" method="show"]
-[connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/FlowContainer2/BackButton" to="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu" method="hide"]
-[connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer/FlowContainer/BackButton" to="VBoxContainer/HSplitContainer/SideBar/PaletteMenu" method="show"]
-[connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer/FlowContainer/BackButton" to="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu" method="hide"]
+[connection signal="visibility_changed" from="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/AddThreadContainer" to="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/AddThreadContainer" method="_on_visibility_changed"]
+[connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/AddThreadContainer/BackButton" to="VBoxContainer/HSplitContainer/SideBar/PaletteMenu" method="show"]
+[connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/AddThreadContainer/BackButton" to="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu" method="hide"]
+[connection signal="text_changed" from="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/SearchBar" to="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/AddThreadContainer" method="_on_search_bar_text_changed"]
+[connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer/SwapThreadContainer/BackButton" to="VBoxContainer/HSplitContainer/SideBar/PaletteMenu" method="show"]
+[connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer/SwapThreadContainer/BackButton" to="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu" method="hide"]
 [connection signal="mouse_entered" from="VBoxContainer/HSplitContainer/SubViewportContainer" to="VBoxContainer/HSplitContainer/SubViewportContainer" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="VBoxContainer/HSplitContainer/SubViewportContainer" to="VBoxContainer/HSplitContainer/SubViewportContainer" method="_on_mouse_exited"]
