@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bx0h6obdnsah7"]
+[gd_scene load_steps=16 format=3 uid="uid://bx0h6obdnsah7"]
 
 [ext_resource type="Script" path="res://user_interface/scripts/user_interface.gd" id="1_u6dhp"]
 [ext_resource type="ButtonGroup" uid="uid://wvnm3xi2ta32" path="res://user_interface/resources/tool_button_group.tres" id="2_pe23o"]
@@ -11,11 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://skecvvmk7e26" path="res://user_interface/scenes/thread_button.tscn" id="8_j7jxf"]
 [ext_resource type="Texture2D" uid="uid://iun3wcxblamr" path="res://resources/svg-symbols/moon-outline.svg" id="9_fhjej"]
 [ext_resource type="Texture2D" uid="uid://brursbtjqwkfw" path="res://resources/icons/back-curved-arrow-svgrepo-com.svg" id="11_tud68"]
-[ext_resource type="ButtonGroup" uid="uid://d1buff5clisav" path="res://user_interface/resources/layer_button_group.tres" id="12_iirdl"]
 [ext_resource type="StyleBox" uid="uid://dj7y1echd756o" path="res://user_interface/resources/thread_button_pressed_stylebox.tres" id="13_2d74d"]
-[ext_resource type="Texture2D" uid="uid://bg3vbvo600vk1" path="res://resources/icons/eye-svgrepo-com.svg" id="13_wkgig"]
-[ext_resource type="Texture2D" uid="uid://jmmr1xap6tda" path="res://resources/icons/lock-open-svgrepo-com.svg" id="14_2v204"]
-[ext_resource type="Script" path="res://user_interface/scripts/layer_rmb.gd" id="15_uxsbo"]
+[ext_resource type="PackedScene" uid="uid://d3fimv4fp01uq" path="res://user_interface/scenes/layer_button.tscn" id="13_lbi11"]
 
 [sub_resource type="Theme" id="Theme_5dpkv"]
 
@@ -30,13 +27,6 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0.442911, 0.442911, 0.442911, 1)
-
-[sub_resource type="ButtonGroup" id="ButtonGroup_ead0c"]
-
-[sub_resource type="ButtonGroup" id="ButtonGroup_f2rbk"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ac6l"]
-bg_color = Color(0.28485, 0.28485, 0.28485, 1)
 
 [node name="RootControl" type="Control"]
 layout_mode = 3
@@ -251,11 +241,9 @@ expand_icon = true
 
 [node name="ThreadButton" parent="VBoxContainer/HSplitContainer/SideBar/PaletteMenu/VBoxContainer/ScrollContainer/PaletteContainer" instance=ExtResource("8_j7jxf")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_ead0c")
 
 [node name="ThreadButton2" parent="VBoxContainer/HSplitContainer/SideBar/PaletteMenu/VBoxContainer/ScrollContainer/PaletteContainer" instance=ExtResource("8_j7jxf")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_f2rbk")
 
 [node name="SkeinPopupMenu" type="PopupMenu" parent="VBoxContainer/HSplitContainer/SideBar/PaletteMenu"]
 unique_name_in_owner = true
@@ -576,362 +564,13 @@ text = "Layers"
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer"]
+[node name="LayersContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="LayerButton" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
+[node name="LayerButton" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/LayersContainer" instance=ExtResource("13_lbi11")]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_6ac6l")
-toggle_mode = true
-button_group = ExtResource("12_iirdl")
-text = "Layer 1"
-alignment = 0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 2
-
-[node name="EyeButton" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton/HBoxContainer"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-icon = ExtResource("13_wkgig")
-flat = true
-expand_icon = true
-
-[node name="LockButton" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton/HBoxContainer"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-icon = ExtResource("14_2v204")
-flat = true
-expand_icon = true
-
-[node name="RMB" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-button_mask = 2
-flat = true
-script = ExtResource("15_uxsbo")
-
-[node name="LayerButton2" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_6ac6l")
-toggle_mode = true
-button_group = ExtResource("12_iirdl")
-text = "Layer 1"
-alignment = 0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton2"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 2
-
-[node name="EyeButton" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton2/HBoxContainer"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-icon = ExtResource("13_wkgig")
-flat = true
-expand_icon = true
-
-[node name="LockButton" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton2/HBoxContainer"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-icon = ExtResource("14_2v204")
-flat = true
-expand_icon = true
-
-[node name="RMB" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton2"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-button_mask = 2
-flat = true
-script = ExtResource("15_uxsbo")
-
-[node name="LayerButton3" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_6ac6l")
-toggle_mode = true
-button_group = ExtResource("12_iirdl")
-text = "Layer 1"
-alignment = 0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton3"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 2
-
-[node name="EyeButton" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton3/HBoxContainer"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-icon = ExtResource("13_wkgig")
-flat = true
-expand_icon = true
-
-[node name="LockButton" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton3/HBoxContainer"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-icon = ExtResource("14_2v204")
-flat = true
-expand_icon = true
-
-[node name="RMB" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton3"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-button_mask = 2
-flat = true
-script = ExtResource("15_uxsbo")
-
-[node name="LayerButton4" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_6ac6l")
-toggle_mode = true
-button_group = ExtResource("12_iirdl")
-text = "Layer 1"
-alignment = 0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton4"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 2
-
-[node name="EyeButton" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton4/HBoxContainer"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-icon = ExtResource("13_wkgig")
-flat = true
-expand_icon = true
-
-[node name="LockButton" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton4/HBoxContainer"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-icon = ExtResource("14_2v204")
-flat = true
-expand_icon = true
-
-[node name="RMB" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton4"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-button_mask = 2
-flat = true
-script = ExtResource("15_uxsbo")
-
-[node name="LayerButton5" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_6ac6l")
-toggle_mode = true
-button_group = ExtResource("12_iirdl")
-text = "Layer 1"
-alignment = 0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton5"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 2
-
-[node name="EyeButton" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton5/HBoxContainer"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-icon = ExtResource("13_wkgig")
-flat = true
-expand_icon = true
-
-[node name="LockButton" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton5/HBoxContainer"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-icon = ExtResource("14_2v204")
-flat = true
-expand_icon = true
-
-[node name="RMB" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton5"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-button_mask = 2
-flat = true
-script = ExtResource("15_uxsbo")
-
-[node name="LayerButton6" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_6ac6l")
-toggle_mode = true
-button_group = ExtResource("12_iirdl")
-text = "Layer 1"
-alignment = 0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton6"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 2
-
-[node name="EyeButton" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton6/HBoxContainer"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-icon = ExtResource("13_wkgig")
-flat = true
-expand_icon = true
-
-[node name="LockButton" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton6/HBoxContainer"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-icon = ExtResource("14_2v204")
-flat = true
-expand_icon = true
-
-[node name="RMB" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton6"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-button_mask = 2
-flat = true
-script = ExtResource("15_uxsbo")
-
-[node name="LayerButton7" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_6ac6l")
-toggle_mode = true
-button_group = ExtResource("12_iirdl")
-text = "Layer 1"
-alignment = 0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton7"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 2
-
-[node name="EyeButton" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton7/HBoxContainer"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-icon = ExtResource("13_wkgig")
-flat = true
-expand_icon = true
-
-[node name="LockButton" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton7/HBoxContainer"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-icon = ExtResource("14_2v204")
-flat = true
-expand_icon = true
-
-[node name="RMB" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton7"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-button_mask = 2
-flat = true
-script = ExtResource("15_uxsbo")
-
-[node name="LayerButton8" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_6ac6l")
-toggle_mode = true
-button_group = ExtResource("12_iirdl")
-text = "Layer 1"
-alignment = 0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton8"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 2
-
-[node name="EyeButton" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton8/HBoxContainer"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-icon = ExtResource("13_wkgig")
-flat = true
-expand_icon = true
-
-[node name="LockButton" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton8/HBoxContainer"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-icon = ExtResource("14_2v204")
-flat = true
-expand_icon = true
-
-[node name="RMB" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton8"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-button_mask = 2
-flat = true
-script = ExtResource("15_uxsbo")
 
 [node name="LayerPopupMenu" type="PopupMenu" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu"]
 unique_name_in_owner = true
@@ -982,13 +621,5 @@ text = "100 x 100 px"
 [connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/FlowContainer2/BackButton" to="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu" method="hide"]
 [connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer/FlowContainer/BackButton" to="VBoxContainer/HSplitContainer/SideBar/PaletteMenu" method="show"]
 [connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer/FlowContainer/BackButton" to="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu" method="hide"]
-[connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton/RMB" to="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton/RMB" method="_on_pressed"]
-[connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton2/RMB" to="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton2/RMB" method="_on_pressed"]
-[connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton3/RMB" to="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton3/RMB" method="_on_pressed"]
-[connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton4/RMB" to="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton4/RMB" method="_on_pressed"]
-[connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton5/RMB" to="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton5/RMB" method="_on_pressed"]
-[connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton6/RMB" to="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton6/RMB" method="_on_pressed"]
-[connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton7/RMB" to="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton7/RMB" method="_on_pressed"]
-[connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton8/RMB" to="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/VBoxContainer/LayerButton8/RMB" method="_on_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/HSplitContainer/SubViewportContainer" to="VBoxContainer/HSplitContainer/SubViewportContainer" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="VBoxContainer/HSplitContainer/SubViewportContainer" to="VBoxContainer/HSplitContainer/SubViewportContainer" method="_on_mouse_exited"]

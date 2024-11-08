@@ -28,10 +28,10 @@ func _process(delta: float) -> void:
 func _on_pressed() -> void:
 	var new_color = Color.from_hsv(randf(), randf(), randf())
 	
-	for stylebox_name in styleboxes:
-		var stylebox := get_theme_stylebox(stylebox_name).duplicate()
+	for setting in styleboxes:
+		var stylebox := get_theme_stylebox(setting).duplicate()
 		stylebox.bg_color = new_color
-		add_theme_stylebox_override(stylebox_name, stylebox)
+		add_theme_stylebox_override(setting, stylebox)
 	
 	var icon_color : Color
 	var luminance = new_color.get_luminance()
