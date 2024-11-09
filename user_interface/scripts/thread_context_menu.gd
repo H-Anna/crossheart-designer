@@ -12,8 +12,7 @@ func _on_id_pressed(id: int) -> void:
 			var target = await SignalBus.skein_swap_requested
 			%SwapThreadConfirmationDialog.confirm(caller.thread, target)
 		CHANGE_SYMBOL:
-			%PaletteMenu.hide()
-			%SwapThreadMenu.show()
+			pass #TODO: implement
 		DELETE:
 			%DeleteThreadConfirmationDialog.confirm(caller.thread)
 		_:
