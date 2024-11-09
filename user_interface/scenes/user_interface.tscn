@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bx0h6obdnsah7"]
+[gd_scene load_steps=19 format=3 uid="uid://bx0h6obdnsah7"]
 
 [ext_resource type="Script" path="res://user_interface/scripts/user_interface.gd" id="1_u6dhp"]
 [ext_resource type="ButtonGroup" uid="uid://wvnm3xi2ta32" path="res://user_interface/resources/tool_button_group.tres" id="2_pe23o"]
@@ -14,6 +14,8 @@
 [ext_resource type="Script" path="res://user_interface/scripts/swap_thread_container.gd" id="12_nfc0l"]
 [ext_resource type="PackedScene" uid="uid://d3fimv4fp01uq" path="res://user_interface/scenes/layer_button.tscn" id="13_lbi11"]
 [ext_resource type="Script" path="res://user_interface/scripts/thread_context_menu.gd" id="13_p3e1f"]
+[ext_resource type="Script" path="res://user_interface/scripts/delete_thread_confirmation_dialog.gd" id="14_h8jix"]
+[ext_resource type="Script" path="res://user_interface/scripts/swap_thread_confirmation_dialog.gd" id="15_gmppc"]
 
 [sub_resource type="Theme" id="Theme_5dpkv"]
 
@@ -399,6 +401,7 @@ ok_button_text = "Yes"
 dialog_text = "All stitches made with this color will be removed. Are you sure?"
 dialog_autowrap = true
 cancel_button_text = "No"
+script = ExtResource("14_h8jix")
 
 [node name="SwapThreadConfirmationDialog" type="ConfirmationDialog" parent="."]
 unique_name_in_owner = true
@@ -410,6 +413,7 @@ unresizable = true
 borderless = true
 dialog_text = "All existing stitches will be converted to the new color. If the color is in the palette, the colors will be merged."
 dialog_autowrap = true
+script = ExtResource("15_gmppc")
 
 [node name="SkeinPopupMenu" type="PopupMenu" parent="."]
 unique_name_in_owner = true
