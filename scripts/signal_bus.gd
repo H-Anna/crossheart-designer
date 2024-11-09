@@ -39,3 +39,7 @@ signal canvas_resized(canvas: Canvas, new_snapshot: bool)
 signal layer_changed(layer: TileMapLayer, new_snapshot: bool)
 signal layer_added(layer: TileMapLayer, new_snapshot: bool)
 signal layer_removed(layer: TileMapLayer, new_snapshot: bool)
+
+## Snapshot-generating signals
+signal thread_layer_added(layer: ThreadLayer, new_snapshot: bool)
+signal thread_layer_removed(layer: ThreadLayer, new_snapshot: bool)

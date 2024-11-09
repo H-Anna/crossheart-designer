@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://duba8w62maq15"
-path="res://.godot/imported/cursor-marquee-svgrepo-com.svg-055f377b96cca7db7fc7cc932255b7e6.ctex"
+uid="uid://beqel3nc8oyr2"
+path="res://.godot/imported/LayerButtonContainer.svg-edafc48c5e4f93d2f99949e20563698a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/icons/cursor-marquee-svgrepo-com.svg"
-dest_files=["res://.godot/imported/cursor-marquee-svgrepo-com.svg-055f377b96cca7db7fc7cc932255b7e6.ctex"]
+source_file="res://icons/LayerButtonContainer.svg"
+dest_files=["res://.godot/imported/LayerButtonContainer.svg-edafc48c5e4f93d2f99949e20563698a.ctex"]
 
 [params]
 

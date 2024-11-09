@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bgldmrp2dbdij"
-path="res://.godot/imported/halfcross-rtl.svg-186063920e9a755c0586c32a77d55e3a.ctex"
+uid="uid://brvl7shde4jk7"
+path="res://.godot/imported/halfcross-ltr-icon.svg-21755dc5488ad6c2a05a4a9323ce6457.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/icons/halfcross-rtl.svg"
-dest_files=["res://.godot/imported/halfcross-rtl.svg-186063920e9a755c0586c32a77d55e3a.ctex"]
+source_file="res://user_interface/icons/halfcross-ltr-icon.svg"
+dest_files=["res://.godot/imported/halfcross-ltr-icon.svg-21755dc5488ad6c2a05a4a9323ce6457.ctex"]
 
 [params]
 
@@ -32,6 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
+svg/scale=0.035
 editor/scale_with_editor_scale=false
 editor/convert_colors_with_editor_theme=false

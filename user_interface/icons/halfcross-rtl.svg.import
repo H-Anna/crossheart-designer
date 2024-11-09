@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bw6lfxepwp3ae"
-path="res://.godot/imported/eye-closed-svgrepo-com.svg-7f7c392a466c244d5b56f5afae02a891.ctex"
+uid="uid://bgldmrp2dbdij"
+path="res://.godot/imported/halfcross-rtl.svg-11637d0021638812985f8f1638366e70.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/icons/eye-closed-svgrepo-com.svg"
-dest_files=["res://.godot/imported/eye-closed-svgrepo-com.svg-7f7c392a466c244d5b56f5afae02a891.ctex"]
+source_file="res://user_interface/icons/halfcross-rtl.svg"
+dest_files=["res://.godot/imported/halfcross-rtl.svg-11637d0021638812985f8f1638366e70.ctex"]
 
 [params]
 

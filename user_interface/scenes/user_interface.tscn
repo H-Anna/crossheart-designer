@@ -1,21 +1,23 @@
-[gd_scene load_steps=19 format=3 uid="uid://bx0h6obdnsah7"]
+[gd_scene load_steps=21 format=3 uid="uid://bx0h6obdnsah7"]
 
 [ext_resource type="Script" path="res://user_interface/scripts/user_interface.gd" id="1_u6dhp"]
 [ext_resource type="ButtonGroup" uid="uid://wvnm3xi2ta32" path="res://user_interface/resources/tool_button_group.tres" id="2_pe23o"]
-[ext_resource type="Texture2D" uid="uid://duba8w62maq15" path="res://resources/icons/cursor-marquee-svgrepo-com.svg" id="3_75h3m"]
-[ext_resource type="Texture2D" uid="uid://1bjbsjetsgf0" path="res://resources/icons/cross-icon.svg" id="4_7oaw5"]
-[ext_resource type="Texture2D" uid="uid://brvl7shde4jk7" path="res://resources/icons/halfcross-ltr-icon.svg" id="5_te4is"]
-[ext_resource type="Texture2D" uid="uid://u3lrn5bi4i3i" path="res://resources/icons/smallfullcross-icon.svg" id="6_ltunq"]
-[ext_resource type="Texture2D" uid="uid://hjub8afgui3d" path="res://resources/icons/plus-svgrepo-com.svg" id="7_l3gsq"]
+[ext_resource type="Texture2D" uid="uid://duba8w62maq15" path="res://user_interface/icons/cursor-marquee-svgrepo-com.svg" id="3_75h3m"]
+[ext_resource type="Texture2D" uid="uid://1bjbsjetsgf0" path="res://user_interface/icons/cross-icon.svg" id="4_7oaw5"]
+[ext_resource type="Texture2D" uid="uid://brvl7shde4jk7" path="res://user_interface/icons/halfcross-ltr-icon.svg" id="5_te4is"]
+[ext_resource type="Texture2D" uid="uid://u3lrn5bi4i3i" path="res://user_interface/icons/smallfullcross-icon.svg" id="6_ltunq"]
+[ext_resource type="Texture2D" uid="uid://hjub8afgui3d" path="res://user_interface/icons/plus-svgrepo-com.svg" id="7_l3gsq"]
 [ext_resource type="Script" path="res://user_interface/scripts/palette_thread_button_container.gd" id="7_xol4m"]
 [ext_resource type="PackedScene" uid="uid://skecvvmk7e26" path="res://user_interface/scenes/thread_button.tscn" id="8_j7jxf"]
 [ext_resource type="Script" path="res://user_interface/scripts/add_thread_button_container.gd" id="10_ww78o"]
-[ext_resource type="Texture2D" uid="uid://brursbtjqwkfw" path="res://resources/icons/back-curved-arrow-svgrepo-com.svg" id="11_tud68"]
+[ext_resource type="Texture2D" uid="uid://brursbtjqwkfw" path="res://user_interface/icons/back-curved-arrow-svgrepo-com.svg" id="11_tud68"]
 [ext_resource type="Script" path="res://user_interface/scripts/swap_thread_container.gd" id="12_nfc0l"]
 [ext_resource type="PackedScene" uid="uid://d3fimv4fp01uq" path="res://user_interface/scenes/layer_button.tscn" id="13_lbi11"]
 [ext_resource type="Script" path="res://user_interface/scripts/thread_context_menu.gd" id="13_p3e1f"]
+[ext_resource type="Script" path="res://user_interface/scripts/layer_button_container.gd" id="13_vprqc"]
 [ext_resource type="Script" path="res://user_interface/scripts/delete_thread_confirmation_dialog.gd" id="14_h8jix"]
 [ext_resource type="Script" path="res://user_interface/scripts/swap_thread_confirmation_dialog.gd" id="15_gmppc"]
+[ext_resource type="Script" path="res://user_interface/scripts/layer_context_menu.gd" id="22_djf3s"]
 
 [sub_resource type="Theme" id="Theme_5dpkv"]
 
@@ -345,18 +347,8 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-
-[node name="LayerButton" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer/LayersContainer" instance=ExtResource("13_lbi11")]
-layout_mode = 2
-
-[node name="LayerPopupMenu" type="PopupMenu" parent="VBoxContainer/HSplitContainer/SideBar/LayersMenu"]
-unique_name_in_owner = true
-item_count = 3
-item_0/text = "Add..."
-item_1/id = 1
-item_1/separator = true
-item_2/text = "Delete"
-item_2/id = 2
+script = ExtResource("13_vprqc")
+layer_button = ExtResource("13_lbi11")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="VBoxContainer/HSplitContainer"]
 layout_mode = 2
@@ -428,6 +420,18 @@ item_3/text = "Delete"
 item_3/id = 3
 script = ExtResource("13_p3e1f")
 
+[node name="LayerPopupMenu" type="PopupMenu" parent="."]
+unique_name_in_owner = true
+item_count = 4
+item_0/text = "Rename"
+item_1/text = "Delete"
+item_1/id = 1
+item_2/id = 2
+item_2/separator = true
+item_3/text = "Add Layer"
+item_3/id = 3
+script = ExtResource("22_djf3s")
+
 [connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/PaletteMenu/VBoxContainer/ScrollContainer/PaletteContainer/AddButton" to="VBoxContainer/HSplitContainer/SideBar/PaletteMenu" method="hide"]
 [connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/PaletteMenu/VBoxContainer/ScrollContainer/PaletteContainer/AddButton" to="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu" method="show"]
 [connection signal="visibility_changed" from="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/AddThreadContainer" to="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/AddThreadContainer" method="_on_visibility_changed"]
@@ -439,3 +443,4 @@ script = ExtResource("13_p3e1f")
 [connection signal="mouse_entered" from="VBoxContainer/HSplitContainer/SubViewportContainer" to="VBoxContainer/HSplitContainer/SubViewportContainer" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="VBoxContainer/HSplitContainer/SubViewportContainer" to="VBoxContainer/HSplitContainer/SubViewportContainer" method="_on_mouse_exited"]
 [connection signal="id_pressed" from="SkeinPopupMenu" to="SkeinPopupMenu" method="_on_id_pressed"]
+[connection signal="id_pressed" from="LayerPopupMenu" to="LayerPopupMenu" method="_on_id_pressed"]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://u3lrn5bi4i3i"
-path="res://.godot/imported/smallfullcross-icon.svg-46d94597d656c1ff7e8eeaa6d7b9de27.ctex"
+uid="uid://do7xdj4dhuwhn"
+path="res://.godot/imported/cross-svgrepo-com.svg-f928a985f0ac266ff1d756c8c05e5283.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/icons/smallfullcross-icon.svg"
-dest_files=["res://.godot/imported/smallfullcross-icon.svg-46d94597d656c1ff7e8eeaa6d7b9de27.ctex"]
+source_file="res://user_interface/icons/cross-svgrepo-com.svg"
+dest_files=["res://.godot/imported/cross-svgrepo-com.svg-f928a985f0ac266ff1d756c8c05e5283.ctex"]
 
 [params]
 
@@ -32,6 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=0.035
+svg/scale=1.0
 editor/scale_with_editor_scale=false
 editor/convert_colors_with_editor_theme=false

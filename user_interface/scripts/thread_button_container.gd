@@ -2,7 +2,7 @@
 ## based on thread data it receives.
 @icon("res://icons/ThreadButtonContainer.svg")
 class_name ThreadButtonContainer
-extends FlowContainer
+extends Container
 
 ## The thread button scene to instantiate. The container will be
 ## populated with these buttons.
@@ -43,7 +43,9 @@ func _on_search_bar_text_changed(new_text: String) -> void:
 			btn.show()
 		return
 	
-	var matching_threads = threads.filter(func(t): _search_matches_thread(new_text, t))
+	var matching_threads = threads.filter(
+		func(t): return _search_matches_thread(new_text, t)
+	)
 	for btn in _created_buttons:
 		if btn.thread in matching_threads:
 			btn.show()
@@ -51,8 +53,9 @@ func _on_search_bar_text_changed(new_text: String) -> void:
 			btn.hide()
 
 func _search_matches_thread(text: String, thread: Skein) -> bool:
-	var id = thread.id.to_lower()
-	var color_name = thread.color_name.to_lower()
+	text = text.to_lower()
+	var id := thread.id.to_lower()
+	var color_name := thread.color_name.to_lower()
 	return id.contains(text) or color_name.contains(text)
 
 ## Extend this lambda to customize thread button functionality.

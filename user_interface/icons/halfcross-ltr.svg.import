@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bu8ju08gex1pp"
-path="res://.godot/imported/yarn.svg-c096eb4fafdfca9c6edbcb9fd5853407.ctex"
+uid="uid://cxg1hagxwdus8"
+path="res://.godot/imported/halfcross-ltr.svg-08deda22995fcf8be34ea8646c7ae958.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/icons/yarn.svg"
-dest_files=["res://.godot/imported/yarn.svg-c096eb4fafdfca9c6edbcb9fd5853407.ctex"]
+source_file="res://user_interface/icons/halfcross-ltr.svg"
+dest_files=["res://.godot/imported/halfcross-ltr.svg-08deda22995fcf8be34ea8646c7ae958.ctex"]
 
 [params]
 
