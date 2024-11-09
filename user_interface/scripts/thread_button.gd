@@ -22,6 +22,9 @@ var theme_color_overrides = [
 	"icon_pressed_color"
 ]
 
+func set_context_menu(context_menu: Node) -> void:
+	find_child("RMB").context_menu = context_menu
+
 func _refresh() -> void:
 	tooltip_text = thread.color_name
 	

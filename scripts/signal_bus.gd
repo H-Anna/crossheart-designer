@@ -7,6 +7,7 @@ signal scheme_parser_ready(parser: SchemeParser, content: Dictionary)
 signal focus_changed(focus_mode: Helpers.MouseFocusMode)
 signal palette_ui_changed(palette: Palette)
 signal layer_ui_changed()
+signal skein_swap_requested(skein: Skein)
 
 ## View signals
 #signal zoom_level_changed(value: float)

@@ -28,6 +28,10 @@ func disconnect_callable(sig: Signal, callable: Callable):
 	if sig.is_connected(callable):
 		sig.disconnect(callable)
 
+func disconnect_all(sig: Signal):
+	for connection in sig.get_connections():
+		sig.disconnect(connection.callable)
+
 #endregion
 
 #region MATH

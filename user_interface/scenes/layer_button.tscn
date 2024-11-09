@@ -3,7 +3,7 @@
 [ext_resource type="ButtonGroup" uid="uid://c3you4cxxbmeu" path="res://user_interface/resources/layer_button_group.tres" id="1_82fnv"]
 [ext_resource type="Texture2D" uid="uid://bg3vbvo600vk1" path="res://resources/icons/eye-svgrepo-com.svg" id="2_qnf8a"]
 [ext_resource type="Texture2D" uid="uid://jmmr1xap6tda" path="res://resources/icons/lock-open-svgrepo-com.svg" id="3_buf6k"]
-[ext_resource type="Script" path="res://user_interface/scripts/layer_rmb.gd" id="4_osrt4"]
+[ext_resource type="Script" path="res://user_interface/scripts/rmb_context_menu_activator.gd" id="4_c8u5a"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ac6l"]
 bg_color = Color(0.28485, 0.28485, 0.28485, 1)
@@ -49,6 +49,6 @@ grow_vertical = 2
 mouse_filter = 1
 button_mask = 2
 flat = true
-script = ExtResource("4_osrt4")
+script = ExtResource("4_c8u5a")
 
 [connection signal="pressed" from="RMB" to="RMB" method="_on_pressed"]

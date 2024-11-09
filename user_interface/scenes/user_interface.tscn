@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bx0h6obdnsah7"]
+[gd_scene load_steps=17 format=3 uid="uid://bx0h6obdnsah7"]
 
 [ext_resource type="Script" path="res://user_interface/scripts/user_interface.gd" id="1_u6dhp"]
 [ext_resource type="ButtonGroup" uid="uid://wvnm3xi2ta32" path="res://user_interface/resources/tool_button_group.tres" id="2_pe23o"]
@@ -11,7 +11,9 @@
 [ext_resource type="PackedScene" uid="uid://skecvvmk7e26" path="res://user_interface/scenes/thread_button.tscn" id="8_j7jxf"]
 [ext_resource type="Script" path="res://user_interface/scripts/add_thread_button_container.gd" id="10_ww78o"]
 [ext_resource type="Texture2D" uid="uid://brursbtjqwkfw" path="res://resources/icons/back-curved-arrow-svgrepo-com.svg" id="11_tud68"]
+[ext_resource type="Script" path="res://user_interface/scripts/swap_thread_container.gd" id="12_nfc0l"]
 [ext_resource type="PackedScene" uid="uid://d3fimv4fp01uq" path="res://user_interface/scenes/layer_button.tscn" id="13_lbi11"]
+[ext_resource type="Script" path="res://user_interface/scripts/thread_context_menu.gd" id="13_p3e1f"]
 
 [sub_resource type="Theme" id="Theme_5dpkv"]
 
@@ -240,18 +242,6 @@ icon = ExtResource("7_l3gsq")
 icon_alignment = 1
 expand_icon = true
 
-[node name="SkeinPopupMenu" type="PopupMenu" parent="VBoxContainer/HSplitContainer/SideBar/PaletteMenu"]
-unique_name_in_owner = true
-size = Vector2i(153, 100)
-item_count = 4
-item_0/text = "Swap..."
-item_1/text = "Change Symbol..."
-item_1/id = 1
-item_2/id = 2
-item_2/separator = true
-item_3/text = "Delete"
-item_3/id = 3
-
 [node name="AddThreadMenu" type="PanelContainer" parent="VBoxContainer/HSplitContainer/SideBar"]
 unique_name_in_owner = true
 visible = false
@@ -312,9 +302,12 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="SwapThreadContainer" type="FlowContainer" parent="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource("12_nfc0l")
+thread_button = ExtResource("8_j7jxf")
 
 [node name="BackButton" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer/SwapThreadContainer"]
 custom_minimum_size = Vector2(40, 40)
@@ -395,10 +388,44 @@ layout_mode = 2
 size_flags_horizontal = 6
 text = "100 x 100 px"
 
+[node name="DeleteThreadConfirmationDialog" type="ConfirmationDialog" parent="."]
+unique_name_in_owner = true
+title = "Remove from Palette?"
+initial_position = 1
+size = Vector2i(300, 120)
+unresizable = true
+borderless = true
+ok_button_text = "Yes"
+dialog_text = "All stitches made with this color will be removed. Are you sure?"
+dialog_autowrap = true
+cancel_button_text = "No"
+
+[node name="SwapThreadConfirmationDialog" type="ConfirmationDialog" parent="."]
+unique_name_in_owner = true
+auto_translate_mode = 1
+title = "Swap Color?"
+initial_position = 1
+size = Vector2i(400, 150)
+unresizable = true
+borderless = true
+dialog_text = "All existing stitches will be converted to the new color. If the color is in the palette, the colors will be merged."
+dialog_autowrap = true
+
+[node name="SkeinPopupMenu" type="PopupMenu" parent="."]
+unique_name_in_owner = true
+size = Vector2i(153, 100)
+item_count = 4
+item_0/text = "Swap..."
+item_1/text = "Change Symbol..."
+item_1/id = 1
+item_2/id = 2
+item_2/separator = true
+item_3/text = "Delete"
+item_3/id = 3
+script = ExtResource("13_p3e1f")
+
 [connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/PaletteMenu/VBoxContainer/ScrollContainer/PaletteContainer/AddButton" to="VBoxContainer/HSplitContainer/SideBar/PaletteMenu" method="hide"]
 [connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/PaletteMenu/VBoxContainer/ScrollContainer/PaletteContainer/AddButton" to="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu" method="show"]
-[connection signal="id_pressed" from="VBoxContainer/HSplitContainer/SideBar/PaletteMenu/SkeinPopupMenu" to="VBoxContainer/HSplitContainer/SideBar/PaletteMenu" method="hide" unbinds=1]
-[connection signal="id_pressed" from="VBoxContainer/HSplitContainer/SideBar/PaletteMenu/SkeinPopupMenu" to="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu" method="show" unbinds=1]
 [connection signal="visibility_changed" from="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/AddThreadContainer" to="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/AddThreadContainer" method="_on_visibility_changed"]
 [connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/AddThreadContainer/BackButton" to="VBoxContainer/HSplitContainer/SideBar/PaletteMenu" method="show"]
 [connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/AddThreadContainer/BackButton" to="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu" method="hide"]
@@ -407,3 +434,4 @@ text = "100 x 100 px"
 [connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer/SwapThreadContainer/BackButton" to="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu" method="hide"]
 [connection signal="mouse_entered" from="VBoxContainer/HSplitContainer/SubViewportContainer" to="VBoxContainer/HSplitContainer/SubViewportContainer" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="VBoxContainer/HSplitContainer/SubViewportContainer" to="VBoxContainer/HSplitContainer/SubViewportContainer" method="_on_mouse_exited"]
+[connection signal="id_pressed" from="SkeinPopupMenu" to="SkeinPopupMenu" method="_on_id_pressed"]

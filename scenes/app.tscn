@@ -203,6 +203,7 @@ cancel_button_text = "No"
 title = "Confirm Swap?"
 initial_position = 2
 size = Vector2i(435, 106)
+visible = true
 dialog_text = "All existing stitches will be converted to the new color.
 If the color is in the palette, the colors will be merged."
 

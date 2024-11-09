@@ -16,6 +16,9 @@ var threads: Array[Skein]:
 
 var _created_buttons: Array[Node]
 
+func _ready() -> void:
+	threads = SkeinsAtlas.get_all_skeins()
+
 func _change_threads() -> void:
 	# Delete all current
 	for btn in _created_buttons:
