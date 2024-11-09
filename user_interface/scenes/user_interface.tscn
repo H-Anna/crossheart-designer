@@ -444,4 +444,6 @@ script = ExtResource("22_djf3s")
 [connection signal="mouse_entered" from="VBoxContainer/HSplitContainer/SubViewportContainer" to="VBoxContainer/HSplitContainer/SubViewportContainer" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="VBoxContainer/HSplitContainer/SubViewportContainer" to="VBoxContainer/HSplitContainer/SubViewportContainer" method="_on_mouse_exited"]
 [connection signal="id_pressed" from="SkeinPopupMenu" to="SkeinPopupMenu" method="_on_id_pressed"]
+[connection signal="visibility_changed" from="SkeinPopupMenu" to="SkeinPopupMenu" method="_on_visibility_changed"]
 [connection signal="id_pressed" from="LayerPopupMenu" to="LayerPopupMenu" method="_on_id_pressed"]
+[connection signal="visibility_changed" from="LayerPopupMenu" to="LayerPopupMenu" method="_on_visibility_changed"]

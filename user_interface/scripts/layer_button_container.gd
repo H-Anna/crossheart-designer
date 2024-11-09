@@ -11,6 +11,9 @@ var thread_layers : Array[ThreadLayer]:
 
 var _created_layers : Array[Node]
 
+func get_layer_count() -> int:
+	return thread_layers.size()
+
 #func _ready() -> void:
 	#if thread_layers.is_empty():
 		#thread_layers.append(ThreadLayer.new())

@@ -4,8 +4,6 @@ const RENAME = 0
 const DELETE = 1
 const ADD_LAYER = 3
 
-
-
 func _on_id_pressed(id: int) -> void:
 	match id:
 		RENAME:
@@ -20,3 +18,7 @@ func _on_id_pressed(id: int) -> void:
 			pass
 		_:
 			print_debug("Unhandled id: %s" % id)
+
+
+func _on_visibility_changed() -> void:
+	set_item_disabled(DELETE, %LayersContainer.get_layer_count() == 1)
