@@ -361,7 +361,7 @@ stretch = true
 unique_name_in_owner = true
 handle_input_locally = false
 gui_disable_input = true
-size = Vector2i(1129, 659)
+size = Vector2i(2, 2)
 render_target_update_mode = 4
 
 [node name="StatusBar" type="PanelContainer" parent="VBoxContainer"]
