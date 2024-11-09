@@ -18,7 +18,7 @@ func rename_layer() -> void:
 	%NameField.text = text
 	text = ""
 	%NameField.show()
-	%NameField.grab_focus()
+	%NameField.select_all()
 
 func _update_ui():
 	text = data.display_name
