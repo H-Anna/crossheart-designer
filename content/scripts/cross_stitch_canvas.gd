@@ -7,8 +7,6 @@ var bounding_rect : Rect2i
 
 var thread : Skein
 var brush_size := 1
-const MIN_BRUSH_SIZE := 1
-const MAX_BRUSH_SIZE := 10
 
 func _ready() -> void:
 	SignalBus.skein_selected.connect(func(skein): thread = skein)
@@ -36,9 +34,9 @@ func _process(delta: float) -> void:
 		active_layer.erase_stitch(brush_size, bounding_rect)
 	
 	if Input.is_action_just_pressed("increase-brush-size", true):
-		brush_size = mini(brush_size + 1, MAX_BRUSH_SIZE)
+		brush_size = mini(brush_size + 1, Globals.MAX_BRUSH_SIZE)
 		SignalBus.brush_size_changed.emit(brush_size)
 	
 	if Input.is_action_just_pressed("decrease-brush-size", true):
-		brush_size = maxi(brush_size - 1, MIN_BRUSH_SIZE)
+		brush_size = maxi(brush_size - 1, Globals.MIN_BRUSH_SIZE)
 		SignalBus.brush_size_changed.emit(brush_size)

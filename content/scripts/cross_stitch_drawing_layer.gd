@@ -7,7 +7,7 @@ var _modulated_tile_cache: Dictionary
 var is_dirty := false
 
 func draw_stitch(thread: Skein, cell: Vector2i, bounding_rect: Rect2i, size: int) -> void:
-	var offsets = Globals.BRUSH_SIZES.get(size, [])
+	var offsets = tile_set.get_pattern(size - 1).get_used_cells().map(func(x): return x - Globals.BRUSH_CENTER_POINT[size])
 	for coord in offsets:
 		if bounding_rect.has_point(cell + coord):
 			_set_cell_modulated(cell + coord, thread)
@@ -15,7 +15,7 @@ func draw_stitch(thread: Skein, cell: Vector2i, bounding_rect: Rect2i, size: int
 
 
 func erase_stitch(cell: Vector2i, bounding_rect: Rect2i, size: int) -> void:
-	var offsets = Globals.BRUSH_SIZES.get(size, [])
+	var offsets = tile_set.get_pattern(size - 1).get_used_cells().map(func(x): return x - Globals.BRUSH_CENTER_POINT[size])
 	for coord in offsets:
 		if bounding_rect.has_point(cell + coord):
 			erase_cell(cell + coord)
