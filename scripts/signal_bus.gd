@@ -11,6 +11,7 @@ signal skein_swap_requested(skein: Skein)
 
 ## View signals
 #signal zoom_level_changed(value: float)
+signal canvas_focus_changed(focused: bool)
 
 ## Tool signals
 signal skein_selected(skein: Skein)

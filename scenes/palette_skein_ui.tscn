@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bv8vy48g54jcs"]
 
 [ext_resource type="Script" path="res://scripts/palette_skein_ui.gd" id="1_oy1bc"]
-[ext_resource type="Texture2D" uid="uid://d2cnmslfcklya" path="res://tile.png" id="1_qc81l"]
+[ext_resource type="Texture2D" uid="uid://d2cnmslfcklya" path="res://tile16.png" id="1_qc81l"]
 [ext_resource type="Texture2D" uid="uid://wl4x50k0m64i" path="res://resources/svg-symbols/cross-outline.svg" id="3_b4y6b"]
 
 [node name="PaletteSkeinUI" type="ColorRect"]

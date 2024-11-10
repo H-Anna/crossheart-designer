@@ -241,7 +241,6 @@ tile_set = SubResource("TileSet_44xxl")
 [node name="Camera2D" type="Camera2D" parent="PreviewWindow/SubViewportContainer/Preview/PreviewCanvas"]
 position = Vector2(576, 324)
 script = ExtResource("7_eenpl")
-focus_mode = 3
 
 [node name="LoadFileDialog" type="FileDialog" parent="."]
 unique_name_in_owner = true

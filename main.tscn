@@ -1,14 +1,14 @@
 [gd_scene load_steps=5 format=3 uid="uid://s1bmq54ffm5f"]
 
 [ext_resource type="PackedScene" uid="uid://bx0h6obdnsah7" path="res://user_interface/scenes/user_interface.tscn" id="1_4xewr"]
-[ext_resource type="PackedScene" uid="uid://u5hw3ynykb0r" path="res://scenes/canvas.tscn" id="2_lewdv"]
+[ext_resource type="PackedScene" uid="uid://dj1tyn5td2irm" path="res://content/scenes/canvas.tscn" id="2_3bs1w"]
 [ext_resource type="Script" path="res://scripts/palette.gd" id="3_y01og"]
 [ext_resource type="Script" path="res://scripts/scheme_parser.gd" id="4_xmgfy"]
 
 [node name="Main" type="Node"]
 
 [node name="UserInterface" parent="." instance=ExtResource("1_4xewr")]
-canvas_scene = ExtResource("2_lewdv")
+canvas_scene = ExtResource("2_3bs1w")
 
 [node name="Palette" type="Node" parent="."]
 script = ExtResource("3_y01og")

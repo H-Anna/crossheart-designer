@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bx0h6obdnsah7"]
+[gd_scene load_steps=22 format=3 uid="uid://bx0h6obdnsah7"]
 
 [ext_resource type="Script" path="res://user_interface/scripts/user_interface.gd" id="1_u6dhp"]
 [ext_resource type="ButtonGroup" uid="uid://wvnm3xi2ta32" path="res://user_interface/resources/tool_button_group.tres" id="2_pe23o"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://user_interface/scripts/thread_context_menu.gd" id="13_p3e1f"]
 [ext_resource type="Script" path="res://user_interface/scripts/layer_button_container.gd" id="13_vprqc"]
 [ext_resource type="Script" path="res://user_interface/scripts/delete_thread_confirmation_dialog.gd" id="14_h8jix"]
+[ext_resource type="Script" path="res://user_interface/scripts/canvas_viewport_container.gd" id="15_f27v3"]
 [ext_resource type="Script" path="res://user_interface/scripts/swap_thread_confirmation_dialog.gd" id="15_gmppc"]
 [ext_resource type="Script" path="res://user_interface/scripts/layer_context_menu.gd" id="22_djf3s"]
 
@@ -356,12 +357,13 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 5.0
 stretch = true
+script = ExtResource("15_f27v3")
 
 [node name="CanvasViewport" type="SubViewport" parent="VBoxContainer/HSplitContainer/SubViewportContainer"]
 unique_name_in_owner = true
 handle_input_locally = false
 gui_disable_input = true
-size = Vector2i(2, 2)
+size = Vector2i(1129, 659)
 render_target_update_mode = 4
 
 [node name="StatusBar" type="PanelContainer" parent="VBoxContainer"]

@@ -37,6 +37,7 @@ window/size/initial_position_type=3
 [global_group]
 
 Persist=""
+master_layers="Root nodes for layers to draw on."
 
 [input]
 

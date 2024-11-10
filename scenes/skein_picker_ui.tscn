@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c8ch4mdg82a6f"]
 
-[ext_resource type="Texture2D" uid="uid://d2cnmslfcklya" path="res://tile.png" id="1_6sy41"]
+[ext_resource type="Texture2D" uid="uid://d2cnmslfcklya" path="res://tile16.png" id="1_6sy41"]
 
 [node name="SkeinPickerButton" type="Button"]
 custom_minimum_size = Vector2(50, 50)
