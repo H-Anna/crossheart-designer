@@ -6,27 +6,20 @@ const CURSOR_TILE := Vector2i(0,0)
 var _modulated_tile_cache: Dictionary
 var is_dirty := false
 
-func draw_stitch(thread: Skein, cell: Vector2i, bounding_rect: Rect2i, depth: int, current_depth: int = 1) -> void:
-	if current_depth > depth:
-		return
-	
-	if Extensions.vector2i_is_within_rect2i(cell, bounding_rect):
-		_set_cell_modulated(cell, thread)
-		is_dirty = true
-	
-	for neighbor in Extensions.get_neighbor_cells(self, cell):
-		draw_stitch(thread, neighbor, bounding_rect, depth, current_depth + 1)
+func draw_stitch(thread: Skein, cell: Vector2i, bounding_rect: Rect2i, size: int) -> void:
+	var offsets = Globals.BRUSH_SIZES.get(size, [])
+	for coord in offsets:
+		if bounding_rect.has_point(cell + coord):
+			_set_cell_modulated(cell + coord, thread)
+			is_dirty = true
 
-func erase_stitch(cell: Vector2i, bounding_rect: Rect2i, depth: int, current_depth: int = 1) -> void:
-	if current_depth > depth:
-		return
-	
-	if Extensions.vector2i_is_within_rect2i(cell, bounding_rect):
-		erase_cell(cell)
-		is_dirty = true
-	
-	for neighbor in Extensions.get_neighbor_cells(self, cell):
-		erase_stitch(neighbor, bounding_rect, depth, current_depth + 1)
+
+func erase_stitch(cell: Vector2i, bounding_rect: Rect2i, size: int) -> void:
+	var offsets = Globals.BRUSH_SIZES.get(size, [])
+	for coord in offsets:
+		if bounding_rect.has_point(cell + coord):
+			erase_cell(cell + coord)
+			is_dirty = true
 
 func erase_all():
 	for cell in get_used_cells():

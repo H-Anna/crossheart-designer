@@ -23,6 +23,7 @@ FileHandler="*res://scripts/file_handler.gd"
 AppSnapshotManager="*res://scripts/snapshot_manager.gd"
 SkeinsAtlas="*res://scripts/skeins_atlas.gd"
 SymbolsAtlas="*res://scripts/symbols_atlas.gd"
+Globals="*res://content/globals.gd"
 
 [debug]
 

@@ -1,6 +1,24 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://csepo0h2nws1a"]
+[gd_resource type="TileSet" load_steps=9 format=3 uid="uid://csepo0h2nws1a"]
 
 [ext_resource type="Texture2D" uid="uid://d2cnmslfcklya" path="res://tile16.png" id="1_htjde"]
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_ioj83"]
+tile_data = PackedInt32Array(0, 0, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_2w7r4"]
+tile_data = PackedInt32Array(0, 0, 0, 65536, 0, 0, 1, 0, 0, 65537, 0, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_lq7te"]
+tile_data = PackedInt32Array(65536, 0, 0, 1, 0, 0, 65537, 0, 0, 131073, 0, 0, 65538, 0, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_rl6cp"]
+tile_data = PackedInt32Array(0, 0, 0, 65536, 0, 0, 131072, 0, 0, 1, 0, 0, 65537, 0, 0, 131073, 0, 0, 2, 0, 0, 65538, 0, 0, 131074, 0, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_ed7lg"]
+tile_data = PackedInt32Array(131072, 0, 0, 65537, 0, 0, 131073, 0, 0, 196609, 0, 0, 2, 0, 0, 65538, 0, 0, 131074, 0, 0, 196610, 0, 0, 262146, 0, 0, 65539, 0, 0, 131075, 0, 0, 196611, 0, 0, 131076, 0, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_85in3"]
+tile_data = PackedInt32Array(131072, 0, 0, 196608, 0, 0, 65537, 0, 0, 131073, 0, 0, 196609, 0, 0, 262145, 0, 0, 2, 0, 0, 65538, 0, 0, 131074, 0, 0, 196610, 0, 0, 262146, 0, 0, 327682, 0, 0, 3, 0, 0, 65539, 0, 0, 131075, 0, 0, 196611, 0, 0, 262147, 0, 0, 327683, 0, 0, 65540, 0, 0, 131076, 0, 0, 196612, 0, 0, 262148, 0, 0, 131077, 0, 0, 196613, 0, 0)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uash4"]
 texture = ExtResource("1_htjde")
@@ -8,3 +26,9 @@ texture = ExtResource("1_htjde")
 
 [resource]
 sources/0 = SubResource("TileSetAtlasSource_uash4")
+pattern_0 = SubResource("TileMapPattern_ioj83")
+pattern_1 = SubResource("TileMapPattern_2w7r4")
+pattern_2 = SubResource("TileMapPattern_lq7te")
+pattern_3 = SubResource("TileMapPattern_rl6cp")
+pattern_4 = SubResource("TileMapPattern_ed7lg")
+pattern_5 = SubResource("TileMapPattern_85in3")

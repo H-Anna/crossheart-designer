@@ -21,11 +21,12 @@ func _update_cursor():
 	## Get mouse position on tilemap
 	var current_cell = %FullStitchLayer.local_to_map(get_global_mouse_position())
 	
-	## De-highlight previous cell
-	if _active_cell != current_cell || _brush_size != canvas.brush_size:
-		%FullStitchLayer.erase_all()
-		_active_cell = current_cell
-		_brush_size = canvas.brush_size
+	if _active_cell == current_cell && _brush_size == canvas.brush_size:
+		return
+	
+	%FullStitchLayer.erase_all()
+	_active_cell = current_cell
+	_brush_size = canvas.brush_size
 	
 	## Highlight current cell
 	%FullStitchLayer.draw_stitch(canvas.thread, current_cell, canvas.bounding_rect, _brush_size)
