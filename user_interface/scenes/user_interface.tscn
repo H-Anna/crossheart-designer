@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bx0h6obdnsah7"]
+[gd_scene load_steps=23 format=3 uid="uid://bx0h6obdnsah7"]
 
 [ext_resource type="Script" path="res://user_interface/scripts/user_interface.gd" id="1_u6dhp"]
 [ext_resource type="ButtonGroup" uid="uid://wvnm3xi2ta32" path="res://user_interface/resources/tool_button_group.tres" id="2_pe23o"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://1bjbsjetsgf0" path="res://user_interface/icons/cross-icon.svg" id="4_7oaw5"]
 [ext_resource type="Texture2D" uid="uid://brvl7shde4jk7" path="res://user_interface/icons/halfcross-ltr-icon.svg" id="5_te4is"]
 [ext_resource type="Texture2D" uid="uid://u3lrn5bi4i3i" path="res://user_interface/icons/smallfullcross-icon.svg" id="6_ltunq"]
+[ext_resource type="Script" path="res://user_interface/scripts/brush_size_spin_box.gd" id="7_1p4c5"]
 [ext_resource type="Texture2D" uid="uid://hjub8afgui3d" path="res://user_interface/icons/plus-svgrepo-com.svg" id="7_l3gsq"]
 [ext_resource type="Script" path="res://user_interface/scripts/palette_thread_button_container.gd" id="7_xol4m"]
 [ext_resource type="PackedScene" uid="uid://skecvvmk7e26" path="res://user_interface/scenes/thread_button.tscn" id="8_j7jxf"]
@@ -196,12 +197,13 @@ theme_override_constants/separation = 15
 layout_mode = 2
 text = "Size:"
 
-[node name="SpinBox" type="SpinBox" parent="VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolSettings/SizeSetting"]
+[node name="BrushSizeSpinBox" type="SpinBox" parent="VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolSettings/SizeSetting"]
 layout_mode = 2
 min_value = 1.0
 max_value = 20.0
 value = 1.0
 suffix = "px"
+script = ExtResource("7_1p4c5")
 
 [node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -435,6 +437,7 @@ item_3/text = "Add Layer"
 item_3/id = 3
 script = ExtResource("22_djf3s")
 
+[connection signal="value_changed" from="VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolSettings/SizeSetting/BrushSizeSpinBox" to="VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolSettings/SizeSetting/BrushSizeSpinBox" method="_on_value_changed"]
 [connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/PaletteMenu/VBoxContainer/ScrollContainer/PaletteContainer/AddButton" to="VBoxContainer/HSplitContainer/SideBar/PaletteMenu" method="hide"]
 [connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/PaletteMenu/VBoxContainer/ScrollContainer/PaletteContainer/AddButton" to="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu" method="show"]
 [connection signal="visibility_changed" from="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/AddThreadContainer" to="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/AddThreadContainer" method="_on_visibility_changed"]

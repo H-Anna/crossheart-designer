@@ -5,12 +5,15 @@ var can_draw := true
 var active_layer : XStitchMasterLayer
 var bounding_rect : Rect2i
 
-var cursor_thread : Skein
-var cursor_size := 1
+var thread : Skein
+var brush_size := 1
+const MIN_BRUSH_SIZE := 1
+const MAX_BRUSH_SIZE := 10
 
 func _ready() -> void:
-	SignalBus.skein_selected.connect(func(skein): cursor_thread = skein)
+	SignalBus.skein_selected.connect(func(skein): thread = skein)
 	SignalBus.canvas_focus_changed.connect(func(focused): can_draw = focused)
+	SignalBus.ui_brush_size_changed.connect(func(size): brush_size = size)
 	
 	bounding_rect = %BackgroundLayer.get_used_rect()
 	
@@ -27,10 +30,15 @@ func _process(delta: float) -> void:
 		return
 	
 	if Input.is_action_pressed("draw", true):
-		active_layer.draw_stitch(cursor_thread, cursor_size, bounding_rect)
+		active_layer.draw_stitch(thread, brush_size, bounding_rect)
+	
 	if Input.is_action_pressed("erase", true):
-		active_layer.erase_stitch(cursor_size, bounding_rect)
+		active_layer.erase_stitch(brush_size, bounding_rect)
+	
 	if Input.is_action_just_pressed("increase-brush-size", true):
-		cursor_size += 1
+		brush_size = mini(brush_size + 1, MAX_BRUSH_SIZE)
+		SignalBus.brush_size_changed.emit(brush_size)
+	
 	if Input.is_action_just_pressed("decrease-brush-size", true):
-		cursor_size -= 1
+		brush_size = maxi(brush_size - 1, MIN_BRUSH_SIZE)
+		SignalBus.brush_size_changed.emit(brush_size)

@@ -19,6 +19,7 @@ signal skein_added_to_palette(skein: Skein)
 signal skein_swapped(old_skein: Skein, new_skein: Skein)
 signal skein_removed_from_palette(skein: Skein)
 signal symbol_swapped(skein: Skein, old_symbol: Symbol, new_symbol: Symbol)
+signal brush_size_changed(size: int)
 
 ## Content swapping signals
 signal new_canvas_opened(size: Rect2i)
@@ -44,3 +45,6 @@ signal layer_removed(layer: TileMapLayer, new_snapshot: bool)
 ## Snapshot-generating signals
 signal thread_layer_added(layer: ThreadLayer, new_snapshot: bool)
 signal thread_layer_removed(layer: ThreadLayer, new_snapshot: bool)
+
+## UI driven signals
+signal ui_brush_size_changed(size: int)

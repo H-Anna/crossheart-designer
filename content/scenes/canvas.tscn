@@ -23,5 +23,6 @@ collision_enabled = false
 navigation_enabled = false
 
 [node name="CursorLayer" parent="." instance=ExtResource("4_e8dy0")]
+unique_name_in_owner = true
 
 [node name="Layer" parent="." instance=ExtResource("4_gu1yr")]
