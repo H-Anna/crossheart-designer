@@ -1,17 +1,19 @@
 class_name XStitchCanvas
 extends Node2D
 
+@export var layer_scene : PackedScene
 var can_draw := true
-var active_layer : XStitchMasterLayer
 var bounding_rect : Rect2i
+var active_layer : XStitchMasterLayer
 
 var thread : Skein
 var brush_size := 1
 
 func _ready() -> void:
 	SignalBus.skein_selected.connect(func(skein): thread = skein)
+	SignalBus.skein_swapped.connect(func(old, new): thread = new)
 	SignalBus.canvas_focus_changed.connect(func(focused): can_draw = focused)
-	SignalBus.ui_brush_size_changed.connect(func(size): brush_size = size)
+	SignalBus.brush_size_changed.connect(func(size): brush_size = size)
 	
 	bounding_rect = %BackgroundLayer.get_used_rect()
 	
@@ -32,11 +34,9 @@ func _process(delta: float) -> void:
 	
 	if Input.is_action_pressed("erase", true):
 		active_layer.erase_stitch(brush_size, bounding_rect)
-	
-	if Input.is_action_just_pressed("increase-brush-size", true):
-		brush_size = mini(brush_size + 1, Globals.MAX_BRUSH_SIZE)
-		SignalBus.brush_size_changed.emit(brush_size)
-	
-	if Input.is_action_just_pressed("decrease-brush-size", true):
-		brush_size = maxi(brush_size - 1, Globals.MIN_BRUSH_SIZE)
-		SignalBus.brush_size_changed.emit(brush_size)
+
+func add_layer() -> void:
+	var data = ThreadLayer.new()
+	var layer = layer_scene.instantiate() as XStitchMasterLayer
+	%LayersContainer.add_child(layer)
+	layer.data = data

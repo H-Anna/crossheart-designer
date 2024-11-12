@@ -12,6 +12,7 @@ script = ExtResource("1_xnw1r")
 
 [node name="FullStitchLayer" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
+texture_filter = 1
 tile_set = ExtResource("1_x2u8v")
 collision_enabled = false
 navigation_enabled = false
@@ -19,6 +20,7 @@ script = ExtResource("3_w0ilw")
 
 [node name="SmallStitchLayer" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
+texture_filter = 1
 tile_set = ExtResource("2_yayt2")
 collision_enabled = false
 navigation_enabled = false
@@ -26,6 +28,7 @@ script = ExtResource("3_w0ilw")
 
 [node name="KnotLayer" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
+texture_filter = 1
 position = Vector2(-4, -4)
 tile_set = ExtResource("3_cfrus")
 collision_enabled = false

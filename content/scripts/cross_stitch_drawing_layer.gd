@@ -6,6 +6,9 @@ const CURSOR_TILE := Vector2i(0,0)
 var _modulated_tile_cache: Dictionary
 var is_dirty := false
 
+func _ready() -> void:
+	SignalBus.skein_swapped.connect(_swap_cells_with_skein)
+
 func draw_stitch(thread: Skein, cell: Vector2i, bounding_rect: Rect2i, size: int) -> void:
 	var offsets = tile_set.get_pattern(size - 1).get_used_cells().map(func(x): return x - Globals.BRUSH_CENTER_POINT[size])
 	for coord in offsets:
@@ -49,3 +52,13 @@ func _erase_cells_with_skein(skein: Skein):
 			#is_dirty = true
 		_modulated_tile_cache.erase(skein)
 		#SignalBus.layer_changed.emit(self, false)
+
+func _swap_cells_with_skein(old_skein: Skein, new_skein: Skein):
+	if !_modulated_tile_cache.has(old_skein):
+		return
+	
+	var old_alt_id = _modulated_tile_cache[old_skein]
+	for cell in get_used_cells_by_id(0, CURSOR_TILE, old_alt_id):
+		_set_cell_modulated(cell, new_skein)
+	
+	#SignalBus.layer_changed.emit(self, false)

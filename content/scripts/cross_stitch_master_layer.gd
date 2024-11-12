@@ -1,6 +1,7 @@
 class_name XStitchMasterLayer
 extends Node2D
 
+var data: ThreadLayer
 var active := false
 
 func draw_stitch(thread: Skein, size: int, bounding_rect: Rect2i):

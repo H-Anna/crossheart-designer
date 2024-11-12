@@ -22,7 +22,10 @@ tile_set = ExtResource("1_4o8a3")
 collision_enabled = false
 navigation_enabled = false
 
-[node name="CursorLayer" parent="." instance=ExtResource("4_e8dy0")]
+[node name="LayersContainer" type="Node2D" parent="."]
 unique_name_in_owner = true
 
-[node name="Layer" parent="." instance=ExtResource("4_gu1yr")]
+[node name="Layer" parent="LayersContainer" instance=ExtResource("4_gu1yr")]
+
+[node name="CursorLayer" parent="." instance=ExtResource("4_e8dy0")]
+unique_name_in_owner = true

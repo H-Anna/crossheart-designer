@@ -45,6 +45,3 @@ signal layer_removed(layer: TileMapLayer, new_snapshot: bool)
 ## Snapshot-generating signals
 signal thread_layer_added(layer: ThreadLayer, new_snapshot: bool)
 signal thread_layer_removed(layer: ThreadLayer, new_snapshot: bool)
-
-## UI driven signals
-signal ui_brush_size_changed(size: int)
