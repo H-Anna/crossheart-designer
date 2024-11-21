@@ -28,7 +28,7 @@ func _load_colors(palette: Palette) -> void:
 	## TODO: refactor
 	# Loads ui elements
 	var selected = false
-	var selected_skein = palette.get_selected_skein()
+	var selected_skein = palette.selected_skein
 	for skein in palette.colors:
 		var symbol = palette.colors_to_symbols_dict.get(skein)
 		var ui = skein_ui.instantiate()

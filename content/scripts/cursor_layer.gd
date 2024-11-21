@@ -11,17 +11,25 @@ var _active_cell : Vector2i
 var _brush_size : int
 # TODO: connect thread select signal
 
+var cmd : Command
+
 func _ready() -> void:
 	_brush_size = canvas.brush_size
 
 func _process(delta: float) -> void:
-	_update_cursor()
-
-func _update_cursor():
+	if !canvas.can_draw:
+		return
+	
 	# Don't draw anything if no thread is selected.
 	if !canvas.thread:
 		return
 	
+	#_update_cursor()
+
+
+
+
+func _update_cursor():
 	# Get mouse position on tilemap
 	var current_cell = %FullStitchLayer.local_to_map(get_global_mouse_position())
 	

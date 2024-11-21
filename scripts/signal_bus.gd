@@ -52,3 +52,6 @@ signal thread_layer_selected(layer: ThreadLayer)
 signal thread_layer_lock_changed(layer: ThreadLayer)
 signal thread_layer_visibility_changed(layer: ThreadLayer)
 signal thread_layer_changed(layer: ThreadLayer)
+
+## Command signals
+signal command_created(command: Command)

@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://s1bmq54ffm5f"]
+[gd_scene load_steps=6 format=3 uid="uid://s1bmq54ffm5f"]
 
 [ext_resource type="PackedScene" uid="uid://bx0h6obdnsah7" path="res://user_interface/scenes/user_interface.tscn" id="1_4xewr"]
 [ext_resource type="PackedScene" uid="uid://dj1tyn5td2irm" path="res://content/scenes/canvas.tscn" id="2_3bs1w"]
 [ext_resource type="Script" path="res://scripts/palette.gd" id="3_y01og"]
 [ext_resource type="Script" path="res://scripts/scheme_parser.gd" id="4_xmgfy"]
+[ext_resource type="Script" path="res://commands/command_manager.gd" id="5_wivus"]
 
 [node name="Main" type="Node"]
 
@@ -17,3 +18,6 @@ script = ExtResource("3_y01og")
 script = ExtResource("4_xmgfy")
 latest_scheme_path = "res://schemes/latest.json"
 scheme_path = "res://schemes/scheme_0_5_0.json"
+
+[node name="CommandManager" type="Node" parent="."]
+script = ExtResource("5_wivus")

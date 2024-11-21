@@ -33,8 +33,8 @@ func _ready() -> void:
 	SignalBus.layer_added.connect(store_layer)
 	SignalBus.layer_removed.connect(drop_layer)
 	
-	SignalBus.undo_pressed.connect(roll_back)
-	SignalBus.redo_pressed.connect(roll_forward)
+	#SignalBus.undo_pressed.connect(roll_back)
+	#SignalBus.redo_pressed.connect(roll_forward)
 
 func initialize(_parser: SchemeParser, _content: Dictionary):
 	scheme_parser = _parser

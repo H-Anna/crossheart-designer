@@ -9,13 +9,27 @@ var is_dirty := false
 func _ready() -> void:
 	SignalBus.skein_swapped.connect(_swap_cells_with_skein)
 
-func draw_stitch(thread: Skein, cell: Vector2i, bounding_rect: Rect2i, size: int) -> void:
-	var offsets = tile_set.get_pattern(size - 1).get_used_cells().map(func(x): return x - Globals.BRUSH_CENTER_POINT[size])
-	for coord in offsets:
-		if bounding_rect.has_point(cell + coord):
-			_set_cell_modulated(cell + coord, thread)
-			is_dirty = true
+func get_mouse_position():
+	return local_to_map(get_global_mouse_position())
 
+func draw_pixel(thread: Skein, cell: Vector2i):
+	_set_cell_modulated(cell, thread)
+
+func erase_pixel(cell: Vector2i):
+	erase_cell(cell)
+
+func get_stitch_at(cell: Vector2i):
+	return _modulated_tile_cache.find_key(get_cell_alternative_tile(cell))
+
+func get_brush_area(center: Vector2i, size: int):
+	return tile_set.get_pattern(size - 1).get_used_cells().map(func(x): return x - Globals.BRUSH_CENTER_POINT[size] + center)
+
+func draw_stitch(thread: Skein, cell: Vector2i, bounding_rect: Rect2i, size: int) -> void:
+	var pixels = get_brush_area(cell, size)
+	for pixel in pixels:
+		if bounding_rect.has_point(pixel):
+			_set_cell_modulated(pixel, thread)
+			is_dirty = true
 
 func erase_stitch(cell: Vector2i, bounding_rect: Rect2i, size: int) -> void:
 	var offsets = tile_set.get_pattern(size - 1).get_used_cells().map(func(x): return x - Globals.BRUSH_CENTER_POINT[size])

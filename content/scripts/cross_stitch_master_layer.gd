@@ -10,6 +10,12 @@ func _ready() -> void:
 	SignalBus.thread_layer_visibility_changed.connect(_show_hide_layer)
 	SignalBus.thread_layer_changed.emit(_layer_changed)
 
+func get_current_cell():
+	return get_active_layer().get_mouse_position()
+
+func get_active_layer() -> XStitchDrawingLayer:
+	return %FullStitchLayer #TODO: return based on active tool
+
 func draw_stitch(thread: Skein, size: int, bounding_rect: Rect2i):
 	# TODO: draw on layer based on tool, let layer handle drawing
 	if !thread:
