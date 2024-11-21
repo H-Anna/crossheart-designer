@@ -7,13 +7,13 @@ var current_command_idx : int = -1
 func _ready() -> void:
 	SignalBus.command_created.connect(execute_command)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_undo", true):
 		undo()
 	elif Input.is_action_just_pressed("ui_redo", true):
 		redo()
 
-## 
+## Executes the incoming command and saves it to the command history.
 func execute_command(cmd: Command):
 	if current_command_idx < command_history.size() - 1:
 		command_history.resize(current_command_idx + 1)

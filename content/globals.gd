@@ -1,5 +1,7 @@
 extends Node
 
+var canvas: XStitchCanvas
+
 const MIN_BRUSH_SIZE := 1
 const MAX_BRUSH_SIZE := 8
 const BRUSH_CENTER_POINT: Dictionary = {

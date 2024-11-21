@@ -6,13 +6,13 @@ extends Button
 @export var locked_icon : CompressedTexture2D
 @export var unlocked_icon : CompressedTexture2D
 
-var data : ThreadLayer:
+var data : XStitchMasterLayer:
 	set(value):
 		data = value
 		_update_ui()
 
-#func _ready() -> void:
-	#SignalBus.thread_layer_removed.connect(queue_free.unbind(1))
+func _ready() -> void:
+	pass
 
 func set_context_menu(context_menu: Node) -> void:
 	find_child("RMB").context_menu = context_menu
@@ -26,14 +26,19 @@ func rename_layer() -> void:
 
 func _update_ui():
 	text = data.display_name
-	_update_visibility_button()
-	_update_lock_button()
+	update_visibility_button()
+	update_lock_button()
+	update_display_name()
 
 func _on_name_field_text_submitted(new_text: String) -> void:
 	new_text = new_text.strip_edges()
 	if !new_text.is_empty():
-		data.display_name = new_text
-	text = data.display_name
+		var cmd = RenameLayerCommand.new()
+		cmd.layer = data
+		cmd.button = self
+		cmd.new_name = new_text
+		SignalBus.command_created.emit(cmd)
+		
 	%NameField.hide()
 
 func _on_name_field_focus_exited() -> void:
@@ -41,27 +46,31 @@ func _on_name_field_focus_exited() -> void:
 	%NameField.hide()
 
 func _on_visibility_button_pressed() -> void:
-	data.visible = !data.visible
-	_update_visibility_button()
-	SignalBus.thread_layer_visibility_changed.emit(data)
+	var cmd = ToggleLayerVisibleCommand.new()
+	cmd.layer = data
+	cmd.button = self
+	SignalBus.command_created.emit(cmd)
 
-func _update_visibility_button():
+func update_visibility_button():
 	if data.visible:
 		%VisibilityButton.icon = show_icon
 	else:
 		%VisibilityButton.icon = hide_icon
 
 func _on_lock_button_pressed() -> void:
-	data.locked = !data.locked
-	_update_lock_button()
-	SignalBus.thread_layer_lock_changed.emit(data)
-	SignalBus.thread_layer_changed.emit(data)
+	var cmd = ToggleLayerLockedCommand.new()
+	cmd.layer = data
+	cmd.button = self
+	SignalBus.command_created.emit(cmd)
 
-func _update_lock_button():
+func update_lock_button():
 	if data.locked:
 		%LockButton.icon = locked_icon
 	else:
 		%LockButton.icon = unlocked_icon
+
+func update_display_name():
+	text = data.display_name
 
 func _on_pressed() -> void:
 	data.active = true

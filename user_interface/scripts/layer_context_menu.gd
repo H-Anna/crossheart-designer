@@ -9,10 +9,15 @@ func _on_id_pressed(id: int) -> void:
 		RENAME:
 			caller.rename_layer()
 		DELETE:
-			SignalBus.thread_layer_removed.emit(caller.data)
+			var cmd = RemoveLayerCommand.new()
+			cmd.layer = caller.data
+			SignalBus.command_created.emit(cmd)
+			#SignalBus.thread_layer_removed.emit(caller.data)
 			pass
 		ADD_LAYER:
-			SignalBus.thread_layer_added.emit(ThreadLayer.new())
+			var cmd = AddLayerCommand.new()
+			SignalBus.command_created.emit(cmd)
+			#SignalBus.thread_layer_added.emit(ThreadLayer.new())
 			pass
 		_:
 			print_debug("Unhandled id: %s" % id)

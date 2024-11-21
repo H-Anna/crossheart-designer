@@ -14,7 +14,7 @@ var _drawing : bool = false
 func _ready() -> void:
 	_brush_size = canvas.brush_size
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if !canvas.can_draw:
 		return
 	
@@ -23,7 +23,8 @@ func _process(delta: float) -> void:
 		return
 	
 	if Input.is_action_just_pressed("draw"):
-		_drawing = true
+		if !canvas.active_layer.locked && canvas.active_layer.visible:
+			_drawing = true
 	elif Input.is_action_just_released("draw"):
 		_drawing = false
 	
