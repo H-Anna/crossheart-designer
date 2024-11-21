@@ -5,13 +5,11 @@ extends XStitchMasterLayer
 ## to the user.
 
 ## The canvas to which this layer belongs.
-@onready var canvas : XStitchCanvas = get_parent()
-
+@onready var canvas : XStitchCanvas = $"../.."
 var _active_cell : Vector2i
 var _brush_size : int
+var _drawing : bool = false
 # TODO: connect thread select signal
-
-var cmd : Command
 
 func _ready() -> void:
 	_brush_size = canvas.brush_size
@@ -24,10 +22,12 @@ func _process(delta: float) -> void:
 	if !canvas.thread:
 		return
 	
-	#_update_cursor()
-
-
-
+	if Input.is_action_just_pressed("draw"):
+		_drawing = true
+	elif Input.is_action_just_released("draw"):
+		_drawing = false
+	
+	_update_cursor()
 
 func _update_cursor():
 	# Get mouse position on tilemap
@@ -39,7 +39,8 @@ func _update_cursor():
 	if _active_cell == current_cell && _brush_size == canvas.brush_size:
 		return
 	
-	%FullStitchLayer.erase_all()
+	if !_drawing:
+		%FullStitchLayer.erase_all()
 	_active_cell = current_cell
 	_brush_size = canvas.brush_size
 	

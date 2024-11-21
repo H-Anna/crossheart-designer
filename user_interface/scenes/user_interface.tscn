@@ -367,7 +367,7 @@ script = ExtResource("15_f27v3")
 unique_name_in_owner = true
 handle_input_locally = false
 gui_disable_input = true
-size = Vector2i(2, 2)
+size = Vector2i(1129, 659)
 render_target_update_mode = 4
 
 [node name="Canvas" parent="VBoxContainer/HSplitContainer/SubViewportContainer/CanvasViewport" instance=ExtResource("17_ul50l")]

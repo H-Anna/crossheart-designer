@@ -26,5 +26,5 @@ navigation_enabled = false
 [node name="LayersContainer" type="Node2D" parent="."]
 unique_name_in_owner = true
 
-[node name="CursorLayer" parent="." instance=ExtResource("4_e8dy0")]
+[node name="CursorLayer" parent="LayersContainer" instance=ExtResource("4_e8dy0")]
 unique_name_in_owner = true
