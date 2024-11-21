@@ -69,6 +69,7 @@ icon = ExtResource("3_buf6k")
 flat = true
 expand_icon = true
 
+[connection signal="pressed" from="." to="." method="_on_pressed"]
 [connection signal="pressed" from="RMB" to="RMB" method="_on_pressed"]
 [connection signal="focus_exited" from="HBoxContainer/NameField" to="." method="_on_name_field_focus_exited"]
 [connection signal="text_submitted" from="HBoxContainer/NameField" to="." method="_on_name_field_text_submitted"]

@@ -11,6 +11,9 @@ var data : ThreadLayer:
 		data = value
 		_update_ui()
 
+#func _ready() -> void:
+	#SignalBus.thread_layer_removed.connect(queue_free.unbind(1))
+
 func set_context_menu(context_menu: Node) -> void:
 	find_child("RMB").context_menu = context_menu
 
@@ -40,6 +43,7 @@ func _on_name_field_focus_exited() -> void:
 func _on_visibility_button_pressed() -> void:
 	data.visible = !data.visible
 	_update_visibility_button()
+	SignalBus.thread_layer_visibility_changed.emit(data)
 
 func _update_visibility_button():
 	if data.visible:
@@ -50,9 +54,15 @@ func _update_visibility_button():
 func _on_lock_button_pressed() -> void:
 	data.locked = !data.locked
 	_update_lock_button()
+	SignalBus.thread_layer_lock_changed.emit(data)
+	SignalBus.thread_layer_changed.emit(data)
 
 func _update_lock_button():
 	if data.locked:
 		%LockButton.icon = locked_icon
 	else:
 		%LockButton.icon = unlocked_icon
+
+func _on_pressed() -> void:
+	data.active = true
+	SignalBus.thread_layer_selected.emit(data)

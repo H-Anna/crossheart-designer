@@ -15,3 +15,5 @@ script = ExtResource("3_y01og")
 
 [node name="SchemeParser" type="Node" parent="."]
 script = ExtResource("4_xmgfy")
+latest_scheme_path = "res://schemes/latest.json"
+scheme_path = "res://schemes/scheme_0_5_0.json"

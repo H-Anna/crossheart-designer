@@ -14,7 +14,7 @@ var threads: Array[Skein]:
 		threads = value
 		_change_threads()
 
-var _created_buttons: Array[Node]
+var _created_buttons: Array[ThreadButton]
 
 func _ready() -> void:
 	threads = SkeinsAtlas.get_all_skeins()

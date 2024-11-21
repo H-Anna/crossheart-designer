@@ -11,8 +11,6 @@ func _on_id_pressed(id: int) -> void:
 		DELETE:
 			SignalBus.thread_layer_removed.emit(caller.data)
 			pass
-			#%PaletteMenu.hide()
-			#%SwapThreadMenu.show()
 		ADD_LAYER:
 			SignalBus.thread_layer_added.emit(ThreadLayer.new())
 			pass

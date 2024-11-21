@@ -1,13 +1,55 @@
 class_name Snapshot
 extends Resource
 
+## Stores the current state of the program.
+## Contents can be saved to file or loaded.
+
 var state : Dictionary
 
 func dump_state():
 	print(state)
 
-func store_data(data : Dictionary):
-	state = data
+#func store_data(data: Variant, path: String):
+	#pass
+
+func store_data(data: Variant, path: String):
+	var path_elems = path.split(Globals.DATA_PATH_DELIMITER, false)
+	var substate = state
+	var get_element_index = func(input: String, _substate):
+		var elem = input.split(Globals.DATA_EQ_DELIMITER)
+		for i in range(_substate.size()):
+			if _substate[i][elem[0]] == elem[1]:
+				return i
+		return -1
+	
+	# "content.canvas" -> state.content.canvas
+	# "layers.id:zJF25gw" -> content.layers.[the element with the id]
+	for i in range(path_elems.size()):
+		var last = i == path_elems.size() - 1
+		var keyed_element = path_elems[i].contains(Globals.DATA_EQ_DELIMITER)
+		
+		if !last:
+			if keyed_element:
+				var idx = get_element_index.call(path_elems[i], substate)
+				if idx == -1:
+					var d = {}
+					substate.append({})
+					substate = substate.back()
+				else:
+					substate = substate[idx]
+			else:
+				substate = substate.get_or_add(path_elems[i], {})
+		else:
+			if keyed_element:
+				var idx = get_element_index.call(path_elems[i], substate)
+				if idx == -1:
+					substate.append(data)
+				else:
+					substate[idx] = data
+			else:
+				substate[path_elems[i]] = data
+	
+	print(state)
 
 func store_palette(palette: Palette):
 	state["palette"] = palette.serialize()

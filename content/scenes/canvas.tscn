@@ -4,10 +4,11 @@
 [ext_resource type="Script" path="res://content/scripts/cross_stitch_canvas.gd" id="1_ncd2v"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="2_o3cl0"]
 [ext_resource type="PackedScene" uid="uid://nxbfjf30u43n" path="res://content/scenes/cursor_layer.tscn" id="4_e8dy0"]
-[ext_resource type="PackedScene" uid="uid://mqe0068ic2xw" path="res://content/scenes/layer.tscn" id="4_gu1yr"]
+[ext_resource type="PackedScene" uid="uid://mqe0068ic2xw" path="res://content/scenes/master_layer.tscn" id="4_gu1yr"]
 
 [node name="Canvas" type="Node2D"]
 script = ExtResource("1_ncd2v")
+layer_scene = ExtResource("4_gu1yr")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(576, 324)
@@ -24,8 +25,6 @@ navigation_enabled = false
 
 [node name="LayersContainer" type="Node2D" parent="."]
 unique_name_in_owner = true
-
-[node name="Layer" parent="LayersContainer" instance=ExtResource("4_gu1yr")]
 
 [node name="CursorLayer" parent="." instance=ExtResource("4_e8dy0")]
 unique_name_in_owner = true

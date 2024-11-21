@@ -12,3 +12,6 @@ const BRUSH_CENTER_POINT: Dictionary = {
 	7: Vector2i(3,3),
 	8: Vector2i(3,3),
 }
+
+const DATA_PATH_DELIMITER = "."
+const DATA_EQ_DELIMITER = ":"

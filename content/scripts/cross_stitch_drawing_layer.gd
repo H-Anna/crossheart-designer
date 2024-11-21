@@ -1,7 +1,7 @@
 class_name XStitchDrawingLayer
 extends TileMapLayer
 
-const CURSOR_TILE := Vector2i(0,0)
+var CURSOR_TILE := Vector2i(0,0)
 
 var _modulated_tile_cache: Dictionary
 var is_dirty := false
@@ -62,3 +62,17 @@ func _swap_cells_with_skein(old_skein: Skein, new_skein: Skein):
 		_set_cell_modulated(cell, new_skein)
 	
 	#SignalBus.layer_changed.emit(self, false)
+
+func serialize():
+	var data: Array[Dictionary]
+	for thread in _modulated_tile_cache:
+		var threads_coords_dict: Dictionary
+		var alt_id = _modulated_tile_cache[thread]
+		threads_coords_dict.get_or_add("thread_id", thread.get_identifying_name())
+		threads_coords_dict.get_or_add("tile", CURSOR_TILE)
+		threads_coords_dict.get_or_add("coordinates", get_used_cells_by_id(0, CURSOR_TILE, alt_id))
+		data.append(threads_coords_dict)
+	return data
+
+func deserialize():
+	pass

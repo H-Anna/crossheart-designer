@@ -10,8 +10,8 @@ signal layer_ui_changed()
 signal skein_swap_requested(skein: Skein)
 
 ## View signals
-#signal zoom_level_changed(value: float)
 signal canvas_focus_changed(focused: bool)
+signal toast_notification(message: String)
 
 ## Tool signals
 signal skein_selected(skein: Skein)
@@ -34,6 +34,9 @@ signal redo_pressed()
 signal snapshot_created(snapshot: Snapshot)
 signal current_snapshot_changed(snapshot: Snapshot)
 
+signal store_state(data: Variant, path: String)
+#signal restore_state()
+
 ## Snapshot-generating signals
 signal palette_changed(palette: Palette, new_snapshot: bool)
 signal canvas_changed(canvas: Canvas, new_snapshot: bool)
@@ -45,3 +48,7 @@ signal layer_removed(layer: TileMapLayer, new_snapshot: bool)
 ## Snapshot-generating signals
 signal thread_layer_added(layer: ThreadLayer, new_snapshot: bool)
 signal thread_layer_removed(layer: ThreadLayer, new_snapshot: bool)
+signal thread_layer_selected(layer: ThreadLayer)
+signal thread_layer_lock_changed(layer: ThreadLayer)
+signal thread_layer_visibility_changed(layer: ThreadLayer)
+signal thread_layer_changed(layer: ThreadLayer)

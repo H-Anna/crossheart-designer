@@ -1,6 +1,8 @@
 class_name SnapshotManager
 extends Node
 
+## Responsible for managing [[Snapshot]]s, restoring and saving them.
+
 @export_range(1, 100) var history_size : int = 10
 # A history of snapshots. The last snapshot is always the current one.
 var snapshot_history : Array[Snapshot]
@@ -17,6 +19,8 @@ var current_snapshot : Snapshot :
 		return snapshot_history[history_index]
 
 func _ready() -> void:
+	SignalBus.store_state.connect(store_data)
+	
 	SignalBus.scheme_parser_ready.connect(initialize)
 	SignalBus.save_requested.connect(save_to_file)
 	SignalBus.load_requested.connect(load_from_file)
@@ -77,10 +81,10 @@ func roll_forward():
 	if old_index != history_index:
 		SignalBus.current_snapshot_changed.emit(current_snapshot)
 
-func store_data(data: Dictionary, new_snapshot: bool = true):
+func store_data(data: Variant, path: String, new_snapshot: bool = true):
 	if new_snapshot:
 		create_snapshot()
-	current_snapshot.store_data(data)
+	current_snapshot.store_data(data, path)
 
 func store_palette(palette: Palette, new_snapshot: bool = true):
 	if new_snapshot:
@@ -131,7 +135,7 @@ func load_from_file(filename: String):
 		return
 	
 	result = scheme_parser.get_result()
-	store_data(result)
+	store_data(result, "")
 	clear_history()
 	
 	SignalBus.current_snapshot_changed.emit(current_snapshot)
