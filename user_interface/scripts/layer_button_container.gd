@@ -13,7 +13,7 @@ var _created_layer_buttons : Array[LayerButton]
 
 func _ready() -> void:
 	SignalBus.layer_added.connect(add_layer)
-	SignalBus.thread_layer_removed.connect(remove_layer)
+	SignalBus.layer_removed.connect(remove_layer)
 	pass
 
 func get_layer_count() -> int:
@@ -23,15 +23,9 @@ func add_layer(layer: XStitchMasterLayer) -> void:
 	thread_layers.append(layer)
 	var btn = _create_layer_button(layer)
 	_created_layer_buttons.append(btn)
-	_change_layers()
+	#_change_layers()
 
-#func add_layer(layer: ThreadLayer) -> void:
-	#thread_layers.append(layer)
-	#var btn = _create_layer_button(layer)
-	#_created_layer_buttons.append(btn)
-	##_change_layers()
-
-func remove_layer(layer: ThreadLayer) -> void:
+func remove_layer(layer: XStitchMasterLayer) -> void:
 	thread_layers.erase(layer)
 	for btn in _created_layer_buttons:
 		if btn.data == layer:
@@ -51,7 +45,6 @@ func _change_layers() -> void:
 
 func _create_layer_button(data: XStitchMasterLayer) -> LayerButton:
 	var btn = layer_button.instantiate() as LayerButton
-	#_created_layer_buttons.append(btn)
 	add_child(btn)
 	btn.data = data
 	btn.pressed.connect(on_layer_button_clicked.bind(btn))

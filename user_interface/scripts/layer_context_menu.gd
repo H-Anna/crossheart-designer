@@ -11,14 +11,11 @@ func _on_id_pressed(id: int) -> void:
 		DELETE:
 			var cmd = RemoveLayerCommand.new()
 			cmd.layer = caller.data
-			cmd.button = caller
 			SignalBus.command_created.emit(cmd)
-			#SignalBus.thread_layer_removed.emit(caller.data)
 			pass
 		ADD_LAYER:
 			var cmd = AddLayerCommand.new()
 			SignalBus.command_created.emit(cmd)
-			#SignalBus.thread_layer_added.emit(ThreadLayer.new())
 			pass
 		_:
 			print_debug("Unhandled id: %s" % id)

@@ -94,3 +94,4 @@ func remove_layer(layer: XStitchMasterLayer) -> void:
 	%LayersContainer.remove_child(layer)
 	if active:
 		active_layer = %LayersContainer.get_child(idx % %LayersContainer.get_child_count())
+	SignalBus.layer_removed.emit(layer)
