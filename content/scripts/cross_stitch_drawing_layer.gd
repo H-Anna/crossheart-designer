@@ -30,10 +30,10 @@ func draw_stitch(thread: Skein, cell: Vector2i, bounding_rect: Rect2i, size: int
 			_set_cell_modulated(pixel, thread)
 
 func erase_stitch(cell: Vector2i, bounding_rect: Rect2i, size: int) -> void:
-	var offsets = tile_set.get_pattern(size - 1).get_used_cells().map(func(x): return x - Globals.BRUSH_CENTER_POINT[size])
-	for coord in offsets:
-		if bounding_rect.has_point(cell + coord):
-			erase_cell(cell + coord)
+	var pixels = get_brush_area(cell, size)
+	for pixel in pixels:
+		if bounding_rect.has_point(pixel):
+			erase_cell(pixel)
 
 func erase_all():
 	for cell in get_used_cells():

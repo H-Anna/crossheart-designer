@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://deick3urc5kcx"
-path="res://.godot/imported/sprites.png-4ccbd8259ebc1e8488fec7711c8727a8.ctex"
+uid="uid://b8sa0ghfu7nfy"
+path="res://.godot/imported/knot8.png-e7ba6ad304fd77d346ce556cb9b7de72.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites.png"
-dest_files=["res://.godot/imported/sprites.png-4ccbd8259ebc1e8488fec7711c8727a8.ctex"]
+source_file="res://content/resources/knot8.png"
+dest_files=["res://.godot/imported/knot8.png-e7ba6ad304fd77d346ce556cb9b7de72.ctex"]
 
 [params]
 

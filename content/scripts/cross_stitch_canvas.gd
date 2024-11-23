@@ -77,11 +77,13 @@ func _update_command():
 	if _cmd is BrushStrokeCommand:
 		var pixels = _cmd.layer.get_brush_area(point, brush_size)
 		for pixel in pixels:
+			_cmd.previous_colors.get_or_add(pixel, _cmd.layer.get_stitch_at(pixel))
 			_cmd.pixels_to_draw.get_or_add(pixel, _cmd.layer.CURSOR_TILE)
 			_cmd.layer.draw_pixel(thread, pixel)
 	if _cmd is EraseCommand:
 		var pixels = _cmd.layer.get_brush_area(point, brush_size)
 		for pixel in pixels:
+			_cmd.previous_colors.get_or_add(pixel, _cmd.layer.get_stitch_at(pixel))
 			_cmd.pixels_to_erase.get_or_add(pixel, _cmd.layer.CURSOR_TILE)
 			_cmd.layer.erase_pixel(pixel)
 

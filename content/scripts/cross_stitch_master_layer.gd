@@ -17,7 +17,7 @@ var display_name : String = "New Layer"
 var locked : bool = false
 
 func _ready() -> void:
-	#name = id
+	name = id
 	pass
 
 func is_active():
@@ -54,9 +54,6 @@ func erase_stitch(size: int, bounding_rect: Rect2i):
 	%FullStitchLayer.erase_stitch(pos, bounding_rect, size)
 	pass
 
-func _layer_changed(layer: ThreadLayer) -> void:
-	serialize()
-
 func serialize():
 	var data = {}
 	data.get_or_add("id", id)
@@ -70,6 +67,7 @@ func serialize():
 
 func deserialize(data: Dictionary) -> void:
 	id = data.get("id", "ERR")
+	name = id
 	display_name = data.get("display_name")
 	visible = data.get("visible", true)
 	locked = data.get("locked", false)

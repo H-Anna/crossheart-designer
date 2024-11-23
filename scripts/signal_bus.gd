@@ -25,11 +25,6 @@ signal new_canvas_opened(size: Rect2i)
 signal save_requested(filename: String)
 signal load_requested(filename: String)
 
-## Snapshot-generating signals
-signal palette_changed(palette: Palette, new_snapshot: bool)
-signal canvas_changed(canvas: Canvas, new_snapshot: bool)
-signal canvas_resized(canvas: Canvas, new_snapshot: bool)
-
 
 ## Layer signals
 signal layer_selected(layer: XStitchMasterLayer)

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8sa0ghfu7nfy"
-path="res://.godot/imported/knot8.png-dbb2103d1c3e25dd469eeb5b72e76755.ctex"
+uid="uid://dgq87hoi01qxv"
+path="res://.godot/imported/tile8.png-c831b11276766b4e765ff1bb20790d76.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://knot8.png"
-dest_files=["res://.godot/imported/knot8.png-dbb2103d1c3e25dd469eeb5b72e76755.ctex"]
+source_file="res://content/resources/tile8.png"
+dest_files=["res://.godot/imported/tile8.png-c831b11276766b4e765ff1bb20790d76.ctex"]
 
 [params]
 
