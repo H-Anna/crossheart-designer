@@ -36,3 +36,7 @@ func redo():
 		command_history[current_command_idx].execute();
 	else:
 		print("Nothing to redo.")
+
+func clear_history():
+	command_history.clear()
+	current_command_idx = -1

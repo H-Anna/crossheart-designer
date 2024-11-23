@@ -1,18 +1,18 @@
 class_name Palette
 extends Node
 
-@export var colors : Array[Skein]
+@export var colors : Array[XStitchThread]
 var colors_to_symbols_dict : Dictionary
-var selected_thread : Skein
+var selected_thread : XStitchThread
 
 func _ready() -> void:
 	Globals.palette = self
 	
-	SignalBus.skein_added_to_palette.connect(add_thread_command)
-	SignalBus.skein_removed_from_palette.connect(remove_thread_command)
-	SignalBus.skein_swapped.connect(swap_thread_command)
+	SignalBus.thread_added_to_palette.connect(add_thread_command)
+	SignalBus.thread_removed_from_palette.connect(remove_thread_command)
+	SignalBus.thread_swapped.connect(swap_thread_command)
 	SignalBus.symbol_swapped.connect(swap_symbol)
-	SignalBus.skein_selected.connect(select_skein)
+	SignalBus.thread_selected.connect(select_thread)
 
 func clear():
 	colors.clear()
@@ -20,19 +20,19 @@ func clear():
 	SignalBus.palette_changed.emit(self)
 	SignalBus.palette_ui_changed.emit(self)
 
-func add_thread_command(thread: Skein):
+func add_thread_command(thread: XStitchThread):
 	var cmd = AddThreadCommand.new()
 	cmd.palette = self
 	cmd.thread = thread
 	SignalBus.command_created.emit(cmd)
 
-func remove_thread_command(thread: Skein):
+func remove_thread_command(thread: XStitchThread):
 	var cmd = RemoveThreadCommand.new()
 	cmd.palette = self
 	cmd.thread = thread
 	SignalBus.command_created.emit(cmd)
 
-func swap_thread_command(old_thread: Skein, new_thread: Skein):
+func swap_thread_command(old_thread: XStitchThread, new_thread: XStitchThread):
 	var cmd = SwapThreadCommand.new()
 	cmd.palette = self
 	cmd.old_thread = old_thread
@@ -56,58 +56,58 @@ func deserialize(data: Array):
 	colors.clear()
 	colors_to_symbols_dict.clear()
 	for dict in data:
-		var skein = SkeinsAtlas.get_skein_by_global_id(dict["global_id"])
+		var thread = ThreadsAtlas.get_thread_by_global_id(dict["global_id"])
 		var symbol = SymbolsAtlas.get_symbol_by_global_id(dict["symbol"])
-		colors.append(skein)
-		colors_to_symbols_dict.get_or_add(skein, symbol)
+		colors.append(thread)
+		colors_to_symbols_dict.get_or_add(thread, symbol)
 	SignalBus.palette_ui_changed.emit(self)
 
-func add_skein(skein: Skein):
-	colors.append(skein)
-	colors_to_symbols_dict.get_or_add(skein, SymbolsAtlas.get_random_symbol())
+func add_thread(thread: XStitchThread):
+	colors.append(thread)
+	colors_to_symbols_dict.get_or_add(thread, SymbolsAtlas.get_random_symbol())
 	if !selected_thread:
-		select_skein(skein)
+		select_thread(thread)
 	SignalBus.palette_ui_changed.emit(self)
 
-func remove_skein(skein: Skein):
-	if skein == selected_thread:
+func remove_thread(thread: XStitchThread):
+	if thread == selected_thread:
 		if colors.size() == 1:
 			selected_thread = null
 		else:
-			var idx = colors.find(skein)
+			var idx = colors.find(thread)
 			if idx == 0:
 				selected_thread = colors[idx + 1]
 			else:
 				selected_thread = colors[idx - 1]
 	
-	colors.erase(skein)
-	colors_to_symbols_dict.erase(skein)
+	colors.erase(thread)
+	colors_to_symbols_dict.erase(thread)
 	SignalBus.palette_ui_changed.emit(self)
 
-func select_skein(skein: Skein):
-	selected_thread = skein
+func select_thread(thread: XStitchThread):
+	selected_thread = thread
 
-func swap_skein(old_skein: Skein, new_skein: Skein):
-	# New skein is in skeins -> select new skein, delete old one
-	# New skein is not in skeins -> add the skein
-	# Old skein
-	if !colors.has(new_skein):
-		var idx = colors.find(old_skein)
-		colors.insert(idx, new_skein)
+func swap_thread(old_thread: XStitchThread, new_thread: XStitchThread):
+	# New thread is in threads -> select new thread, delete old one
+	# New thread is not in threads -> add the thread
+	# Old thread
+	if !colors.has(new_thread):
+		var idx = colors.find(old_thread)
+		colors.insert(idx, new_thread)
 		
-	colors_to_symbols_dict.get_or_add(new_skein, colors_to_symbols_dict.get(old_skein))
+	colors_to_symbols_dict.get_or_add(new_thread, colors_to_symbols_dict.get(old_thread))
 	
-	#if old_skein == selected_thread:
-		#selected_thread = new_skein
+	#if old_thread == selected_thread:
+		#selected_thread = new_thread
 	
-	colors.erase(old_skein)
-	colors_to_symbols_dict.erase(old_skein)
-	print_debug("Swapped %s with %s" % [old_skein.id, new_skein.id])
+	colors.erase(old_thread)
+	colors_to_symbols_dict.erase(old_thread)
+	print_debug("Swapped %s with %s" % [old_thread.id, new_thread.id])
 	
 	#SignalBus.palette_changed.emit(self)
 	SignalBus.palette_ui_changed.emit(self)
 
-func swap_symbol(skein: Skein, old_symbol: Symbol, new_symbol: Symbol):
-	colors_to_symbols_dict[skein] = new_symbol
+func swap_symbol(thread: XStitchThread, old_symbol: Symbol, new_symbol: Symbol):
+	colors_to_symbols_dict[thread] = new_symbol
 	SignalBus.palette_changed.emit(self)
 	SignalBus.palette_ui_changed.emit(self)

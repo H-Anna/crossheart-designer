@@ -1,7 +1,7 @@
 class_name BackStitchDrawingLayer
 extends Node2D
 
-# Skein to Array[BackStitch]
+# XStitchThread to Array[BackStitch]
 var _modulated_stitches_cache: Dictionary
 
 func get_mouse_position():

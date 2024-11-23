@@ -8,14 +8,14 @@ extends Window
 @export var symbol_picker_ui : PackedScene
 
 var symbol_to_swap : Symbol
-var skein_for_symbol : Skein
+var thread_for_symbol : XStitchThread
 var swap_callable : Callable
 
 func _ready() -> void:
 	_delete_elements()
 
-func set_values(skein: Skein, symbol: Symbol):
-	skein_for_symbol = skein
+func set_values(thread: XStitchThread, symbol: Symbol):
+	thread_for_symbol = thread
 	symbol_to_swap = symbol
 	if visible:
 		_delete_elements()
@@ -32,7 +32,7 @@ func _load_elements(except: Symbol):
 		var ui = symbol_picker_ui.instantiate()
 		ui.set_script(script)
 		container.add_child(ui)
-		ui.set_values(symbol, skein_for_symbol.color)
+		ui.set_values(symbol, thread_for_symbol.color)
 		ui.symbol_selected.connect(_on_symbol_selected)
 
 func _delete_elements():
@@ -40,7 +40,7 @@ func _delete_elements():
 		child.queue_free()
 
 func _on_symbol_selected(new_symbol: Symbol):
-	swap_callable.call(skein_for_symbol, symbol_to_swap, new_symbol)
+	swap_callable.call(thread_for_symbol, symbol_to_swap, new_symbol)
 	hide()
 
 func _on_visibility_changed() -> void:

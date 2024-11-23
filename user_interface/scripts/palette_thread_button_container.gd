@@ -1,6 +1,6 @@
 extends ThreadButtonContainer
 
-var _selected_thread: Skein
+var _selected_thread: XStitchThread
 
 func _ready() -> void:
 	SignalBus.palette_ui_changed.connect(on_palette_ui_changed)
@@ -18,5 +18,5 @@ func on_palette_ui_changed(palette: Palette):
 
 func on_thread_button_clicked(button: ThreadButton):
 	_selected_thread = button.thread
-	SignalBus.skein_selected.emit(_selected_thread)
+	SignalBus.thread_selected.emit(_selected_thread)
 	print("Thread selected: %s" % _selected_thread.get_identifying_name())

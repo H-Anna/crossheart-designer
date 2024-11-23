@@ -17,7 +17,7 @@ var bounding_rect : Rect2i
 var active_layer : XStitchMasterLayer
 
 ## The currently selected thread.
-var thread : Skein
+var thread : XStitchThread
 
 ## The current brush size.
 var brush_size := 1
@@ -28,7 +28,7 @@ var _cmd : Command
 func _ready() -> void:
 	Globals.canvas = self
 	
-	SignalBus.skein_selected.connect(func(skein): thread = skein)
+	SignalBus.thread_selected.connect(func(_thread): thread = _thread)
 	SignalBus.palette_ui_changed.connect(func(palette): thread = palette.selected_thread)
 	SignalBus.canvas_focus_changed.connect(func(focused): can_draw = focused)
 	SignalBus.brush_size_changed.connect(func(size): brush_size = size)

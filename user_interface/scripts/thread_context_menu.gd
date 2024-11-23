@@ -9,7 +9,7 @@ func _on_id_pressed(id: int) -> void:
 		SWAP:
 			%PaletteMenu.hide()
 			%SwapThreadMenu.show()
-			var target = await SignalBus.skein_swap_requested
+			var target = await SignalBus.thread_swap_requested
 			%SwapThreadConfirmationDialog.confirm(caller.thread, target)
 		CHANGE_SYMBOL:
 			pass #TODO: implement

@@ -1,11 +1,11 @@
 class_name AddThreadCommand
 extends Command
 
-var thread: Skein
+var thread: XStitchThread
 var palette: Palette
 
 func execute():
-	palette.add_skein(thread)
+	palette.add_thread(thread)
 
 func undo():
-	palette.remove_skein(thread)
+	palette.remove_thread(thread)

@@ -1,13 +1,17 @@
-[gd_scene load_steps=25 format=3 uid="uid://ba5px3gj1ix1k"]
+[gd_scene load_steps=29 format=3 uid="uid://ba5px3gj1ix1k"]
 
 [ext_resource type="Script" path="res://user_interface/scripts/file_menu.gd" id="1_ry4fw"]
 [ext_resource type="ButtonGroup" uid="uid://wvnm3xi2ta32" path="res://user_interface/resources/tool_button_group.tres" id="2_pe23o"]
+[ext_resource type="Texture2D" uid="uid://c84tjppmo3qgo" path="res://user_interface/icons/draw-edit-message-pen-pencil-text-svgrepo-com.svg" id="3_1eavc"]
 [ext_resource type="Texture2D" uid="uid://duba8w62maq15" path="res://user_interface/icons/cursor-marquee-svgrepo-com.svg" id="3_75h3m"]
 [ext_resource type="Texture2D" uid="uid://1bjbsjetsgf0" path="res://user_interface/icons/cross-icon.svg" id="4_7oaw5"]
+[ext_resource type="Texture2D" uid="uid://drdr6jh61xxws" path="res://user_interface/icons/fill-svgrepo-com.svg" id="4_jbcuk"]
 [ext_resource type="Texture2D" uid="uid://brvl7shde4jk7" path="res://user_interface/icons/halfcross-ltr-icon.svg" id="5_te4is"]
 [ext_resource type="Texture2D" uid="uid://u3lrn5bi4i3i" path="res://user_interface/icons/smallfullcross-icon.svg" id="6_ltunq"]
+[ext_resource type="Texture2D" uid="uid://dm7g0drk7toco" path="res://user_interface/icons/stamp-2-svgrepo-com.svg" id="6_stqtc"]
 [ext_resource type="Script" path="res://user_interface/scripts/brush_size_spin_box.gd" id="7_1p4c5"]
 [ext_resource type="Texture2D" uid="uid://hjub8afgui3d" path="res://user_interface/icons/plus-svgrepo-com.svg" id="7_l3gsq"]
+[ext_resource type="Texture2D" uid="uid://no3ch4iluw0s" path="res://user_interface/icons/text-svgrepo-com.svg" id="7_mbmrq"]
 [ext_resource type="Script" path="res://user_interface/scripts/palette_thread_button_container.gd" id="7_xol4m"]
 [ext_resource type="PackedScene" uid="uid://skecvvmk7e26" path="res://user_interface/scenes/thread_button.tscn" id="8_j7jxf"]
 [ext_resource type="Script" path="res://user_interface/scripts/add_thread_button_container.gd" id="10_ww78o"]
@@ -117,24 +121,30 @@ alignment = 1
 [node name="Button" type="Button" parent="VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolButtons"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
+tooltip_text = "Draw & Erase"
 toggle_mode = true
+button_pressed = true
 button_group = ExtResource("2_pe23o")
-icon = ExtResource("3_75h3m")
+icon = ExtResource("3_1eavc")
 icon_alignment = 1
 expand_icon = true
 
 [node name="Button2" type="Button" parent="VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolButtons"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
+tooltip_text = "Fill"
+disabled = true
 toggle_mode = true
 button_group = ExtResource("2_pe23o")
-icon = ExtResource("3_75h3m")
+icon = ExtResource("4_jbcuk")
 icon_alignment = 1
 expand_icon = true
 
 [node name="Button3" type="Button" parent="VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolButtons"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
+tooltip_text = "Select"
+disabled = true
 toggle_mode = true
 button_group = ExtResource("2_pe23o")
 icon = ExtResource("3_75h3m")
@@ -144,18 +154,22 @@ expand_icon = true
 [node name="Button4" type="Button" parent="VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolButtons"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
+tooltip_text = "Stamp"
+disabled = true
 toggle_mode = true
 button_group = ExtResource("2_pe23o")
-icon = ExtResource("3_75h3m")
+icon = ExtResource("6_stqtc")
 icon_alignment = 1
 expand_icon = true
 
 [node name="Button5" type="Button" parent="VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolButtons"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
+tooltip_text = "Insert Text"
+disabled = true
 toggle_mode = true
 button_group = ExtResource("2_pe23o")
-icon = ExtResource("3_75h3m")
+icon = ExtResource("7_mbmrq")
 icon_alignment = 1
 expand_icon = true
 
@@ -176,6 +190,7 @@ text = "Mode:"
 
 [node name="OptionButton" type="OptionButton" parent="VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolSettings/ModeSetting"]
 layout_mode = 2
+tooltip_text = "Mode: the type of stitch currently being drawn."
 selected = 0
 item_count = 6
 popup/item_0/text = "Full stitch"
@@ -203,6 +218,7 @@ text = "Size:"
 
 [node name="BrushSizeSpinBox" type="SpinBox" parent="VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolSettings/SizeSetting"]
 layout_mode = 2
+tooltip_text = "Size: the brush/eraser size."
 min_value = 1.0
 max_value = 20.0
 value = 1.0
@@ -247,7 +263,7 @@ thread_button = ExtResource("8_j7jxf")
 [node name="AddButton" type="Button" parent="VBoxContainer/HSplitContainer/SideBar/PaletteMenu/VBoxContainer/ScrollContainer/PaletteContainer"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
-tooltip_text = "Add New Color"
+tooltip_text = "Add New Thread"
 theme_override_styles/normal = SubResource("StyleBoxFlat_jpx58")
 icon = ExtResource("7_l3gsq")
 icon_alignment = 1
@@ -386,11 +402,13 @@ alignment = 1
 [node name="Label" type="Label" parent="VBoxContainer/StatusBar/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
+tooltip_text = "Canvas size: 14.5 x 1.45 inches"
 text = "14.5in x 14.5in"
 
 [node name="Label2" type="Label" parent="VBoxContainer/StatusBar/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
+tooltip_text = "Canvas size: 100 x 100 pixels"
 text = "100 x 100 px"
 
 [node name="NotificationToast" type="PanelContainer" parent="."]

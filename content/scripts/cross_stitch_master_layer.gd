@@ -29,7 +29,7 @@ func get_current_cell():
 func get_active_sublayer() -> XStitchDrawingLayer:
 	return %FullStitchLayer #TODO: return based on active tool
 
-func draw_stitch(thread: Skein, size: int, bounding_rect: Rect2i):
+func draw_stitch(thread: XStitchThread, size: int, bounding_rect: Rect2i):
 	# TODO: draw on layer based on tool, let layer handle drawing
 	if !thread:
 		return # TODO: notification? error?

@@ -2,7 +2,7 @@
 class_name ThreadButton
 extends Button
 
-var thread: Skein:
+var thread: XStitchThread:
 	set(value):
 		thread = value
 		_refresh()

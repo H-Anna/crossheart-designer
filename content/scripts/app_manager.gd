@@ -30,6 +30,7 @@ func _save_to_file(filename: String = _cached_filepath):
 	error = FileHandler.get_error()
 	if error != OK:
 		print_debug("Failed to save data: %s" % error_string(error))
+	_cached_filepath = filename
 
 func _load_from_file(filename: String):
 	if !$SchemeParser.serialization_enabled:
@@ -57,3 +58,4 @@ func _load_from_file(filename: String):
 	Globals.palette.deserialize(result["palette"])
 	Globals.canvas.deserialize(result["canvas"])
 	_cached_filepath = filename
+	$CommandManager.clear_history()

@@ -9,7 +9,7 @@ extends Container
 @export var thread_button: PackedScene
 
 ## The thread data.
-var threads: Array[Skein]:
+var threads: Array[XStitchThread]:
 	set(value):
 		threads = value
 		_change_threads()
@@ -17,7 +17,7 @@ var threads: Array[Skein]:
 var _created_buttons: Array[ThreadButton]
 
 func _ready() -> void:
-	threads = SkeinsAtlas.get_all_skeins()
+	threads = ThreadsAtlas.get_all_threads()
 
 func _change_threads() -> void:
 	# Delete all current
@@ -52,7 +52,7 @@ func _on_search_bar_text_changed(new_text: String) -> void:
 		else:
 			btn.hide()
 
-func _search_matches_thread(text: String, thread: Skein) -> bool:
+func _search_matches_thread(text: String, thread: XStitchThread) -> bool:
 	text = text.to_lower()
 	var id := thread.id.to_lower()
 	var color_name := thread.color_name.to_lower()

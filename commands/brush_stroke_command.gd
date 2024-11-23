@@ -7,7 +7,7 @@ var layer : XStitchDrawingLayer
 var pixels_to_draw : Dictionary
 var previous_colors : Dictionary
 ## The thread to draw with.
-var thread : Skein
+var thread : XStitchThread
 
 func execute():
 	for pixel in pixels_to_draw:

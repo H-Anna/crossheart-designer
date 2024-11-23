@@ -6,12 +6,12 @@ var CURSOR_TILE := Vector2i(0,0)
 var _modulated_tile_cache: Dictionary
 
 func _ready() -> void:
-	SignalBus.skein_swapped.connect(_swap_cells_with_skein)
+	SignalBus.thread_swapped.connect(_swap_cells_with_thread)
 
 func get_mouse_position():
 	return local_to_map(get_global_mouse_position())
 
-func draw_pixel(thread: Skein, cell: Vector2i):
+func draw_pixel(thread: XStitchThread, cell: Vector2i):
 	_set_cell_modulated(cell, thread)
 
 func erase_pixel(cell: Vector2i):
@@ -23,7 +23,7 @@ func get_stitch_at(cell: Vector2i):
 func get_brush_area(center: Vector2i, size: int):
 	return tile_set.get_pattern(size - 1).get_used_cells().map(func(x): return x - Globals.BRUSH_CENTER_POINT[size] + center)
 
-func draw_stitch(thread: Skein, cell: Vector2i, bounding_rect: Rect2i, size: int) -> void:
+func draw_stitch(thread: XStitchThread, cell: Vector2i, bounding_rect: Rect2i, size: int) -> void:
 	var pixels = get_brush_area(cell, size)
 	for pixel in pixels:
 		if bounding_rect.has_point(pixel):
@@ -39,7 +39,7 @@ func erase_all():
 	for cell in get_used_cells():
 		erase_cell(cell)
 
-func _set_cell_modulated(cell: Vector2i, thread: Skein, tile: Vector2i = CURSOR_TILE) -> void:
+func _set_cell_modulated(cell: Vector2i, thread: XStitchThread, tile: Vector2i = CURSOR_TILE) -> void:
 	if thread == null:
 		set_cell(cell, 0, tile)
 		return
@@ -55,20 +55,20 @@ func _set_cell_modulated(cell: Vector2i, thread: Skein, tile: Vector2i = CURSOR_
 	_modulated_tile_cache[thread] = alt_tile_id
 	set_cell(cell, 0, tile, alt_tile_id)
 
-func _erase_cells_with_skein(skein: Skein):
-	if _modulated_tile_cache.has(skein):
-		var alt_id = _modulated_tile_cache[skein]
+func _erase_cells_with_thread(thread: XStitchThread):
+	if _modulated_tile_cache.has(thread):
+		var alt_id = _modulated_tile_cache[thread]
 		for cell in get_used_cells_by_id(0, CURSOR_TILE, alt_id):
 			erase_cell(cell)
-		_modulated_tile_cache.erase(skein)
+		_modulated_tile_cache.erase(thread)
 
-func _swap_cells_with_skein(old_skein: Skein, new_skein: Skein):
-	if !_modulated_tile_cache.has(old_skein):
+func _swap_cells_with_thread(old_thread: XStitchThread, new_thread: XStitchThread):
+	if !_modulated_tile_cache.has(old_thread):
 		return
 	
-	var old_alt_id = _modulated_tile_cache[old_skein]
+	var old_alt_id = _modulated_tile_cache[old_thread]
 	for cell in get_used_cells_by_id(0, CURSOR_TILE, old_alt_id):
-		_set_cell_modulated(cell, new_skein)
+		_set_cell_modulated(cell, new_thread)
 
 func serialize():
 	var data = []
@@ -90,6 +90,6 @@ func deserialize(data: Array):
 		var tile = stitches.get("tile")
 		var coordinates = stitches.get("coordinates")
 		
-		var thread = SkeinsAtlas.get_skein_by_global_id(thread_id)
+		var thread = ThreadsAtlas.get_thread_by_global_id(thread_id)
 		for cell in coordinates:
 			_set_cell_modulated(cell, thread, tile)

@@ -6,18 +6,18 @@ signal scheme_parser_ready(parser: SchemeParser, content: Dictionary)
 ## Window signals
 signal palette_ui_changed(palette: Palette)
 signal layer_ui_changed()
-signal skein_swap_requested(skein: Skein)
+signal thread_swap_requested(thread: XStitchThread)
 
 ## View signals
 signal canvas_focus_changed(focused: bool)
 signal toast_notification(message: String)
 
 ## Tool signals
-signal skein_selected(skein: Skein)
-signal skein_added_to_palette(skein: Skein)
-signal skein_swapped(old_skein: Skein, new_skein: Skein)
-signal skein_removed_from_palette(skein: Skein)
-signal symbol_swapped(skein: Skein, old_symbol: Symbol, new_symbol: Symbol)
+signal thread_selected(thread: XStitchThread)
+signal thread_added_to_palette(thread: XStitchThread)
+signal thread_swapped(old_thread: XStitchThread, new_thread: XStitchThread)
+signal thread_removed_from_palette(thread: XStitchThread)
+signal symbol_swapped(thread: XStitchThread, old_symbol: Symbol, new_symbol: Symbol)
 signal brush_size_changed(size: int)
 
 ## Content swapping signals

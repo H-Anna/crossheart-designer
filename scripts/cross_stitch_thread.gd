@@ -1,4 +1,4 @@
-class_name Skein
+class_name XStitchThread
 extends Resource
 
 @export var brand : String
