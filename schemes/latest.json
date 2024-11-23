@@ -1,13 +1,8 @@
 {
 	"name" : "Sparrow Stitch JSON",
-	"version" : "0.4.0",
+	"version" : "0.5.0",
 	"content" : {
-		"canvas" : {
-			"size_x" : "2",
-			"size_y" : "2",
-			"layers" : "28:4"
-		},
-		"palette" : [
+	  "palette" : [
 			{
 				"brand" : "4",
 				"id" : "4",
@@ -17,18 +12,50 @@
 				"symbol" : "4"
 			}
 		],
-		"layers" : [
+		"canvas" : {
+			"size_x" : "2",
+			"size_y" : "2",
+			"layers" : [
 			{
-				"name" : "4",
+				"id" : "4",
 				"display_name" : "4",
 				"visible": "1",
-				"tiles" : [
+				"locked": "1",
+				"active": "1",
+				"FullStitchLayer" : [
 					{
-						"skein_global_id" : "4",
+						"thread_id" : "4",
+						"tile": "6",
 						"coordinates" : "28:6"
+					}
+				],
+				"SmallStitchLayer" : [
+					{
+						"thread_id" : "4",
+						"tile": "6",
+						"coordinates" : "28:6"
+					}
+				],
+				"KnotLayer" : [
+					{
+						"thread_id" : "4",
+						"tile": "6",
+						"coordinates" : "28:6"
+					}
+				],
+				"BackStitchLayer" : [
+					{
+						"thread_id" : "4",
+						"coordinates": [
+						  {
+						    "from": "5",
+						    "to": "5"
+						  }
+						]
 					}
 				]
 			}
 		]
+		}
 	}
 }

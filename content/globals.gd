@@ -1,6 +1,8 @@
 extends Node
 
+var app: Node
 var canvas: XStitchCanvas
+var palette: Palette
 
 const MIN_BRUSH_SIZE := 1
 const MAX_BRUSH_SIZE := 8

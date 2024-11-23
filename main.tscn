@@ -1,11 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://s1bmq54ffm5f"]
+[gd_scene load_steps=6 format=3 uid="uid://s1bmq54ffm5f"]
 
 [ext_resource type="PackedScene" uid="uid://ba5px3gj1ix1k" path="res://user_interface/scenes/user_interface.tscn" id="1_4xewr"]
+[ext_resource type="Script" path="res://app_manager.gd" id="1_gc8s6"]
 [ext_resource type="Script" path="res://scripts/palette.gd" id="3_y01og"]
 [ext_resource type="Script" path="res://scripts/scheme_parser.gd" id="4_xmgfy"]
 [ext_resource type="Script" path="res://commands/command_manager.gd" id="5_wivus"]
 
 [node name="Main" type="Node"]
+script = ExtResource("1_gc8s6")
 
 [node name="UserInterface" parent="." instance=ExtResource("1_4xewr")]
 

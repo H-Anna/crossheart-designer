@@ -2,12 +2,7 @@
 	"name" : "Sparrow Stitch JSON",
 	"version" : "0.5.0",
 	"content" : {
-		"canvas" : {
-			"size_x" : "2",
-			"size_y" : "2",
-			"layers" : "28:4"
-		},
-		"palette" : [
+	  "palette" : [
 			{
 				"brand" : "4",
 				"id" : "4",
@@ -17,7 +12,10 @@
 				"symbol" : "4"
 			}
 		],
-		"layers" : [
+		"canvas" : {
+			"size_x" : "2",
+			"size_y" : "2",
+			"layers" : [
 			{
 				"id" : "4",
 				"display_name" : "4",
@@ -58,5 +56,6 @@
 				]
 			}
 		]
+		}
 	}
 }

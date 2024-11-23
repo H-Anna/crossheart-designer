@@ -1,5 +1,6 @@
-[gd_scene load_steps=24 format=3 uid="uid://ba5px3gj1ix1k"]
+[gd_scene load_steps=25 format=3 uid="uid://ba5px3gj1ix1k"]
 
+[ext_resource type="Script" path="res://user_interface/scripts/file_menu.gd" id="1_ry4fw"]
 [ext_resource type="ButtonGroup" uid="uid://wvnm3xi2ta32" path="res://user_interface/resources/tool_button_group.tres" id="2_pe23o"]
 [ext_resource type="Texture2D" uid="uid://duba8w62maq15" path="res://user_interface/icons/cursor-marquee-svgrepo-com.svg" id="3_75h3m"]
 [ext_resource type="Texture2D" uid="uid://1bjbsjetsgf0" path="res://user_interface/icons/cross-icon.svg" id="4_7oaw5"]
@@ -65,12 +66,15 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="File" type="PopupMenu" parent="VBoxContainer/PanelContainer/VBoxContainer/MenuBar"]
-item_count = 3
-item_0/text = "Element 1"
-item_1/text = "Element 2"
+item_count = 4
+item_0/text = "Open..."
+item_1/text = "Save"
 item_1/id = 1
-item_2/text = "Element 3"
+item_2/text = "Save As..."
 item_2/id = 2
+item_3/text = "Export..."
+item_3/id = 3
+script = ExtResource("1_ry4fw")
 
 [node name="Edit" type="PopupMenu" parent="VBoxContainer/PanelContainer/VBoxContainer/MenuBar"]
 auto_translate_mode = 1
@@ -470,6 +474,27 @@ item_5/text = "Delete"
 item_5/id = 5
 script = ExtResource("22_djf3s")
 
+[node name="SaveFileDialog" type="FileDialog" parent="."]
+unique_name_in_owner = true
+title = "Save Project"
+initial_position = 1
+size = Vector2i(889, 500)
+ok_button_text = "Save"
+access = 2
+filters = PackedStringArray("*.json;JSON files")
+
+[node name="LoadFileDialog" type="FileDialog" parent="."]
+unique_name_in_owner = true
+auto_translate_mode = 1
+title = "Open a File"
+initial_position = 1
+size = Vector2i(889, 500)
+ok_button_text = "Load"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.json;JSON files")
+
+[connection signal="index_pressed" from="VBoxContainer/PanelContainer/VBoxContainer/MenuBar/File" to="VBoxContainer/PanelContainer/VBoxContainer/MenuBar/File" method="_on_index_pressed"]
 [connection signal="value_changed" from="VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolSettings/SizeSetting/BrushSizeSpinBox" to="VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolSettings/SizeSetting/BrushSizeSpinBox" method="_on_value_changed"]
 [connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/PaletteMenu/VBoxContainer/ScrollContainer/PaletteContainer/AddButton" to="VBoxContainer/HSplitContainer/SideBar/PaletteMenu" method="hide"]
 [connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/PaletteMenu/VBoxContainer/ScrollContainer/PaletteContainer/AddButton" to="VBoxContainer/HSplitContainer/SideBar/AddThreadMenu" method="show"]
@@ -485,3 +510,5 @@ script = ExtResource("22_djf3s")
 [connection signal="visibility_changed" from="SkeinPopupMenu" to="SkeinPopupMenu" method="_on_visibility_changed"]
 [connection signal="index_pressed" from="LayerPopupMenu" to="LayerPopupMenu" method="_on_index_pressed"]
 [connection signal="visibility_changed" from="LayerPopupMenu" to="LayerPopupMenu" method="_on_visibility_changed"]
+[connection signal="file_selected" from="SaveFileDialog" to="VBoxContainer/PanelContainer/VBoxContainer/MenuBar/File" method="_on_save_file_dialog_file_selected"]
+[connection signal="file_selected" from="LoadFileDialog" to="VBoxContainer/PanelContainer/VBoxContainer/MenuBar/File" method="_on_load_file_dialog_file_selected"]

@@ -4,7 +4,10 @@ extends Node2D
 ## Manages multiple [XStitchDrawingLayer]s. Handles calls from [XStitchCanvas].
 
 ## The [ThreadLayer] data associated with this master layer.
-@onready var id : String = Extensions.generate_unique_string(Extensions.layer_name_length)
+@onready var id : String = Extensions.generate_unique_string(Extensions.layer_name_length):
+	set(value):
+		id = value
+		name = value
 
 ## The name of the layer displayed to the user.
 var display_name : String = "New Layer"
@@ -14,6 +17,7 @@ var display_name : String = "New Layer"
 var locked : bool = false
 
 func _ready() -> void:
+	#name = id
 	pass
 
 func is_active():
@@ -54,7 +58,7 @@ func _layer_changed(layer: ThreadLayer) -> void:
 	serialize()
 
 func serialize():
-	var data: Dictionary
+	var data = {}
 	data.get_or_add("id", id)
 	data.get_or_add("display_name", display_name)
 	data.get_or_add("visible", visible)
@@ -62,8 +66,15 @@ func serialize():
 	data.get_or_add("active", is_active())
 	for child in get_children():
 		data.get_or_add(child.name, child.serialize())
-	
-	SignalBus.store_state.emit(data, "layers.id:%s" % id)
+	return data
 
-func deserialize() -> void:
-	pass
+func deserialize(data: Dictionary) -> void:
+	id = data.get("id", "ERR")
+	display_name = data.get("display_name")
+	visible = data.get("visible", true)
+	locked = data.get("locked", false)
+	var _active = data.get("active", false)
+	if _active:
+		Globals.canvas.select_layer(self)
+	for child in get_children():
+		child.deserialize(data.get(child.name))

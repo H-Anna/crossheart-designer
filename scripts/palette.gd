@@ -6,15 +6,13 @@ var colors_to_symbols_dict : Dictionary
 var selected_thread : Skein
 
 func _ready() -> void:
+	Globals.palette = self
+	
 	SignalBus.skein_added_to_palette.connect(add_thread_command)
-	#SignalBus.skein_added_to_palette.connect(add_skein)
 	SignalBus.skein_removed_from_palette.connect(remove_thread_command)
-	#SignalBus.skein_removed_from_palette.connect(remove_skein)
 	SignalBus.skein_swapped.connect(swap_thread_command)
 	SignalBus.symbol_swapped.connect(swap_symbol)
-	
 	SignalBus.skein_selected.connect(select_skein)
-	#SignalBus.current_snapshot_changed.connect(deserialize)
 
 func clear():
 	colors.clear()
@@ -41,23 +39,22 @@ func swap_thread_command(old_thread: Skein, new_thread: Skein):
 	cmd.new_thread = new_thread
 	SignalBus.command_created.emit(cmd)
 
-func serialize() -> Array:
-	var arr : Array[Dictionary]
-	for skein in colors:
-		var elem : Dictionary
-		elem.get_or_add("brand", skein.brand)
-		elem.get_or_add("id", skein.id)
-		elem.get_or_add("global_id", skein.get_identifying_name())
-		elem.get_or_add("color_name", skein.color_name)
-		elem.get_or_add("color_hex", skein.color.to_html(false))
-		elem.get_or_add("symbol", colors_to_symbols_dict.get(skein).get_identifying_name())
+func serialize():
+	var arr = []
+	for thread in colors:
+		var elem = {}
+		elem.get_or_add("brand", thread.brand)
+		elem.get_or_add("id", thread.id)
+		elem.get_or_add("global_id", thread.get_identifying_name())
+		elem.get_or_add("color_name", thread.color_name)
+		elem.get_or_add("color_hex", thread.color.to_html(false))
+		elem.get_or_add("symbol", colors_to_symbols_dict.get(thread).get_identifying_name())
 		arr.append(elem)
 	return arr
 
-func deserialize(snapshot: Snapshot):
+func deserialize(data: Array):
 	colors.clear()
 	colors_to_symbols_dict.clear()
-	var data = snapshot.state["palette"] as Array
 	for dict in data:
 		var skein = SkeinsAtlas.get_skein_by_global_id(dict["global_id"])
 		var symbol = SymbolsAtlas.get_symbol_by_global_id(dict["symbol"])
@@ -70,7 +67,6 @@ func add_skein(skein: Skein):
 	colors_to_symbols_dict.get_or_add(skein, SymbolsAtlas.get_random_symbol())
 	if !selected_thread:
 		select_skein(skein)
-	#SignalBus.palette_changed.emit(self)
 	SignalBus.palette_ui_changed.emit(self)
 
 func remove_skein(skein: Skein):
@@ -86,8 +82,6 @@ func remove_skein(skein: Skein):
 	
 	colors.erase(skein)
 	colors_to_symbols_dict.erase(skein)
-	
-	#SignalBus.palette_changed.emit(self)
 	SignalBus.palette_ui_changed.emit(self)
 
 func select_skein(skein: Skein):

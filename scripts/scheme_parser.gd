@@ -5,6 +5,7 @@ extends Node
 @export_file var scheme_path : String
 var scheme : Dictionary
 var content : Dictionary
+var serialization_enabled := true
 
 var _result : Variant
 var _error : Error = OK
@@ -20,7 +21,8 @@ func _ready() -> void:
 	load_scheme()
 	if _error != OK:
 		print_debug("Failed to load scheme: %s\nSaving and loading will be disabled." % error_string(_error))
-	SignalBus.scheme_parser_ready.emit(self, get_empty_content())
+		serialization_enabled = false
+	#SignalBus.scheme_parser_ready.emit(self, get_empty_content())
 
 # TODO: apply versioning
 func load_scheme() -> void:
@@ -94,7 +96,7 @@ func _validate_against_content(data: Dictionary, against: Dictionary) -> bool:
 			TYPE_DICTIONARY: # Recursive comparison of nested dictionaries.
 				return _validate_type(data[key], against[key]) && _validate_against_content(data[key], against[key])
 			TYPE_ARRAY: # Scheme should have only one element in each array to validate against.
-				if _validate_type(data[key], against[key]):
+				if !_validate_type(data[key], against[key]):
 					return false
 				for elem in data[key]:
 					return _validate_against_content(elem, against[key].front())

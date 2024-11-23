@@ -89,7 +89,6 @@ func add_layer(layer: XStitchMasterLayer = null) -> XStitchMasterLayer:
 	if !layer:
 		layer = layer_scene.instantiate() as XStitchMasterLayer
 	%LayersContainer.add_child(layer)
-	layer.name = layer.id
 	if !active_layer:
 		active_layer = layer
 		
@@ -106,3 +105,30 @@ func remove_layer(layer: XStitchMasterLayer) -> void:
 	if active:
 		active_layer = %LayersContainer.get_child(idx % %LayersContainer.get_child_count())
 	SignalBus.layer_removed.emit(layer)
+
+func serialize():
+	var data = {}
+	
+	data.get_or_add("size_x", bounding_rect.size.x)
+	data.get_or_add("size_y", bounding_rect.size.y)
+	
+	var layers = []
+	for child in %LayersContainer.get_children():
+		layers.append(child.serialize())
+	
+	data.get_or_add("layers", layers)
+	return data
+
+func deserialize(data: Dictionary):
+	active_layer = null
+	for layer in %LayersContainer.get_children():
+		remove_layer(layer)
+	
+	var size_x = data["size_x"]
+	var size_y = data["size_y"]
+	bounding_rect = Rect2i(0, 0, size_x, size_y)
+	
+	for layer in data["layers"]:
+		var child = layer_scene.instantiate() as XStitchMasterLayer
+		child.deserialize(layer)
+		add_layer(child)

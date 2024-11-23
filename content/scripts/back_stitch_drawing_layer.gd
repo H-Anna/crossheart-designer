@@ -7,7 +7,10 @@ var _modulated_stitches_cache: Dictionary
 func get_mouse_position():
 	return get_global_mouse_position()
 
-#func serialize() -> Array[Dictionary]:
+func serialize():
+	var data = []
+	
+	return data
 	#var data: Array[Dictionary]
 	#for thread in _modulated_stitches_cache:
 		#var thread_coords_data: Dictionary
@@ -20,7 +23,6 @@ func get_mouse_position():
 			#coordinates.append(entry)
 		#thread_coords_data.get_or_add("coordinates")
 		#data.append(thread_coords_data)
-	#return data
-#
-#func deserialize():
-	#pass
+
+func deserialize(data):
+	pass
