@@ -3,15 +3,27 @@ extends Node2D
 
 ## Manages a number of [XStitchMasterLayer]s.
 
+## Layer scene to instantiate.
 @export var layer_scene : PackedScene
+
+## Whether the canvas can be drawn on.
 var can_draw := false
+
+## The size and position of the canvas.
+## Used to restrict drawing within the canvas.
 var bounding_rect : Rect2i
+
+## The layer currently being drawn on.
 var active_layer : XStitchMasterLayer
 
+## The currently selected thread.
 var thread : Skein
+
+## The current brush size.
 var brush_size := 1
 
-var cmd : Command
+## The stored command.
+var _cmd : Command
 
 func _ready() -> void:
 	Globals.canvas = self
@@ -21,15 +33,12 @@ func _ready() -> void:
 	SignalBus.canvas_focus_changed.connect(func(focused): can_draw = focused)
 	SignalBus.brush_size_changed.connect(func(size): brush_size = size)
 	
-	#SignalBus.thread_layer_added.connect(add_layer)
 	SignalBus.layer_selected.connect(select_layer)
-	#SignalBus.thread_layer_removed.connect(remove_layer)
 	
 	bounding_rect = %BackgroundLayer.get_used_rect()
 	
 	add_layer()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if !can_draw || !thread:
 		return
@@ -37,7 +46,7 @@ func _process(delta: float) -> void:
 	_handle_drawing()
 	_handle_erase()
 	
-	if cmd:
+	if _cmd:
 		_update_command()
 
 func _handle_drawing():
@@ -45,34 +54,36 @@ func _handle_drawing():
 		if active_layer.locked:
 			SignalBus.toast_notification.emit("Layer locked! Unlock to draw on it.")
 		else:
-			cmd = BrushStrokeCommand.new()
-			cmd.layer = active_layer.get_active_sublayer()
-			cmd.thread = thread
+			_cmd = BrushStrokeCommand.new()
+			_cmd.layer = active_layer.get_active_sublayer()
+			_cmd.thread = thread
 	elif Input.is_action_just_released("draw"):
 		_commit()
 
 func _handle_erase():
 	if Input.is_action_just_pressed("erase"):
-		cmd = EraseCommand.new()
-		cmd.layer = active_layer.get_active_sublayer()
+		_cmd = EraseCommand.new()
+		_cmd.layer = active_layer.get_active_sublayer()
 	elif Input.is_action_just_released("erase"):
 		_commit()
 
 func _commit():
-	if cmd:
-		SignalBus.command_created.emit(cmd)
-		cmd = null
+	if _cmd:
+		SignalBus.command_created.emit(_cmd)
+		_cmd = null
 
 func _update_command():
-	var point = cmd.layer.get_mouse_position()
-	if cmd is BrushStrokeCommand:
-		var pixels = cmd.layer.get_brush_area(point, brush_size)
+	var point = _cmd.layer.get_mouse_position()
+	if _cmd is BrushStrokeCommand:
+		var pixels = _cmd.layer.get_brush_area(point, brush_size)
 		for pixel in pixels:
-			cmd.pixels_to_draw.get_or_add(pixel, cmd.layer.CURSOR_TILE)
-	if cmd is EraseCommand:
-		var pixels = cmd.layer.get_brush_area(point, brush_size)
+			_cmd.pixels_to_draw.get_or_add(pixel, _cmd.layer.CURSOR_TILE)
+			_cmd.layer.draw_pixel(thread, pixel)
+	if _cmd is EraseCommand:
+		var pixels = _cmd.layer.get_brush_area(point, brush_size)
 		for pixel in pixels:
-			cmd.pixels_to_erase.get_or_add(pixel, cmd.layer.CURSOR_TILE)
+			_cmd.pixels_to_erase.get_or_add(pixel, _cmd.layer.CURSOR_TILE)
+			_cmd.layer.erase_pixel(pixel)
 
 func add_layer(layer: XStitchMasterLayer = null) -> XStitchMasterLayer:
 	if !layer:

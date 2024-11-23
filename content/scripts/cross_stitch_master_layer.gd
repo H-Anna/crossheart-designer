@@ -5,12 +5,15 @@ extends Node2D
 
 ## The [ThreadLayer] data associated with this master layer.
 @onready var id : String = Extensions.generate_unique_string(Extensions.layer_name_length)
+
+## The name of the layer displayed to the user.
 var display_name : String = "New Layer"
+
+## The locked state of the layer.
+## Locking or hiding a layer prevents drawing.
 var locked : bool = false
 
 func _ready() -> void:
-	#SignalBus.thread_layer_visibility_changed.connect(_show_hide_layer)
-	#SignalBus.thread_layer_changed.emit(_layer_changed)
 	pass
 
 func is_active():
@@ -47,15 +50,7 @@ func erase_stitch(size: int, bounding_rect: Rect2i):
 	%FullStitchLayer.erase_stitch(pos, bounding_rect, size)
 	pass
 
-#func _show_hide_layer(layer: ThreadLayer) -> void:
-	#if visible:
-		#show()
-	#else:
-		#hide()
-
 func _layer_changed(layer: ThreadLayer) -> void:
-	#if data != layer:
-		#return
 	serialize()
 
 func serialize():

@@ -1,8 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://flpd06xap3sw"]
-
-[ext_resource type="TileSet" uid="uid://bbnmx1vdxhn4s" path="res://content/resources/smallstitch_tileset.tres" id="1_odhej"]
-[ext_resource type="Script" path="res://scripts/stitches_layer.gd" id="2_75vv7"]
-
-[node name="Layer0" type="TileMapLayer" groups=["Persist"]]
-tile_set = ExtResource("1_odhej")
-script = ExtResource("2_75vv7")
