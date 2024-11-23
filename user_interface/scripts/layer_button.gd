@@ -73,5 +73,4 @@ func update_display_name():
 	text = data.display_name
 
 func _on_pressed() -> void:
-	data.active = true
-	SignalBus.thread_layer_selected.emit(data)
+	SignalBus.layer_selected.emit(data)

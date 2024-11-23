@@ -22,7 +22,7 @@ func _ready() -> void:
 	SignalBus.brush_size_changed.connect(func(size): brush_size = size)
 	
 	#SignalBus.thread_layer_added.connect(add_layer)
-	SignalBus.thread_layer_selected.connect(select_layer)
+	SignalBus.layer_selected.connect(select_layer)
 	#SignalBus.thread_layer_removed.connect(remove_layer)
 	
 	bounding_rect = %BackgroundLayer.get_used_rect()
@@ -89,6 +89,8 @@ func select_layer(layer: XStitchMasterLayer) -> void:
 	active_layer = layer
 
 func remove_layer(layer: XStitchMasterLayer) -> void:
-	if layer.is_active():
-		pass #TODO: choose next layer to activate
+	var idx = layer.get_index()
+	var active = layer.is_active()
 	%LayersContainer.remove_child(layer)
+	if active:
+		active_layer = %LayersContainer.get_child(idx % %LayersContainer.get_child_count())

@@ -11,6 +11,7 @@ func _on_id_pressed(id: int) -> void:
 		DELETE:
 			var cmd = RemoveLayerCommand.new()
 			cmd.layer = caller.data
+			cmd.button = caller
 			SignalBus.command_created.emit(cmd)
 			#SignalBus.thread_layer_removed.emit(caller.data)
 			pass
