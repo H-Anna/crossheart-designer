@@ -46,6 +46,7 @@ func _change_layers() -> void:
 func _create_layer_button(data: XStitchMasterLayer) -> LayerButton:
 	var btn = layer_button.instantiate() as LayerButton
 	add_child(btn)
+	move_child(btn, 0)
 	btn.data = data
 	btn.pressed.connect(on_layer_button_clicked.bind(btn))
 	btn.set_context_menu(%LayerPopupMenu)
