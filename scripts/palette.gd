@@ -17,7 +17,6 @@ func _ready() -> void:
 func clear():
 	colors.clear()
 	colors_to_symbols_dict.clear()
-	SignalBus.palette_changed.emit(self)
 	SignalBus.palette_ui_changed.emit(self)
 
 func add_thread_command(thread: XStitchThread):
@@ -97,17 +96,15 @@ func swap_thread(old_thread: XStitchThread, new_thread: XStitchThread):
 		
 	colors_to_symbols_dict.get_or_add(new_thread, colors_to_symbols_dict.get(old_thread))
 	
-	#if old_thread == selected_thread:
-		#selected_thread = new_thread
+	if old_thread == selected_thread:
+		selected_thread = new_thread
 	
 	colors.erase(old_thread)
 	colors_to_symbols_dict.erase(old_thread)
 	print_debug("Swapped %s with %s" % [old_thread.id, new_thread.id])
 	
-	#SignalBus.palette_changed.emit(self)
 	SignalBus.palette_ui_changed.emit(self)
 
 func swap_symbol(thread: XStitchThread, old_symbol: Symbol, new_symbol: Symbol):
 	colors_to_symbols_dict[thread] = new_symbol
-	SignalBus.palette_changed.emit(self)
 	SignalBus.palette_ui_changed.emit(self)

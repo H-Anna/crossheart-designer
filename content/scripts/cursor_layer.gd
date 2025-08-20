@@ -6,18 +6,18 @@ extends XStitchMasterLayer
 
 @onready var _sublayer = %FullStitchLayer
 
-var _can_draw := true
+var focused := true
 var _erasing := false
 var _active_cell : Vector2i
 var _brush_size : int
 # TODO: connect thread select signal
 
 func _ready() -> void:
-	SignalBus.canvas_focus_changed.connect(func(focused): _can_draw = focused)
+	SignalBus.canvas_focus_changed.connect(_focus_changed)
 	pass
 
 func _process(_delta: float) -> void:
-	if !_can_draw:
+	if !focused:
 		return
 	
 	# Don't draw anything if no thread is selected.
@@ -31,6 +31,12 @@ func _process(_delta: float) -> void:
 	
 	_update_cursor_position()
 	_draw_cursor()
+
+func _focus_changed(_focused: bool):
+	focused = _focused
+	
+	if !focused:
+		_erase_cursor()
 
 func _erase_cursor():
 	_sublayer.erase_all()

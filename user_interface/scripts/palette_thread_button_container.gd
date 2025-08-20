@@ -8,7 +8,7 @@ func _ready() -> void:
 func _change_threads() -> void:
 	super._change_threads()
 	for btn in _created_buttons:
-		btn.set_context_menu(%SkeinPopupMenu)
+		btn.set_context_menu(%ThreadContextMenu)
 		if btn.thread == _selected_thread:
 			btn.set_pressed_no_signal(true)
 

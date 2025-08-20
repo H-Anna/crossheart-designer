@@ -463,7 +463,7 @@ dialog_text = "All existing stitches will be converted to the new color. If the 
 dialog_autowrap = true
 script = ExtResource("15_gmppc")
 
-[node name="SkeinPopupMenu" type="PopupMenu" parent="."]
+[node name="ThreadContextMenu" type="PopupMenu" parent="."]
 unique_name_in_owner = true
 size = Vector2i(153, 100)
 item_count = 4
@@ -476,8 +476,9 @@ item_3/text = "Delete"
 item_3/id = 3
 script = ExtResource("13_p3e1f")
 
-[node name="LayerPopupMenu" type="PopupMenu" parent="."]
+[node name="LayerContextMenu" type="PopupMenu" parent="."]
 unique_name_in_owner = true
+size = Vector2i(112, 147)
 item_count = 6
 item_0/text = "Add Layer"
 item_1/text = "Rename"
@@ -496,7 +497,7 @@ script = ExtResource("22_djf3s")
 unique_name_in_owner = true
 title = "Save Project"
 initial_position = 1
-size = Vector2i(889, 500)
+size = Vector2i(970, 500)
 ok_button_text = "Save"
 access = 2
 filters = PackedStringArray("*.json;JSON files")
@@ -524,9 +525,9 @@ filters = PackedStringArray("*.json;JSON files")
 [connection signal="pressed" from="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer/SwapThreadContainer/BackButton" to="VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu" method="hide"]
 [connection signal="mouse_entered" from="VBoxContainer/HSplitContainer/SubViewportContainer" to="VBoxContainer/HSplitContainer/SubViewportContainer" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="VBoxContainer/HSplitContainer/SubViewportContainer" to="VBoxContainer/HSplitContainer/SubViewportContainer" method="_on_mouse_exited"]
-[connection signal="id_pressed" from="SkeinPopupMenu" to="SkeinPopupMenu" method="_on_id_pressed"]
-[connection signal="visibility_changed" from="SkeinPopupMenu" to="SkeinPopupMenu" method="_on_visibility_changed"]
-[connection signal="index_pressed" from="LayerPopupMenu" to="LayerPopupMenu" method="_on_index_pressed"]
-[connection signal="visibility_changed" from="LayerPopupMenu" to="LayerPopupMenu" method="_on_visibility_changed"]
+[connection signal="id_pressed" from="ThreadContextMenu" to="ThreadContextMenu" method="_on_id_pressed"]
+[connection signal="visibility_changed" from="ThreadContextMenu" to="ThreadContextMenu" method="_on_visibility_changed"]
+[connection signal="index_pressed" from="LayerContextMenu" to="LayerContextMenu" method="_on_index_pressed"]
+[connection signal="visibility_changed" from="LayerContextMenu" to="LayerContextMenu" method="_on_visibility_changed"]
 [connection signal="file_selected" from="SaveFileDialog" to="VBoxContainer/PanelContainer/VBoxContainer/MenuBar/File" method="_on_save_file_dialog_file_selected"]
 [connection signal="file_selected" from="LoadFileDialog" to="VBoxContainer/PanelContainer/VBoxContainer/MenuBar/File" method="_on_load_file_dialog_file_selected"]

@@ -30,7 +30,7 @@ func _ready() -> void:
 	
 	SignalBus.thread_selected.connect(func(_thread): thread = _thread)
 	SignalBus.palette_ui_changed.connect(func(palette): thread = palette.selected_thread)
-	SignalBus.canvas_focus_changed.connect(func(focused): can_draw = focused)
+	SignalBus.canvas_focus_changed.connect(_focus_changed)
 	SignalBus.brush_size_changed.connect(func(size): brush_size = size)
 	
 	SignalBus.layer_selected.connect(select_layer)
@@ -39,7 +39,7 @@ func _ready() -> void:
 	
 	add_layer()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if !can_draw || !thread:
 		return
 	
@@ -48,6 +48,12 @@ func _process(delta: float) -> void:
 	
 	if _cmd:
 		_update_command()
+
+func _focus_changed(focused: bool):
+	can_draw = focused
+	if !can_draw && _cmd:
+		_commit()
+	
 
 func _handle_drawing():
 	if Input.is_action_just_pressed("draw"):

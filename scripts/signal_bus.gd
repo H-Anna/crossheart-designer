@@ -21,7 +21,6 @@ signal symbol_swapped(thread: XStitchThread, old_symbol: Symbol, new_symbol: Sym
 signal brush_size_changed(size: int)
 
 ## Content swapping signals
-signal new_canvas_opened(size: Rect2i)
 signal save_requested(filename: String)
 signal load_requested(filename: String)
 
@@ -29,7 +28,6 @@ signal load_requested(filename: String)
 ## Layer signals
 signal layer_selected(layer: XStitchMasterLayer)
 signal layer_added(layer: XStitchMasterLayer)
-signal layer_changed(layer: TileMapLayer, new_snapshot: bool)
 signal layer_removed(layer: TileMapLayer, new_snapshot: bool)
 
 ## Command signals
