@@ -1,6 +1,6 @@
 [gd_scene load_steps=29 format=3 uid="uid://ba5px3gj1ix1k"]
 
-[ext_resource type="Script" path="res://user_interface/scripts/file_menu.gd" id="1_ry4fw"]
+[ext_resource type="Script" uid="uid://cc3vfh7yxmat1" path="res://user_interface/scripts/file_menu.gd" id="1_ry4fw"]
 [ext_resource type="ButtonGroup" uid="uid://wvnm3xi2ta32" path="res://user_interface/resources/tool_button_group.tres" id="2_pe23o"]
 [ext_resource type="Texture2D" uid="uid://c84tjppmo3qgo" path="res://user_interface/icons/draw-edit-message-pen-pencil-text-svgrepo-com.svg" id="3_1eavc"]
 [ext_resource type="Texture2D" uid="uid://duba8w62maq15" path="res://user_interface/icons/cursor-marquee-svgrepo-com.svg" id="3_75h3m"]
@@ -9,23 +9,23 @@
 [ext_resource type="Texture2D" uid="uid://brvl7shde4jk7" path="res://user_interface/icons/halfcross-ltr-icon.svg" id="5_te4is"]
 [ext_resource type="Texture2D" uid="uid://u3lrn5bi4i3i" path="res://user_interface/icons/smallfullcross-icon.svg" id="6_ltunq"]
 [ext_resource type="Texture2D" uid="uid://dm7g0drk7toco" path="res://user_interface/icons/stamp-2-svgrepo-com.svg" id="6_stqtc"]
-[ext_resource type="Script" path="res://user_interface/scripts/brush_size_spin_box.gd" id="7_1p4c5"]
+[ext_resource type="Script" uid="uid://bmct46kbsh8ig" path="res://user_interface/scripts/brush_size_spin_box.gd" id="7_1p4c5"]
 [ext_resource type="Texture2D" uid="uid://hjub8afgui3d" path="res://user_interface/icons/plus-svgrepo-com.svg" id="7_l3gsq"]
 [ext_resource type="Texture2D" uid="uid://no3ch4iluw0s" path="res://user_interface/icons/text-svgrepo-com.svg" id="7_mbmrq"]
-[ext_resource type="Script" path="res://user_interface/scripts/palette_thread_button_container.gd" id="7_xol4m"]
+[ext_resource type="Script" uid="uid://b0wpnx4cmh8fe" path="res://user_interface/scripts/palette_thread_button_container.gd" id="7_xol4m"]
 [ext_resource type="PackedScene" uid="uid://skecvvmk7e26" path="res://user_interface/scenes/thread_button.tscn" id="8_j7jxf"]
-[ext_resource type="Script" path="res://user_interface/scripts/add_thread_button_container.gd" id="10_ww78o"]
+[ext_resource type="Script" uid="uid://ew7637s3hwk3" path="res://user_interface/scripts/add_thread_button_container.gd" id="10_ww78o"]
 [ext_resource type="Texture2D" uid="uid://brursbtjqwkfw" path="res://user_interface/icons/back-curved-arrow-svgrepo-com.svg" id="11_tud68"]
-[ext_resource type="Script" path="res://user_interface/scripts/swap_thread_container.gd" id="12_nfc0l"]
+[ext_resource type="Script" uid="uid://dy3w46byobuef" path="res://user_interface/scripts/swap_thread_container.gd" id="12_nfc0l"]
 [ext_resource type="PackedScene" uid="uid://d3fimv4fp01uq" path="res://user_interface/scenes/layer_button.tscn" id="13_lbi11"]
-[ext_resource type="Script" path="res://user_interface/scripts/thread_context_menu.gd" id="13_p3e1f"]
-[ext_resource type="Script" path="res://user_interface/scripts/layer_button_container.gd" id="13_vprqc"]
-[ext_resource type="Script" path="res://user_interface/scripts/delete_thread_confirmation_dialog.gd" id="14_h8jix"]
-[ext_resource type="Script" path="res://user_interface/scripts/canvas_viewport_container.gd" id="15_f27v3"]
-[ext_resource type="Script" path="res://user_interface/scripts/swap_thread_confirmation_dialog.gd" id="15_gmppc"]
+[ext_resource type="Script" uid="uid://cknqpddqck2gf" path="res://user_interface/scripts/thread_context_menu.gd" id="13_p3e1f"]
+[ext_resource type="Script" uid="uid://ce85rmbbfkx1h" path="res://user_interface/scripts/layer_button_container.gd" id="13_vprqc"]
+[ext_resource type="Script" uid="uid://blxfgd6p3udpf" path="res://user_interface/scripts/delete_thread_confirmation_dialog.gd" id="14_h8jix"]
+[ext_resource type="Script" uid="uid://bd48yyerxdbxk" path="res://user_interface/scripts/canvas_viewport_container.gd" id="15_f27v3"]
+[ext_resource type="Script" uid="uid://dgolg720vghup" path="res://user_interface/scripts/swap_thread_confirmation_dialog.gd" id="15_gmppc"]
 [ext_resource type="PackedScene" uid="uid://dj1tyn5td2irm" path="res://content/scenes/canvas.tscn" id="17_ul50l"]
-[ext_resource type="Script" path="res://user_interface/scripts/notification_toast.gd" id="18_xut32"]
-[ext_resource type="Script" path="res://user_interface/scripts/layer_context_menu.gd" id="22_djf3s"]
+[ext_resource type="Script" uid="uid://wjvr85eprhuy" path="res://user_interface/scripts/notification_toast.gd" id="18_xut32"]
+[ext_resource type="Script" uid="uid://dhraiic6maytg" path="res://user_interface/scripts/layer_context_menu.gd" id="22_djf3s"]
 
 [sub_resource type="Theme" id="Theme_5dpkv"]
 
@@ -72,6 +72,7 @@ size_flags_vertical = 3
 [node name="File" type="PopupMenu" parent="VBoxContainer/PanelContainer/VBoxContainer/MenuBar"]
 item_count = 4
 item_0/text = "Open..."
+item_0/id = 0
 item_1/text = "Save"
 item_1/id = 1
 item_2/text = "Save As..."
@@ -84,6 +85,7 @@ script = ExtResource("1_ry4fw")
 auto_translate_mode = 1
 item_count = 3
 item_0/text = "Element 1"
+item_0/id = 0
 item_1/text = "Element 2"
 item_1/id = 1
 item_2/text = "Element 3"
@@ -93,6 +95,7 @@ item_2/id = 2
 auto_translate_mode = 1
 item_count = 3
 item_0/text = "Element 1"
+item_0/id = 0
 item_1/text = "Element 2"
 item_1/id = 1
 item_2/text = "Element 3"
@@ -102,6 +105,7 @@ item_2/id = 2
 auto_translate_mode = 1
 item_count = 3
 item_0/text = "Element 1"
+item_0/id = 0
 item_1/text = "Element 2"
 item_1/id = 1
 item_2/text = "Element 3"
@@ -195,6 +199,7 @@ selected = 0
 item_count = 6
 popup/item_0/text = "Full stitch"
 popup/item_0/icon = ExtResource("4_7oaw5")
+popup/item_0/id = 0
 popup/item_1/text = "Half stitch"
 popup/item_1/icon = ExtResource("5_te4is")
 popup/item_1/id = 1
@@ -385,7 +390,7 @@ script = ExtResource("15_f27v3")
 unique_name_in_owner = true
 handle_input_locally = false
 gui_disable_input = true
-size = Vector2i(1129, 659)
+size = Vector2i(2, 2)
 render_target_update_mode = 4
 
 [node name="Canvas" parent="VBoxContainer/HSplitContainer/SubViewportContainer/CanvasViewport" instance=ExtResource("17_ul50l")]
@@ -468,6 +473,7 @@ unique_name_in_owner = true
 size = Vector2i(153, 100)
 item_count = 4
 item_0/text = "Swap..."
+item_0/id = 0
 item_1/text = "Change Symbol..."
 item_1/id = 1
 item_2/id = 2
@@ -481,6 +487,7 @@ unique_name_in_owner = true
 size = Vector2i(112, 147)
 item_count = 6
 item_0/text = "Add Layer"
+item_0/id = 0
 item_1/text = "Rename"
 item_1/id = 1
 item_2/text = "Move Up"
@@ -498,7 +505,6 @@ unique_name_in_owner = true
 title = "Save Project"
 initial_position = 1
 size = Vector2i(970, 500)
-ok_button_text = "Save"
 access = 2
 filters = PackedStringArray("*.json;JSON files")
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dtsrqbf4f2xm8"
-path="res://.godot/imported/sun-filled.svg-771192c068dbe80bb47f8284ec6cafca.ctex"
+uid="uid://dxpbofo663get"
+path="res://.godot/imported/snowflake.svg-db8078f87e3b2cbd73a040d5d6d1550d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/svg-symbols/sun-filled.svg"
-dest_files=["res://.godot/imported/sun-filled.svg-771192c068dbe80bb47f8284ec6cafca.ctex"]
+source_file="res://assets/svg-symbols/snowflake.svg"
+dest_files=["res://.godot/imported/snowflake.svg-db8078f87e3b2cbd73a040d5d6d1550d.ctex"]
 
 [params]
 

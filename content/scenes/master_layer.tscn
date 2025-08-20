@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=3 uid="uid://mqe0068ic2xw"]
 
-[ext_resource type="Script" path="res://content/scripts/cross_stitch_master_layer.gd" id="1_m0dbt"]
+[ext_resource type="Script" uid="uid://cfq1frsbcwbsn" path="res://content/scripts/cross_stitch_master_layer.gd" id="1_m0dbt"]
 [ext_resource type="TileSet" uid="uid://csepo0h2nws1a" path="res://content/resources/fullstitch_tileset.tres" id="2_oc7mr"]
-[ext_resource type="Script" path="res://content/scripts/cross_stitch_drawing_layer.gd" id="3_w46b7"]
+[ext_resource type="Script" uid="uid://d2a0te282sf4m" path="res://content/scripts/cross_stitch_drawing_layer.gd" id="3_w46b7"]
 [ext_resource type="TileSet" uid="uid://bbnmx1vdxhn4s" path="res://content/resources/smallstitch_tileset.tres" id="4_iwuhq"]
 [ext_resource type="TileSet" uid="uid://54o453kt1lcl" path="res://content/resources/knot_tileset.tres" id="5_xo1s1"]
-[ext_resource type="Script" path="res://content/scripts/back_stitch_drawing_layer.gd" id="6_k4oxk"]
+[ext_resource type="Script" uid="uid://b3m1v0rnwf3i5" path="res://content/scripts/back_stitch_drawing_layer.gd" id="6_k4oxk"]
 
 [node name="MasterLayer" type="Node2D" groups=["master_layers"]]
 script = ExtResource("1_m0dbt")

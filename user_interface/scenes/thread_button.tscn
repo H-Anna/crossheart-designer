@@ -2,9 +2,9 @@
 
 [ext_resource type="Theme" uid="uid://kktmjqake1c6" path="res://user_interface/resources/thread_button_theme.tres" id="1_w375h"]
 [ext_resource type="ButtonGroup" uid="uid://5m4cps4hjh3w" path="res://user_interface/resources/thread_button_group.tres" id="2_mvevd"]
-[ext_resource type="Texture2D" uid="uid://iun3wcxblamr" path="res://resources/svg-symbols/moon-outline.svg" id="3_mfayi"]
-[ext_resource type="Script" path="res://user_interface/scripts/thread_button.gd" id="4_5ojna"]
-[ext_resource type="Script" path="res://user_interface/scripts/rmb_context_menu_activator.gd" id="4_yxpmc"]
+[ext_resource type="Texture2D" uid="uid://iun3wcxblamr" path="res://assets/svg-symbols/moon-outline.svg" id="3_mfayi"]
+[ext_resource type="Script" uid="uid://b7c7s6ykx2csv" path="res://user_interface/scripts/thread_button.gd" id="4_5ojna"]
+[ext_resource type="Script" uid="uid://cobqbkyaa2hiw" path="res://user_interface/scripts/rmb_context_menu_activator.gd" id="4_yxpmc"]
 
 [node name="ThreadButton" type="Button"]
 custom_minimum_size = Vector2(40, 40)

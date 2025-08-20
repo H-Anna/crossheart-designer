@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://iun3wcxblamr"
-path="res://.godot/imported/moon-outline.svg-5579d258628c16c17393c47a14e2721f.ctex"
+uid="uid://uh0pepe4rfo2"
+path="res://.godot/imported/cards-clubs.svg-e78a8ae8e0a49a24d7f5d375d0609d36.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/svg-symbols/moon-outline.svg"
-dest_files=["res://.godot/imported/moon-outline.svg-5579d258628c16c17393c47a14e2721f.ctex"]
+source_file="res://assets/svg-symbols/cards-clubs.svg"
+dest_files=["res://.godot/imported/cards-clubs.svg-e78a8ae8e0a49a24d7f5d375d0609d36.ctex"]
 
 [params]
 

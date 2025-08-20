@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvcecof33gq6l"
-path="res://.godot/imported/dot-fill.svg-8fe8de013b32d24d11974c55399e651c.ctex"
+uid="uid://d2drcx27by186"
+path="res://.godot/imported/arrow-up.svg-22b4219466ffae090a7628a88c09f64c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/svg-symbols/dot-fill.svg"
-dest_files=["res://.godot/imported/dot-fill.svg-8fe8de013b32d24d11974c55399e651c.ctex"]
+source_file="res://assets/svg-symbols/arrow-up.svg"
+dest_files=["res://.godot/imported/arrow-up.svg-22b4219466ffae090a7628a88c09f64c.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2drcx27by186"
-path="res://.godot/imported/arrow-up.svg-684aa8315f389a987d5578eb722e95bc.ctex"
+uid="uid://5mnaukyj7tcn"
+path="res://.godot/imported/star-filled.svg-3460beb522ed4f40356089c128f70b8d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/svg-symbols/arrow-up.svg"
-dest_files=["res://.godot/imported/arrow-up.svg-684aa8315f389a987d5578eb722e95bc.ctex"]
+source_file="res://assets/svg-symbols/star-filled.svg"
+dest_files=["res://.godot/imported/star-filled.svg-3460beb522ed4f40356089c128f70b8d.ctex"]
 
 [params]
 

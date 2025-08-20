@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://5mnaukyj7tcn"
-path="res://.godot/imported/star-filled.svg-e71d91ecf7742838148b0039e8d0493b.ctex"
+uid="uid://cokggx5nmhx23"
+path="res://.godot/imported/cards-hearts.svg-e488569f378bf0b1f5dcb755ad2f40db.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/svg-symbols/star-filled.svg"
-dest_files=["res://.godot/imported/star-filled.svg-e71d91ecf7742838148b0039e8d0493b.ctex"]
+source_file="res://assets/svg-symbols/cards-hearts.svg"
+dest_files=["res://.godot/imported/cards-hearts.svg-e488569f378bf0b1f5dcb755ad2f40db.ctex"]
 
 [params]
 

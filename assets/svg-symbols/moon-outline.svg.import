@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dxpbofo663get"
-path="res://.godot/imported/snowflake.svg-f9f5f9f5e99a1d27a2cbeca4ba69387d.ctex"
+uid="uid://iun3wcxblamr"
+path="res://.godot/imported/moon-outline.svg-4462aeea8dc082501aafbfd2aab85ef3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/svg-symbols/snowflake.svg"
-dest_files=["res://.godot/imported/snowflake.svg-f9f5f9f5e99a1d27a2cbeca4ba69387d.ctex"]
+source_file="res://assets/svg-symbols/moon-outline.svg"
+dest_files=["res://.godot/imported/moon-outline.svg-4462aeea8dc082501aafbfd2aab85ef3.ctex"]
 
 [params]
 

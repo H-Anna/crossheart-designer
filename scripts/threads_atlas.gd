@@ -1,6 +1,6 @@
 extends Node
 
-const colors_file := "res://resources/dmc_colors.json"
+const colors_file := "res://assets/dmc_colors.json"
 var threads: Dictionary
 
 func _ready() -> void:

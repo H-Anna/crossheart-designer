@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b51bbvnoyov8x"
-path="res://.godot/imported/cards-diamonds.svg-10c64f4fe3ac67067165a6d0d61d5c67.ctex"
+uid="uid://db7pokconwmgo"
+path="res://.godot/imported/cards-spades.svg-127d6f553668d0d766424155ff62d7e0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/svg-symbols/cards-diamonds.svg"
-dest_files=["res://.godot/imported/cards-diamonds.svg-10c64f4fe3ac67067165a6d0d61d5c67.ctex"]
+source_file="res://assets/svg-symbols/cards-spades.svg"
+dest_files=["res://.godot/imported/cards-spades.svg-127d6f553668d0d766424155ff62d7e0.ctex"]
 
 [params]
 
