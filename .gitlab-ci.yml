@@ -1,0 +1,26 @@
+prep-job:
+    stage: .pre
+    tags:
+        - linux
+        - godot
+    script:
+        - wget https://gitlab.home.petras/Sparrow/godotenv/-/raw/master/script.sh --no-check-certificate
+        - chmod +x script.sh
+        - ./script.sh
+
+build-job:
+    stage: build
+    tags:
+        - linux
+        - godot
+    script:
+        - mkdir builds
+        - pwd
+        - ls
+        - /home/gitlab-runner/Godot_v4.4.1-stable_linux.x86_64 -v --headless --export-debug "Linux"
+    artifacts:
+        paths:
+            - builds/
+        when: on_success
+        access: all
+        expire_in: never
