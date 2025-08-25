@@ -8,9 +8,7 @@ func _ready() -> void:
 	_load_data()
 
 func _load_data():
-	print_debug(DirAccess.get_files_at(path))
-	
-	for file in DirAccess.get_files_at(path):
+	for file in ResourceLoader.list_directory(path):
 		if !file.ends_with(suffix):
 			continue;
 		var s = Symbol.new();
@@ -24,5 +22,4 @@ func get_symbol_by_global_id(id: String) -> Symbol:
 	return symbols.get(id, null)
 
 func get_random_symbol() -> Symbol:
-	print_debug("Modulo by ", symbols.size())
 	return symbols.values()[randi() % symbols.size()]
