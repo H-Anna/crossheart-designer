@@ -22,7 +22,11 @@ func get_stitch_at(cell: Vector2i):
 	return _modulated_tile_cache.find_key(get_cell_alternative_tile(cell))
 
 func get_brush_area(center: Vector2i, size: int):
-	return tile_set.get_pattern(size - 1).get_used_cells().map(func(x): return x - Globals.BRUSH_CENTER_POINT[size] + center)
+	# Get the used cells of a given brush size
+	var brush_cells = tile_set.get_pattern(size - 1).get_used_cells()
+	# Offset the cells so that they are in the context of the layer
+	var layer_cells = brush_cells.map(func(x): return x - Globals.BRUSH_CENTER_POINT[size] + center)
+	return layer_cells
 
 func draw_stitch(thread: XStitchThread, cell: Vector2i, bounding_rect: Rect2i, size: int) -> void:
 	var pixels = get_brush_area(cell, size)

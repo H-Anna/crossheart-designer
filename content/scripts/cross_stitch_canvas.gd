@@ -82,7 +82,7 @@ func _update_command():
 	var point = _cmd.layer.get_mouse_position()
 	if _cmd is BrushStrokeCommand:
 		var pixels = _cmd.layer.get_brush_area(point, brush_size)
-		for pixel in pixels:
+		for pixel in pixels.filter(point_is_in_canvas):
 			_cmd.previous_colors.get_or_add(pixel, _cmd.layer.get_stitch_at(pixel))
 			_cmd.pixels_to_draw.get_or_add(pixel, _cmd.layer.CURSOR_TILE)
 			_cmd.layer.draw_pixel(thread, pixel)
@@ -113,6 +113,13 @@ func remove_layer(layer: XStitchMasterLayer) -> void:
 	if active:
 		active_layer = %LayersContainer.get_child(idx % %LayersContainer.get_child_count())
 	SignalBus.layer_removed.emit(layer)
+
+func point_is_in_canvas(p: Vector2i) -> bool:
+	if p.x < 0 || p.y < 0:
+		return false
+	if p.x >= bounding_rect.size.x || p.y >= bounding_rect.size.y:
+		return false
+	return true
 
 func serialize():
 	var data = {}
