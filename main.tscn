@@ -1,18 +1,532 @@
-[gd_scene load_steps=6 format=3 uid="uid://s1bmq54ffm5f"]
+[gd_scene load_steps=33 format=3 uid="uid://s1bmq54ffm5f"]
 
-[ext_resource type="PackedScene" uid="uid://ba5px3gj1ix1k" path="res://user_interface/scenes/user_interface.tscn" id="1_4xewr"]
 [ext_resource type="Script" uid="uid://ba1jthx0oawo3" path="res://content/scripts/app_manager.gd" id="1_gc8s6"]
-[ext_resource type="Script" uid="uid://v3hbv868eikr" path="res://scripts/palette.gd" id="3_y01og"]
+[ext_resource type="Script" uid="uid://cc3vfh7yxmat1" path="res://user_interface/scripts/file_menu.gd" id="2_qsp4k"]
+[ext_resource type="Texture2D" uid="uid://c84tjppmo3qgo" path="res://user_interface/icons/draw-edit-message-pen-pencil-text-svgrepo-com.svg" id="3_kq58d"]
+[ext_resource type="Texture2D" uid="uid://drdr6jh61xxws" path="res://user_interface/icons/fill-svgrepo-com.svg" id="4_seu75"]
 [ext_resource type="Script" uid="uid://38awyfbr7x0l" path="res://scripts/scheme_parser.gd" id="4_xmgfy"]
+[ext_resource type="Texture2D" uid="uid://duba8w62maq15" path="res://user_interface/icons/cursor-marquee-svgrepo-com.svg" id="5_htxhm"]
 [ext_resource type="Script" uid="uid://dxogtraf2vgig" path="res://commands/command_manager.gd" id="5_wivus"]
+[ext_resource type="Texture2D" uid="uid://dm7g0drk7toco" path="res://user_interface/icons/stamp-2-svgrepo-com.svg" id="6_jq2sk"]
+[ext_resource type="Texture2D" uid="uid://no3ch4iluw0s" path="res://user_interface/icons/text-svgrepo-com.svg" id="7_4k2k6"]
+[ext_resource type="Texture2D" uid="uid://1bjbsjetsgf0" path="res://user_interface/icons/cross-icon.svg" id="8_0rl1p"]
+[ext_resource type="Texture2D" uid="uid://brvl7shde4jk7" path="res://user_interface/icons/halfcross-ltr-icon.svg" id="9_ok6jj"]
+[ext_resource type="Texture2D" uid="uid://u3lrn5bi4i3i" path="res://user_interface/icons/smallfullcross-icon.svg" id="10_facbu"]
+[ext_resource type="Script" uid="uid://bmct46kbsh8ig" path="res://user_interface/scripts/brush_size_spin_box.gd" id="11_b1qrp"]
+[ext_resource type="Script" uid="uid://b0wpnx4cmh8fe" path="res://user_interface/scripts/palette_thread_button_container.gd" id="12_come4"]
+[ext_resource type="PackedScene" uid="uid://skecvvmk7e26" path="res://user_interface/scenes/thread_button.tscn" id="13_h8e4i"]
+[ext_resource type="Texture2D" uid="uid://hjub8afgui3d" path="res://user_interface/icons/plus-svgrepo-com.svg" id="14_4lmeg"]
+[ext_resource type="Script" uid="uid://do361w8lxdjb4" path="res://user_interface/scripts/thread_button_container.gd" id="15_kq58d"]
+[ext_resource type="Texture2D" uid="uid://brursbtjqwkfw" path="res://user_interface/icons/back-curved-arrow-svgrepo-com.svg" id="16_d2t1y"]
+[ext_resource type="Script" uid="uid://dy3w46byobuef" path="res://user_interface/scripts/swap_thread_container.gd" id="17_gngh3"]
+[ext_resource type="Script" uid="uid://ce85rmbbfkx1h" path="res://user_interface/scripts/layer_button_container.gd" id="18_0n3wm"]
+[ext_resource type="PackedScene" uid="uid://d3fimv4fp01uq" path="res://user_interface/scenes/layer_button.tscn" id="19_qnost"]
+[ext_resource type="Script" uid="uid://bd48yyerxdbxk" path="res://user_interface/scripts/canvas_viewport_container.gd" id="20_wnkbs"]
+[ext_resource type="PackedScene" uid="uid://dj1tyn5td2irm" path="res://content/scenes/canvas.tscn" id="21_f6a44"]
+[ext_resource type="Script" uid="uid://wjvr85eprhuy" path="res://user_interface/scripts/notification_toast.gd" id="22_0cbny"]
+[ext_resource type="Script" uid="uid://blxfgd6p3udpf" path="res://user_interface/scripts/delete_thread_confirmation_dialog.gd" id="23_hrvbo"]
+[ext_resource type="Script" uid="uid://dgolg720vghup" path="res://user_interface/scripts/swap_thread_confirmation_dialog.gd" id="24_uypp3"]
+[ext_resource type="Script" uid="uid://cknqpddqck2gf" path="res://user_interface/scripts/thread_context_menu.gd" id="25_blkrb"]
+[ext_resource type="Script" uid="uid://dhraiic6maytg" path="res://user_interface/scripts/layer_context_menu.gd" id="26_abqjc"]
+[ext_resource type="Script" uid="uid://bgk2h0b357aq2" path="res://scripts/palette_controller.gd" id="30_kq58d"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_6iyjs"]
+
+[sub_resource type="Theme" id="Theme_5dpkv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jpx58"]
+content_margin_left = 7.0
+content_margin_top = 7.0
+content_margin_right = 7.0
+content_margin_bottom = 7.0
+bg_color = Color(0.144063, 0.144063, 0.144062, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.442911, 0.442911, 0.442911, 1)
 
 [node name="Main" type="Node"]
 script = ExtResource("1_gc8s6")
 
-[node name="UserInterface" parent="." instance=ExtResource("1_4xewr")]
+[node name="UserInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Palette" type="Node" parent="."]
-script = ExtResource("3_y01og")
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="UserInterface/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/VBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="MenuBar" type="MenuBar" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="File" type="PopupMenu" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/MenuBar"]
+item_count = 4
+item_0/text = "Open..."
+item_0/id = 0
+item_1/text = "Save"
+item_1/id = 1
+item_2/text = "Save As..."
+item_2/id = 2
+item_3/text = "Export..."
+item_3/id = 3
+script = ExtResource("2_qsp4k")
+
+[node name="Edit" type="PopupMenu" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/MenuBar"]
+auto_translate_mode = 1
+item_count = 3
+item_0/text = "Element 1"
+item_0/id = 0
+item_1/text = "Element 2"
+item_1/id = 1
+item_2/text = "Element 3"
+item_2/id = 2
+
+[node name="View" type="PopupMenu" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/MenuBar"]
+auto_translate_mode = 1
+item_count = 3
+item_0/text = "Element 1"
+item_0/id = 0
+item_1/text = "Element 2"
+item_1/id = 1
+item_2/text = "Element 3"
+item_2/id = 2
+
+[node name="Help" type="PopupMenu" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/MenuBar"]
+auto_translate_mode = 1
+item_count = 3
+item_0/text = "Element 1"
+item_0/id = 0
+item_1/text = "Element 2"
+item_1/id = 1
+item_2/text = "Element 3"
+item_2/id = 2
+
+[node name="ToolBar" type="HBoxContainer" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="ToolButtons" type="HBoxContainer" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Button" type="Button" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolButtons"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+tooltip_text = "Draw & Erase"
+toggle_mode = true
+button_pressed = true
+button_group = SubResource("ButtonGroup_6iyjs")
+icon = ExtResource("3_kq58d")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Button2" type="Button" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolButtons"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+tooltip_text = "Fill"
+disabled = true
+toggle_mode = true
+button_group = SubResource("ButtonGroup_6iyjs")
+icon = ExtResource("4_seu75")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Button3" type="Button" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolButtons"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+tooltip_text = "Select"
+disabled = true
+toggle_mode = true
+button_group = SubResource("ButtonGroup_6iyjs")
+icon = ExtResource("5_htxhm")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Button4" type="Button" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolButtons"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+tooltip_text = "Stamp"
+disabled = true
+toggle_mode = true
+button_group = SubResource("ButtonGroup_6iyjs")
+icon = ExtResource("6_jq2sk")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Button5" type="Button" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolButtons"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+tooltip_text = "Insert Text"
+disabled = true
+toggle_mode = true
+button_group = SubResource("ButtonGroup_6iyjs")
+icon = ExtResource("7_4k2k6")
+icon_alignment = 1
+expand_icon = true
+
+[node name="ToolSettings" type="HBoxContainer" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar"]
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_constants/separation = 50
+alignment = 2
+
+[node name="ModeSetting" type="HBoxContainer" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolSettings"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolSettings/ModeSetting"]
+layout_mode = 2
+theme = SubResource("Theme_5dpkv")
+text = "Mode:"
+
+[node name="OptionButton" type="OptionButton" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolSettings/ModeSetting"]
+layout_mode = 2
+tooltip_text = "Mode: the type of stitch currently being drawn."
+selected = 0
+item_count = 6
+popup/item_0/text = "Full stitch"
+popup/item_0/icon = ExtResource("8_0rl1p")
+popup/item_0/id = 0
+popup/item_1/text = "Half stitch"
+popup/item_1/icon = ExtResource("9_ok6jj")
+popup/item_1/id = 1
+popup/item_2/text = "1/4 stitch"
+popup/item_2/id = 2
+popup/item_3/text = "3/4 stitch"
+popup/item_3/id = 3
+popup/item_4/text = "Small full stitch"
+popup/item_4/icon = ExtResource("10_facbu")
+popup/item_4/id = 4
+popup/item_5/text = "Small half stitch"
+popup/item_5/id = 5
+
+[node name="SizeSetting" type="HBoxContainer" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolSettings"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolSettings/SizeSetting"]
+layout_mode = 2
+text = "Size:"
+
+[node name="BrushSizeSpinBox" type="SpinBox" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolSettings/SizeSetting"]
+layout_mode = 2
+tooltip_text = "Size: the brush/eraser size."
+min_value = 1.0
+max_value = 20.0
+value = 1.0
+suffix = "px"
+script = ExtResource("11_b1qrp")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="UserInterface/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SideBar" type="VBoxContainer" parent="UserInterface/VBoxContainer/HSplitContainer"]
+custom_minimum_size = Vector2(225, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+
+[node name="PaletteMenu" type="PanelContainer" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar/PaletteMenu"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar/PaletteMenu/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Palette"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar/PaletteMenu/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PaletteContainer" type="FlowContainer" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar/PaletteMenu/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("12_come4")
+thread_button = ExtResource("13_h8e4i")
+
+[node name="AddButton" type="Button" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar/PaletteMenu/VBoxContainer/ScrollContainer/PaletteContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+tooltip_text = "Add New Thread"
+theme_override_styles/normal = SubResource("StyleBoxFlat_jpx58")
+icon = ExtResource("14_4lmeg")
+icon_alignment = 1
+expand_icon = true
+
+[node name="AddThreadMenu" type="PanelContainer" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar/AddThreadMenu"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Add New Thread"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AddThreadContainer" type="FlowContainer" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("15_kq58d")
+thread_button = ExtResource("13_h8e4i")
+
+[node name="BackButton" type="Button" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/AddThreadContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+tooltip_text = "Back to Palette"
+theme_override_styles/normal = SubResource("StyleBoxFlat_jpx58")
+icon = ExtResource("16_d2t1y")
+icon_alignment = 1
+expand_icon = true
+
+[node name="SearchBar" type="LineEdit" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Search colors..."
+
+[node name="SwapThreadMenu" type="PanelContainer" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Swap Thread"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SwapThreadContainer" type="FlowContainer" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("17_gngh3")
+thread_button = ExtResource("13_h8e4i")
+
+[node name="BackButton" type="Button" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer/SwapThreadContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+tooltip_text = "Back to Palette"
+theme_override_styles/normal = SubResource("StyleBoxFlat_jpx58")
+icon = ExtResource("16_d2t1y")
+icon_alignment = 1
+expand_icon = true
+
+[node name="SearchBar" type="LineEdit" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Search colors..."
+
+[node name="LayersMenu" type="PanelContainer" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar/LayersMenu"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Layers"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LayersContainer" type="VBoxContainer" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("18_0n3wm")
+layer_button = ExtResource("19_qnost")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="UserInterface/VBoxContainer/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.0
+stretch = true
+script = ExtResource("20_wnkbs")
+
+[node name="CanvasViewport" type="SubViewport" parent="UserInterface/VBoxContainer/HSplitContainer/SubViewportContainer"]
+unique_name_in_owner = true
+handle_input_locally = false
+gui_disable_input = true
+size = Vector2i(1129, 659)
+render_target_update_mode = 4
+
+[node name="Canvas" parent="UserInterface/VBoxContainer/HSplitContainer/SubViewportContainer/CanvasViewport" instance=ExtResource("21_f6a44")]
+unique_name_in_owner = true
+
+[node name="StatusBar" type="PanelContainer" parent="UserInterface/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UserInterface/VBoxContainer/StatusBar"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="UserInterface/VBoxContainer/StatusBar/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+tooltip_text = "Canvas size: 14.5 x 1.45 inches"
+text = "14.5in x 14.5in"
+
+[node name="Label2" type="Label" parent="UserInterface/VBoxContainer/StatusBar/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+tooltip_text = "Canvas size: 100 x 100 pixels"
+text = "100 x 100 px"
+
+[node name="NotificationToast" type="PanelContainer" parent="UserInterface"]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -447.0
+offset_top = -94.0
+offset_right = -30.0
+offset_bottom = -54.0
+grow_horizontal = 0
+grow_vertical = 0
+script = ExtResource("22_0cbny")
+
+[node name="Label" type="Label" parent="UserInterface/NotificationToast"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 1
+text = "This is a toast notification!"
+vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="UserInterface/NotificationToast"]
+wait_time = 5.0
+one_shot = true
+
+[node name="DeleteThreadConfirmationDialog" type="ConfirmationDialog" parent="UserInterface"]
+unique_name_in_owner = true
+title = "Remove from Palette?"
+initial_position = 1
+size = Vector2i(300, 120)
+unresizable = true
+borderless = true
+ok_button_text = "Yes"
+dialog_text = "All stitches made with this color will be removed. Are you sure?"
+dialog_autowrap = true
+cancel_button_text = "No"
+script = ExtResource("23_hrvbo")
+
+[node name="SwapThreadConfirmationDialog" type="ConfirmationDialog" parent="UserInterface"]
+unique_name_in_owner = true
+auto_translate_mode = 1
+title = "Swap Color?"
+initial_position = 1
+size = Vector2i(400, 150)
+unresizable = true
+borderless = true
+dialog_text = "All existing stitches will be converted to the new color. If the color is in the palette, the colors will be merged."
+dialog_autowrap = true
+script = ExtResource("24_uypp3")
+
+[node name="ThreadContextMenu" type="PopupMenu" parent="UserInterface"]
+unique_name_in_owner = true
+size = Vector2i(153, 100)
+item_count = 4
+item_0/text = "Swap..."
+item_0/id = 0
+item_1/text = "Change Symbol..."
+item_1/id = 1
+item_2/id = 2
+item_2/separator = true
+item_3/text = "Delete"
+item_3/id = 3
+script = ExtResource("25_blkrb")
+
+[node name="LayerContextMenu" type="PopupMenu" parent="UserInterface"]
+unique_name_in_owner = true
+size = Vector2i(112, 147)
+item_count = 6
+item_0/text = "Add Layer"
+item_0/id = 0
+item_1/text = "Rename"
+item_1/id = 1
+item_2/text = "Move Up"
+item_2/id = 2
+item_3/text = "Move Down"
+item_3/id = 3
+item_4/id = 4
+item_4/separator = true
+item_5/text = "Delete"
+item_5/id = 5
+script = ExtResource("26_abqjc")
+
+[node name="SaveFileDialog" type="FileDialog" parent="UserInterface"]
+unique_name_in_owner = true
+title = "Save Project"
+initial_position = 1
+size = Vector2i(970, 500)
+access = 2
+filters = PackedStringArray("*.json;JSON files")
+
+[node name="LoadFileDialog" type="FileDialog" parent="UserInterface"]
+unique_name_in_owner = true
+auto_translate_mode = 1
+title = "Open a File"
+initial_position = 1
+size = Vector2i(889, 500)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.json;JSON files")
 
 [node name="SchemeParser" type="Node" parent="."]
 script = ExtResource("4_xmgfy")
@@ -21,3 +535,29 @@ scheme_path = "res://schemes/scheme_0_5_0.json"
 
 [node name="CommandManager" type="Node" parent="."]
 script = ExtResource("5_wivus")
+
+[node name="PaletteController" type="Node" parent="." node_paths=PackedStringArray("ui_palette_container", "ui_add_thread_container", "ui_swap_thread_container")]
+unique_name_in_owner = true
+script = ExtResource("30_kq58d")
+ui_palette_container = NodePath("../UserInterface/VBoxContainer/HSplitContainer/SideBar/PaletteMenu/VBoxContainer/ScrollContainer/PaletteContainer")
+ui_add_thread_container = NodePath("../UserInterface/VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/AddThreadContainer")
+ui_swap_thread_container = NodePath("../UserInterface/VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer/SwapThreadContainer")
+
+[connection signal="index_pressed" from="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/MenuBar/File" to="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/MenuBar/File" method="_on_index_pressed"]
+[connection signal="value_changed" from="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolSettings/SizeSetting/BrushSizeSpinBox" to="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolSettings/SizeSetting/BrushSizeSpinBox" method="_on_value_changed"]
+[connection signal="pressed" from="UserInterface/VBoxContainer/HSplitContainer/SideBar/PaletteMenu/VBoxContainer/ScrollContainer/PaletteContainer/AddButton" to="UserInterface/VBoxContainer/HSplitContainer/SideBar/PaletteMenu" method="hide"]
+[connection signal="pressed" from="UserInterface/VBoxContainer/HSplitContainer/SideBar/PaletteMenu/VBoxContainer/ScrollContainer/PaletteContainer/AddButton" to="UserInterface/VBoxContainer/HSplitContainer/SideBar/AddThreadMenu" method="show"]
+[connection signal="visibility_changed" from="UserInterface/VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/AddThreadContainer" to="UserInterface/VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/AddThreadContainer" method="_on_visibility_changed"]
+[connection signal="pressed" from="UserInterface/VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/AddThreadContainer/BackButton" to="UserInterface/VBoxContainer/HSplitContainer/SideBar/PaletteMenu" method="show"]
+[connection signal="pressed" from="UserInterface/VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/AddThreadContainer/BackButton" to="UserInterface/VBoxContainer/HSplitContainer/SideBar/AddThreadMenu" method="hide"]
+[connection signal="text_changed" from="UserInterface/VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/SearchBar" to="UserInterface/VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/AddThreadContainer" method="_on_search_bar_text_changed"]
+[connection signal="pressed" from="UserInterface/VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer/SwapThreadContainer/BackButton" to="UserInterface/VBoxContainer/HSplitContainer/SideBar/PaletteMenu" method="show"]
+[connection signal="pressed" from="UserInterface/VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer/SwapThreadContainer/BackButton" to="UserInterface/VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu" method="hide"]
+[connection signal="mouse_entered" from="UserInterface/VBoxContainer/HSplitContainer/SubViewportContainer" to="UserInterface/VBoxContainer/HSplitContainer/SubViewportContainer" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="UserInterface/VBoxContainer/HSplitContainer/SubViewportContainer" to="UserInterface/VBoxContainer/HSplitContainer/SubViewportContainer" method="_on_mouse_exited"]
+[connection signal="id_pressed" from="UserInterface/ThreadContextMenu" to="UserInterface/ThreadContextMenu" method="_on_id_pressed"]
+[connection signal="visibility_changed" from="UserInterface/ThreadContextMenu" to="UserInterface/ThreadContextMenu" method="_on_visibility_changed"]
+[connection signal="index_pressed" from="UserInterface/LayerContextMenu" to="UserInterface/LayerContextMenu" method="_on_index_pressed"]
+[connection signal="visibility_changed" from="UserInterface/LayerContextMenu" to="UserInterface/LayerContextMenu" method="_on_visibility_changed"]
+[connection signal="file_selected" from="UserInterface/SaveFileDialog" to="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/MenuBar/File" method="_on_save_file_dialog_file_selected"]
+[connection signal="file_selected" from="UserInterface/LoadFileDialog" to="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/MenuBar/File" method="_on_load_file_dialog_file_selected"]

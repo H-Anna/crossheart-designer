@@ -29,4 +29,5 @@ button_mask = 2
 flat = true
 script = ExtResource("4_yxpmc")
 
+[connection signal="pressed" from="." to="." method="_on_pressed"]
 [connection signal="pressed" from="RMB" to="RMB" method="_on_pressed"]
