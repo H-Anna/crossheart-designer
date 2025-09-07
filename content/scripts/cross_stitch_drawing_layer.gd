@@ -7,6 +7,7 @@ var _modulated_tile_cache: Dictionary
 
 func _ready() -> void:
 	SignalBus.thread_swapped.connect(_swap_cells_with_thread)
+	SignalBus.thread_removed_from_palette.connect(_erase_cells_with_thread)
 
 func get_mouse_position():
 	return local_to_map(get_global_mouse_position())
