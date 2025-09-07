@@ -8,5 +8,6 @@ extends ConfirmationDialog
 ## emission of this signal, resulting in multiple threads being deleted.
 func confirm(thread: XStitchThread) -> void:
 	Extensions.disconnect_all(confirmed)
-	confirmed.connect(SignalBus.thread_removed_from_palette.emit.bind(thread))
+	#confirmed.connect(SignalBus.thread_removed_from_palette.emit.bind(thread))
+	confirmed.connect(%PaletteController.remove_thread_command.bind(thread))
 	show()

@@ -8,7 +8,7 @@ var selected_thread : XStitchThread
 func _ready() -> void:
 	Globals.palette = self
 	
-	SignalBus.thread_added_to_palette.connect(add_thread_command)
+	#SignalBus.thread_added_to_palette.connect(add_thread_command)
 	SignalBus.thread_removed_from_palette.connect(remove_thread_command)
 	SignalBus.thread_swapped.connect(swap_thread_command)
 	SignalBus.symbol_swapped.connect(swap_symbol)
