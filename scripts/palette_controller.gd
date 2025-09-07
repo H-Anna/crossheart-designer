@@ -42,6 +42,7 @@ func remove_thread_command(thread: XStitchThread):
 	cmd.palette_controller = self
 	cmd.palette = palette
 	cmd.thread = thread
+	cmd.canvas = %Canvas
 	SignalBus.command_created.emit(cmd)
 
 
@@ -78,7 +79,11 @@ func select_thread(thread: XStitchThread):
 	#SignalBus.thread_selected.emit(thread)
 	ui_palette_container.select_thread(thread)
 	%Canvas.thread = thread
-	print_debug("Thread selected: %s" % thread.get_identifying_name())
+	
+	if !thread:
+		print_debug("No thread selected.")
+	else:
+		print_debug("Thread selected: %s" % thread.get_identifying_name())
 
 # TODO: selection should be governed by commands instead!
 func remove_thread(thread: XStitchThread):

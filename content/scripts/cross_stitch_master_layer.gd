@@ -9,6 +9,13 @@ extends Node2D
 		id = value
 		name = value
 
+@onready var layers : Dictionary = {
+	"FULL" : %FullStitchLayer,
+	#"SMALL" : %SmallStitchLayer,
+	#"KNOT" : %KnotLayer,
+	#"BACK" : %BackStitchLayer
+}
+
 ## The name of the layer displayed to the user.
 var display_name : String = "New Layer"
 
@@ -28,6 +35,16 @@ func get_current_cell():
 
 func get_active_sublayer() -> XStitchDrawingLayer:
 	return %FullStitchLayer #TODO: return based on active tool
+
+func add_stitches(thread: XStitchThread, context: Dictionary):
+	for key in layers:
+		layers[key].add_stitches(thread, context[key])
+
+func remove_stitches(thread: XStitchThread) -> Dictionary:
+	var context: Dictionary
+	for key in layers:
+		context[key] = layers[key]._erase_cells_with_thread(thread)
+	return context
 
 func draw_stitch(thread: XStitchThread, size: int, bounding_rect: Rect2i):
 	# TODO: draw on layer based on tool, let layer handle drawing

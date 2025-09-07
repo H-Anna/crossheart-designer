@@ -17,6 +17,7 @@ var bounding_rect : Rect2i
 var active_layer : XStitchMasterLayer
 
 ## The currently selected thread.
+# TODO: use get_selected_thread instead.
 var thread : XStitchThread
 
 ## The current brush size.
@@ -53,7 +54,7 @@ func _focus_changed(focused: bool):
 	can_draw = focused
 	if !can_draw && _cmd:
 		_commit()
-	
+
 
 func _handle_drawing():
 	if Input.is_action_just_pressed("draw"):
@@ -120,6 +121,20 @@ func point_is_in_canvas(p: Vector2i) -> bool:
 	if p.x >= bounding_rect.size.x || p.y >= bounding_rect.size.y:
 		return false
 	return true
+
+func get_current_thread():
+	return %PaletteController.get_selected_thread()
+
+func add_stitches(thread: XStitchThread, context: Dictionary):
+	for master_layer in %LayersContainer.get_children():
+		master_layer.add_stitches(thread, context[master_layer.name])
+	pass
+
+func remove_stitches(thread: XStitchThread) -> Dictionary:
+	var context: Dictionary
+	for master_layer in %LayersContainer.get_children():
+		context[master_layer.name] = master_layer.remove_stitches(thread)
+	return context
 
 func serialize():
 	var data = {}
