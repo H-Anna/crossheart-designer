@@ -54,25 +54,16 @@ func clear_palette():
 	palette.colors.clear()
 	palette.colors_to_symbols_dict.clear()
 	palette.select_thread(null)
-	#palette.selected_thread = null
-	#SignalBus.palette_ui_changed.emit(self)
 
 
 func add_thread(thread: XStitchThread):
 	palette.colors.append(thread)
 	palette.colors_to_symbols_dict.get_or_add(thread, SymbolsAtlas.get_random_symbol())
 	ui_palette_container.add_thread(thread)
-	#select_thread(thread)
-	#if !palette.selected_thread:
-		#select_thread(thread)
-		#ui_palette_container.select_thread(thread)
-	#SignalBus.thread_added_to_palette.emit(thread)
-	#SignalBus.palette_ui_changed.emit(self)
 
 
 func select_thread(thread: XStitchThread):
 	palette.selected_thread = thread
-	#SignalBus.thread_selected.emit(thread)
 	ui_palette_container.select_thread(thread)
 	%Canvas.thread = thread
 	
@@ -85,28 +76,21 @@ func select_thread(thread: XStitchThread):
 func remove_thread(thread: XStitchThread):
 	if thread == palette.selected_thread:
 		if palette.colors.size() == 1:
-			#palette.selected_thread = null
 			select_thread(null)
 		else:
 			var idx = palette.colors.find(thread)
 			if idx == 0:
-				#palette.selected_thread = palette.colors[idx + 1]
 				select_thread(palette.colors[idx + 1])
 			else:
-				#palette.selected_thread = palette.colors[idx - 1]
 				select_thread(palette.colors[idx - 1])
 	
 	palette.colors.erase(thread)
 	palette.colors_to_symbols_dict.erase(thread)
 	ui_palette_container.remove_thread(thread)
 	SignalBus.thread_removed_from_palette.emit(thread)
-	#SignalBus.palette_ui_changed.emit(self)
 
 
 func swap_thread(old_thread: XStitchThread, new_thread: XStitchThread):
-	# New thread is in threads -> select new thread, delete old one
-	# New thread is not in threads -> add the thread
-	# Old thread
 	if !palette.colors.has(new_thread):
 		var idx = palette.colors.find(old_thread)
 		palette.colors.insert(idx, new_thread)
@@ -119,13 +103,10 @@ func swap_thread(old_thread: XStitchThread, new_thread: XStitchThread):
 	palette.colors.erase(old_thread)
 	palette.colors_to_symbols_dict.erase(old_thread)
 	print_debug("Swapped %s with %s" % [old_thread.id, new_thread.id])
-	
-	#SignalBus.palette_ui_changed.emit(self)
 
 
 func swap_symbol(thread: XStitchThread, old_symbol: Symbol, new_symbol: Symbol):
 	palette.colors_to_symbols_dict[thread] = new_symbol
-	#SignalBus.palette_ui_changed.emit(self)
 
 
 func get_used_symbols():
