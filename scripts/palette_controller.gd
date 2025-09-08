@@ -9,6 +9,7 @@ var palette : PaletteModel
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	Globals.palette_controller = self
 	palette = PaletteModel.new()
 	SignalBus.thread_button_clicked.connect(on_thread_button_pressed)
 
@@ -31,24 +32,19 @@ func on_thread_button_pressed(thread: XStitchThread, button: ThreadButton, conta
 
 func add_thread_command(thread: XStitchThread):
 	var cmd = AddThreadCommand.new()
-	#cmd.palette = palette
-	cmd.palette_controller = self
 	cmd.thread = thread
 	SignalBus.command_created.emit(cmd)
 
 
 func remove_thread_command(thread: XStitchThread):
 	var cmd = RemoveThreadCommand.new()
-	cmd.palette_controller = self
 	cmd.palette = palette
 	cmd.thread = thread
-	cmd.canvas = %Canvas
 	SignalBus.command_created.emit(cmd)
 
 
 func swap_thread_command(old_thread: XStitchThread, new_thread: XStitchThread):
 	var cmd = SwapThreadCommand.new()
-	cmd.palette = self
 	cmd.old_thread = old_thread
 	cmd.new_thread = new_thread
 	SignalBus.command_created.emit(cmd)
