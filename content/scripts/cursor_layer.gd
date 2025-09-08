@@ -10,7 +10,6 @@ var focused := true
 var _erasing := false
 var _active_cell : Vector2i
 var _brush_size : int
-# TODO: connect thread select signal
 
 func _ready() -> void:
 	SignalBus.canvas_focus_changed.connect(_focus_changed)
@@ -21,7 +20,7 @@ func _process(_delta: float) -> void:
 		return
 	
 	# Don't draw anything if no thread is selected.
-	if !Globals.canvas.thread:
+	if !Globals.canvas.get_current_thread():
 		return
 	
 	if Input.is_action_just_pressed("erase"):
@@ -55,4 +54,4 @@ func _update_cursor_position():
 func _draw_cursor():
 	_sublayer.erase_all()
 	if !_erasing:
-		_sublayer.draw_stitch(Globals.canvas.thread, _active_cell, Globals.canvas.bounding_rect, _brush_size)
+		_sublayer.draw_stitch(Globals.canvas.get_current_thread(), _active_cell, Globals.canvas.bounding_rect, _brush_size)

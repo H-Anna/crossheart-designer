@@ -6,8 +6,7 @@ var CURSOR_TILE := Vector2i(0,0)
 var _modulated_tile_cache: Dictionary
 
 func _ready() -> void:
-	SignalBus.thread_swapped.connect(_swap_cells_with_thread)
-	#SignalBus.thread_removed_from_palette.connect(_erase_cells_with_thread)
+	pass
 
 func get_mouse_position():
 	return local_to_map(get_global_mouse_position())
@@ -44,6 +43,7 @@ func erase_all():
 	for cell in get_used_cells():
 		erase_cell(cell)
 
+
 func _set_cell_modulated(cell: Vector2i, thread: XStitchThread, tile: Vector2i = CURSOR_TILE) -> void:
 	if thread == null:
 		set_cell(cell, 0, tile)
@@ -60,6 +60,7 @@ func _set_cell_modulated(cell: Vector2i, thread: XStitchThread, tile: Vector2i =
 	_modulated_tile_cache[thread] = alt_tile_id
 	set_cell(cell, 0, tile, alt_tile_id)
 
+
 func _erase_cells_with_thread(thread: XStitchThread) -> Array[Vector2i]:
 	var used_cells : Array[Vector2i]
 	
@@ -72,17 +73,11 @@ func _erase_cells_with_thread(thread: XStitchThread) -> Array[Vector2i]:
 	
 	return used_cells
 
-func _swap_cells_with_thread(old_thread: XStitchThread, new_thread: XStitchThread):
-	if !_modulated_tile_cache.has(old_thread):
-		return
-	
-	var old_alt_id = _modulated_tile_cache[old_thread]
-	for cell in get_used_cells_by_id(0, CURSOR_TILE, old_alt_id):
-		_set_cell_modulated(cell, new_thread)
 
 func add_stitches(thread: XStitchThread, context: Array[Vector2i]):
 	for cell in context:
 		_set_cell_modulated(cell, thread)
+
 
 func serialize():
 	var data = []
