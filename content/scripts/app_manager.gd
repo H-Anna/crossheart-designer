@@ -16,7 +16,7 @@ func _save_to_file(filename: String = _cached_filepath):
 		return
 	
 	var state = {}
-	state.get_or_add("palette", Globals.palette.serialize())
+	state.get_or_add("palette", Globals.palette_controller.palette.serialize())
 	state.get_or_add("canvas", Globals.canvas.serialize())
 	
 	$SchemeParser.data_to_scheme(state)
@@ -55,7 +55,7 @@ func _load_from_file(filename: String):
 	
 	DisplayServer.window_set_title("Loaded: %s" % filename)
 	
-	Globals.palette.deserialize(result["palette"])
+	Globals.palette_controller.palette.deserialize(result["palette"])
 	Globals.canvas.deserialize(result["canvas"])
 	_cached_filepath = filename
 	$CommandManager.clear_history()

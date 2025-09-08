@@ -2,7 +2,6 @@ extends Node
 
 var app: Node
 var canvas: XStitchCanvas
-var palette: Palette
 var palette_controller: PaletteController
 
 const MIN_BRUSH_SIZE := 1
