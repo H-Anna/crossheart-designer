@@ -24,7 +24,7 @@ func on_thread_button_pressed(thread: XStitchThread, button: ThreadButton, conta
 			%AddThreadMenu.hide()
 			%PaletteMenu.show()
 		ui_swap_thread_container:
-			# TODO implement swap
+			SignalBus.thread_swap_requested.emit(thread)
 			pass
 		_: # Anything else
 			pass
@@ -94,14 +94,17 @@ func swap_thread(old_thread: XStitchThread, new_thread: XStitchThread):
 	if !palette.colors.has(new_thread):
 		var idx = palette.colors.find(old_thread)
 		palette.colors.insert(idx, new_thread)
+		ui_palette_container.add_thread(new_thread)
 		
 	palette.colors_to_symbols_dict.get_or_add(new_thread, palette.colors_to_symbols_dict.get(old_thread))
 	
 	if old_thread == palette.selected_thread:
-		palette.selected_thread = new_thread
+		select_thread(new_thread)
+		ui_palette_container.select_thread(new_thread)
 	
 	palette.colors.erase(old_thread)
 	palette.colors_to_symbols_dict.erase(old_thread)
+	ui_palette_container.remove_thread(old_thread)
 	print_debug("Swapped %s with %s" % [old_thread.id, new_thread.id])
 
 

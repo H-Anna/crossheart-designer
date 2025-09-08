@@ -8,7 +8,7 @@ extends ConfirmationDialog
 ## emission of this signal, resulting in multiple threads being swapped.
 func confirm(old_thread: XStitchThread, new_thread: XStitchThread) -> void:
 	Extensions.disconnect_all(confirmed)
-	confirmed.connect(SignalBus.thread_swapped.emit.bind(old_thread, new_thread))
+	confirmed.connect(%PaletteController.swap_thread_command.bind(old_thread, new_thread))
 	confirmed.connect(%PaletteMenu.show)
 	confirmed.connect(%SwapThreadMenu.hide)
 	show()
