@@ -19,7 +19,6 @@ func on_thread_button_pressed(thread: XStitchThread, button: ThreadButton, conta
 		ui_palette_container:
 			select_thread(thread)
 		ui_add_thread_container:
-			#add_thread(thread)
 			add_thread_command(thread)
 			%AddThreadMenu.hide()
 			%PaletteMenu.show()
@@ -56,8 +55,11 @@ func clear_palette():
 	palette.select_thread(null)
 
 
-func add_thread(thread: XStitchThread):
-	palette.colors.append(thread)
+func add_thread(thread: XStitchThread, index: int = -1):
+	if index >= 0:
+		palette.colors.insert(index, thread)
+	else:
+		palette.colors.append(thread)
 	palette.colors_to_symbols_dict.get_or_add(thread, SymbolsAtlas.get_random_symbol())
 	ui_palette_container.add_thread(thread)
 
@@ -65,46 +67,31 @@ func add_thread(thread: XStitchThread):
 func select_thread(thread: XStitchThread):
 	palette.selected_thread = thread
 	ui_palette_container.select_thread(thread)
-	%Canvas.thread = thread
 	
 	if !thread:
 		print_debug("No thread selected.")
 	else:
 		print_debug("Thread selected: %s" % thread.get_identifying_name())
 
-# TODO: selection should be governed by commands instead!
+
 func remove_thread(thread: XStitchThread):
 	if thread == palette.selected_thread:
-		if palette.colors.size() == 1:
-			select_thread(null)
-		else:
-			var idx = palette.colors.find(thread)
-			if idx == 0:
-				select_thread(palette.colors[idx + 1])
-			else:
-				select_thread(palette.colors[idx - 1])
+		select_thread(null)
 	
 	palette.colors.erase(thread)
 	palette.colors_to_symbols_dict.erase(thread)
 	ui_palette_container.remove_thread(thread)
-	SignalBus.thread_removed_from_palette.emit(thread)
 
 
 func swap_thread(old_thread: XStitchThread, new_thread: XStitchThread):
 	if !palette.colors.has(new_thread):
 		var idx = palette.colors.find(old_thread)
-		palette.colors.insert(idx, new_thread)
-		ui_palette_container.add_thread(new_thread)
-		
-	palette.colors_to_symbols_dict.get_or_add(new_thread, palette.colors_to_symbols_dict.get(old_thread))
+		add_thread(new_thread, idx)
 	
 	if old_thread == palette.selected_thread:
 		select_thread(new_thread)
-		ui_palette_container.select_thread(new_thread)
 	
-	palette.colors.erase(old_thread)
-	palette.colors_to_symbols_dict.erase(old_thread)
-	ui_palette_container.remove_thread(old_thread)
+	remove_thread(old_thread)
 	print_debug("Swapped %s with %s" % [old_thread.id, new_thread.id])
 
 
