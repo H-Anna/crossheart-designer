@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://s1bmq54ffm5f"]
+[gd_scene load_steps=32 format=3 uid="uid://s1bmq54ffm5f"]
 
 [ext_resource type="Script" uid="uid://ba1jthx0oawo3" path="res://content/scripts/app_manager.gd" id="1_gc8s6"]
 [ext_resource type="Script" uid="uid://cc3vfh7yxmat1" path="res://user_interface/scripts/file_menu.gd" id="2_qsp4k"]
@@ -18,7 +18,6 @@
 [ext_resource type="Texture2D" uid="uid://hjub8afgui3d" path="res://user_interface/icons/plus-svgrepo-com.svg" id="14_4lmeg"]
 [ext_resource type="Script" uid="uid://do361w8lxdjb4" path="res://user_interface/scripts/thread_button_container.gd" id="15_kq58d"]
 [ext_resource type="Texture2D" uid="uid://brursbtjqwkfw" path="res://user_interface/icons/back-curved-arrow-svgrepo-com.svg" id="16_d2t1y"]
-[ext_resource type="Script" uid="uid://dy3w46byobuef" path="res://user_interface/scripts/swap_thread_container.gd" id="17_gngh3"]
 [ext_resource type="Script" uid="uid://ce85rmbbfkx1h" path="res://user_interface/scripts/layer_button_container.gd" id="18_0n3wm"]
 [ext_resource type="PackedScene" uid="uid://d3fimv4fp01uq" path="res://user_interface/scenes/layer_button.tscn" id="19_qnost"]
 [ext_resource type="Script" uid="uid://bd48yyerxdbxk" path="res://user_interface/scripts/canvas_viewport_container.gd" id="20_wnkbs"]
@@ -344,7 +343,7 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("17_gngh3")
+script = ExtResource("15_kq58d")
 thread_button = ExtResource("13_h8e4i")
 
 [node name="BackButton" type="Button" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer/SwapThreadContainer"]
