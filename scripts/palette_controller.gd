@@ -17,7 +17,7 @@ func _ready() -> void:
 func on_thread_button_pressed(thread: XStitchThread, button: ThreadButton, container: ThreadButtonContainer):
 	match container:
 		ui_palette_container:
-			select_thread(thread)
+			select_thread(get_thread_index(thread))
 		ui_add_thread_container:
 			add_thread_command(thread)
 			%AddThreadMenu.hide()
@@ -55,28 +55,32 @@ func clear_palette():
 	palette.select_thread(null)
 
 
-func add_thread(thread: XStitchThread, index: int = -1):
+func add_thread(thread: XStitchThread, index: int = -1) -> int:
 	if index >= 0:
 		palette.colors.insert(index, thread)
 	else:
 		palette.colors.append(thread)
+		index = palette.colors.size() - 1
+	
 	palette.colors_to_symbols_dict.get_or_add(thread, SymbolsAtlas.get_random_symbol())
 	ui_palette_container.add_thread(thread)
+	return index
 
 
-func select_thread(thread: XStitchThread):
-	palette.selected_thread = thread
+func select_thread(index: int = -1):
+	palette.selected = index
+	var thread = get_selected_thread()
 	ui_palette_container.select_thread(thread)
 	
-	if !thread:
+	if index == -1:
 		print_debug("No thread selected.")
 	else:
 		print_debug("Thread selected: %s" % thread.get_identifying_name())
 
 
 func remove_thread(thread: XStitchThread):
-	if thread == palette.selected_thread:
-		select_thread(null)
+	if palette.colors.find(thread) == palette.selected:
+		select_thread()
 	
 	palette.colors.erase(thread)
 	palette.colors_to_symbols_dict.erase(thread)
@@ -84,12 +88,16 @@ func remove_thread(thread: XStitchThread):
 
 
 func swap_thread(old_thread: XStitchThread, new_thread: XStitchThread):
+	var index: int
 	if !palette.colors.has(new_thread):
-		var idx = palette.colors.find(old_thread)
-		add_thread(new_thread, idx)
+		var insert_at = palette.colors.find(old_thread)
+		add_thread(new_thread, insert_at)
+		index = insert_at
+	else:
+		index = palette.colors.find(new_thread)
 	
-	if old_thread == palette.selected_thread:
-		select_thread(new_thread)
+	if palette.colors.find(old_thread) == palette.selected:
+		select_thread(index)
 	
 	remove_thread(old_thread)
 	print_debug("Swapped %s with %s" % [old_thread.id, new_thread.id])
@@ -102,5 +110,10 @@ func swap_symbol(thread: XStitchThread, old_symbol: Symbol, new_symbol: Symbol):
 func get_used_symbols():
 	return palette.colors_to_symbols_dict.values()
 
-func get_selected_thread():
-	return palette.selected_thread
+func get_selected_thread() -> XStitchThread:
+	if palette.colors.is_empty() || palette.selected < 0:
+		return null
+	return palette.colors[palette.selected]
+
+func get_thread_index(thread: XStitchThread) -> int:
+	return palette.colors.find(thread)

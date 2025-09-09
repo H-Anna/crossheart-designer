@@ -4,8 +4,8 @@ extends Command
 var thread: XStitchThread
 
 func execute():
-	Globals.palette_controller.add_thread(thread)
-	Globals.palette_controller.select_thread(thread)
+	var index = Globals.palette_controller.add_thread(thread)
+	Globals.palette_controller.select_thread(index)
 	print_debug("CMD DO: ", get_string())
 
 func undo():
