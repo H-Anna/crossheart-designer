@@ -44,4 +44,4 @@ func _refresh() -> void:
 		add_theme_color_override(setting, icon_color)
 
 func _on_pressed() -> void:
-	print("Thread Button pressed: %s" % thread.color_name)
+	SignalBus.thread_button_clicked.emit(thread, self, get_parent())

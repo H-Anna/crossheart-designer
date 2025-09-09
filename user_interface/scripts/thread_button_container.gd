@@ -31,7 +31,7 @@ func _change_threads() -> void:
 		_created_buttons.append(btn)
 		add_child(btn)
 		btn.thread = t
-		btn.pressed.connect(on_thread_button_clicked.bind(btn))
+		#btn.pressed.connect(on_thread_button_clicked.bind(btn))
 
 func _on_search_bar_text_changed(new_text: String) -> void:
 	# Get text contents

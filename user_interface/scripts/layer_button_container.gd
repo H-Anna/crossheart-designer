@@ -23,14 +23,12 @@ func add_layer(layer: XStitchMasterLayer) -> void:
 	thread_layers.append(layer)
 	var btn = _create_layer_button(layer)
 	_created_layer_buttons.append(btn)
-	#_change_layers()
 
 func remove_layer(layer: XStitchMasterLayer) -> void:
 	thread_layers.erase(layer)
 	for btn in _created_layer_buttons:
 		if btn.data == layer:
 			btn.queue_free()
-	#_change_layers()
 
 func _change_layers() -> void:
 	# Delete all current

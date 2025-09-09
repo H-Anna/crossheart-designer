@@ -16,9 +16,6 @@ var bounding_rect : Rect2i
 ## The layer currently being drawn on.
 var active_layer : XStitchMasterLayer
 
-## The currently selected thread.
-var thread : XStitchThread
-
 ## The current brush size.
 var brush_size := 1
 
@@ -28,8 +25,6 @@ var _cmd : Command
 func _ready() -> void:
 	Globals.canvas = self
 	
-	SignalBus.thread_selected.connect(func(_thread): thread = _thread)
-	SignalBus.palette_ui_changed.connect(func(palette): thread = palette.selected_thread)
 	SignalBus.canvas_focus_changed.connect(_focus_changed)
 	SignalBus.brush_size_changed.connect(func(size): brush_size = size)
 	
@@ -40,7 +35,7 @@ func _ready() -> void:
 	add_layer()
 
 func _process(_delta: float) -> void:
-	if !can_draw || !thread:
+	if !can_draw || !get_current_thread():
 		return
 	
 	_handle_drawing()
@@ -53,7 +48,6 @@ func _focus_changed(focused: bool):
 	can_draw = focused
 	if !can_draw && _cmd:
 		_commit()
-	
 
 func _handle_drawing():
 	if Input.is_action_just_pressed("draw"):
@@ -62,7 +56,7 @@ func _handle_drawing():
 		else:
 			_cmd = BrushStrokeCommand.new()
 			_cmd.layer = active_layer.get_active_sublayer()
-			_cmd.thread = thread
+			_cmd.thread = get_current_thread()
 	elif Input.is_action_just_released("draw"):
 		_commit()
 
@@ -85,7 +79,7 @@ func _update_command():
 		for pixel in pixels.filter(point_is_in_canvas):
 			_cmd.previous_colors.get_or_add(pixel, _cmd.layer.get_stitch_at(pixel))
 			_cmd.pixels_to_draw.get_or_add(pixel, _cmd.layer.CURSOR_TILE)
-			_cmd.layer.draw_pixel(thread, pixel)
+			_cmd.layer.draw_pixel(get_current_thread(), pixel)
 	if _cmd is EraseCommand:
 		var pixels = _cmd.layer.get_brush_area(point, brush_size)
 		for pixel in pixels:
@@ -120,6 +114,20 @@ func point_is_in_canvas(p: Vector2i) -> bool:
 	if p.x >= bounding_rect.size.x || p.y >= bounding_rect.size.y:
 		return false
 	return true
+
+func get_current_thread():
+	return %PaletteController.get_selected_thread()
+
+func add_stitches(thread: XStitchThread, context: Dictionary):
+	for master_layer in %LayersContainer.get_children():
+		master_layer.add_stitches(thread, context[master_layer.name])
+	pass
+
+func remove_stitches(thread: XStitchThread) -> Dictionary:
+	var context: Dictionary
+	for master_layer in %LayersContainer.get_children():
+		context[master_layer.name] = master_layer.remove_stitches(thread)
+	return context
 
 func serialize():
 	var data = {}
