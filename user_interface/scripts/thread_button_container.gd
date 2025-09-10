@@ -27,11 +27,13 @@ func _change_threads() -> void:
 	_created_buttons.clear()
 	
 	for t in threads:
-		var btn = thread_button.instantiate() as ThreadButton
-		_created_buttons.append(btn)
-		add_child(btn)
-		btn.thread = t
-		#btn.pressed.connect(on_thread_button_clicked.bind(btn))
+		create_thread_button(t)
+
+func create_thread_button(thread: XStitchThread):
+	var btn = thread_button.instantiate() as ThreadButton
+	_created_buttons.append(btn)
+	add_child(btn)
+	btn.assign_thread(thread)
 
 func _on_search_bar_text_changed(new_text: String) -> void:
 	# Get text contents
@@ -57,8 +59,3 @@ func _search_matches_thread(text: String, thread: XStitchThread) -> bool:
 	var id := thread.id.to_lower()
 	var color_name := thread.color_name.to_lower()
 	return id.contains(text) or color_name.contains(text)
-
-## Extend this lambda to customize thread button functionality.
-## By default, prints the thread name.
-func on_thread_button_clicked(button: ThreadButton):
-	print("Thread Button pressed: %s" % button.thread.color_name)
