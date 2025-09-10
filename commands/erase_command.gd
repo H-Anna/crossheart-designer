@@ -2,14 +2,14 @@ class_name EraseCommand
 extends Command
 
 var layer : XStitchDrawingLayer
-var pixels_to_erase : Dictionary
-var previous_colors : Dictionary
+var cells_to_erase : Dictionary
+var previous_stitches : Dictionary
 
 func execute():
-	for pixel in pixels_to_erase:
-		layer.erase_pixel(pixel)
+	for cell in cells_to_erase:
+		layer.erase_cell(cell)
 
 func undo():
-	for pixel in previous_colors:
-		if previous_colors[pixel]:
-			layer.draw_pixel(previous_colors[pixel], pixel)
+	for cell in previous_stitches:
+		if previous_stitches[cell]:
+			layer.draw_cell(previous_stitches[cell], cell)

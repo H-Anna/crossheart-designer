@@ -75,17 +75,17 @@ func _commit():
 func _update_command():
 	var point = _cmd.layer.get_mouse_position()
 	if _cmd is BrushStrokeCommand:
-		var pixels = _cmd.layer.get_brush_area(point, brush_size)
-		for pixel in pixels.filter(point_is_in_canvas):
-			_cmd.previous_colors.get_or_add(pixel, _cmd.layer.get_stitch_at(pixel))
-			_cmd.pixels_to_draw.get_or_add(pixel, _cmd.layer.CURSOR_TILE)
-			_cmd.layer.draw_pixel(get_current_thread(), pixel)
+		var cells = _cmd.layer.get_brush_area(point, brush_size)
+		for cell in cells.filter(cell_is_in_canvas):
+			_cmd.previous_stitches.get_or_add(cell, _cmd.layer.get_stitch_at(cell))
+			_cmd.cells_to_draw.get_or_add(cell, _cmd.layer.CURSOR_TILE)
+			_cmd.layer.draw_cell(get_current_thread(), cell)
 	if _cmd is EraseCommand:
-		var pixels = _cmd.layer.get_brush_area(point, brush_size)
-		for pixel in pixels:
-			_cmd.previous_colors.get_or_add(pixel, _cmd.layer.get_stitch_at(pixel))
-			_cmd.pixels_to_erase.get_or_add(pixel, _cmd.layer.CURSOR_TILE)
-			_cmd.layer.erase_pixel(pixel)
+		var cells = _cmd.layer.get_brush_area(point, brush_size)
+		for cell in cells:
+			_cmd.previous_stitches.get_or_add(cell, _cmd.layer.get_stitch_at(cell))
+			_cmd.cells_to_erase.get_or_add(cell, _cmd.layer.CURSOR_TILE)
+			_cmd.layer.erase_cell(cell)
 
 func add_layer(layer: XStitchMasterLayer = null) -> XStitchMasterLayer:
 	if !layer:
@@ -108,7 +108,7 @@ func remove_layer(layer: XStitchMasterLayer) -> void:
 		active_layer = %LayersContainer.get_child(idx % %LayersContainer.get_child_count())
 	SignalBus.layer_removed.emit(layer)
 
-func point_is_in_canvas(p: Vector2i) -> bool:
+func cell_is_in_canvas(p: Vector2i) -> bool:
 	if p.x < 0 || p.y < 0:
 		return false
 	if p.x >= bounding_rect.size.x || p.y >= bounding_rect.size.y:

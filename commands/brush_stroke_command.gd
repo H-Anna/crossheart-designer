@@ -3,19 +3,19 @@ extends Command
 
 ## The layer to draw on.
 var layer : XStitchDrawingLayer
-## The tiles to draw.
-var pixels_to_draw : Dictionary
-var previous_colors : Dictionary
+## The cells to draw.
+var cells_to_draw : Dictionary
+var previous_stitches : Dictionary
 ## The thread to draw with.
 var thread : XStitchThread
 
 func execute():
-	for pixel in pixels_to_draw:
-		layer.draw_pixel(thread, pixel)
+	for cell in cells_to_draw:
+		layer.draw_cell(thread, cell)
 
 func undo():
-	for pixel in previous_colors:
-		if previous_colors[pixel]:
-			layer.draw_pixel(previous_colors[pixel], pixel)
+	for cell in previous_stitches:
+		if previous_stitches[cell]:
+			layer.draw_cell(previous_stitches[cell], cell)
 		else:
-			layer.erase_pixel(pixel)
+			layer.erase_cell(cell)
