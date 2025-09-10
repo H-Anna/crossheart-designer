@@ -16,6 +16,6 @@ func execute():
 func undo():
 	for cell in previous_stitches:
 		if previous_stitches[cell]:
-			layer.draw_cell(previous_stitches[cell], cell)
+			layer.draw_cell(previous_stitches[cell], thread)
 		else:
 			layer.erase_cell(cell)

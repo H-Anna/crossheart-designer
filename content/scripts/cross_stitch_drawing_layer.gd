@@ -18,7 +18,7 @@ func get_brush_area(center: Vector2i, size: int):
 	# Get the used cells of a given brush size
 	var brush_cells = tile_set.get_pattern(size - 1).get_used_cells()
 	# Offset the cells to given center point
-	var offset = Globals.BRUSH_CENTER_POINT[size] + center
+	var offset = center - Globals.BRUSH_CENTER_POINT[size]
 	var cells = brush_cells.map(func(x): return x + offset)
 	return cells
 
