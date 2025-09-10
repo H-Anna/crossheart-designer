@@ -79,7 +79,7 @@ func _update_command():
 		for cell in cells.filter(cell_is_in_canvas):
 			_cmd.previous_stitches.get_or_add(cell, _cmd.layer.get_stitch_at(cell))
 			_cmd.cells_to_draw.get_or_add(cell, _cmd.layer.CURSOR_TILE)
-			_cmd.layer.draw_cell(get_current_thread(), cell)
+			_cmd.layer.draw_cell(cell, get_current_thread())
 	if _cmd is EraseCommand:
 		var cells = _cmd.layer.get_brush_area(point, brush_size)
 		for cell in cells:

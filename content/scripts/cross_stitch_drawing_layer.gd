@@ -17,12 +17,10 @@ func get_stitch_at(cell: Vector2i):
 func get_brush_area(center: Vector2i, size: int):
 	# Get the used cells of a given brush size
 	var brush_cells = tile_set.get_pattern(size - 1).get_used_cells()
-	# Offset the cells so that they are in the context of the layer
-	var layer_cells = brush_cells.map(get_brush_offset)
-	return layer_cells
-
-func get_brush_offset(x: Vector2i, brush_size: Vector2i, center: Vector2i) -> Vector2i:
-	return x - Globals.BRUSH_CENTER_POINT[brush_size] + center
+	# Offset the cells to given center point
+	var offset = Globals.BRUSH_CENTER_POINT[size] + center
+	var cells = brush_cells.map(func(x): return x + offset)
+	return cells
 
 func draw_stitch(thread: XStitchThread, center: Vector2i, bounding_rect: Rect2i, size: int) -> void:
 	var cells = get_brush_area(center, size)

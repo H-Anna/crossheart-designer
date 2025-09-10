@@ -6,7 +6,7 @@ extends XStitchMasterLayer
 
 @onready var _sublayer = %FullStitchLayer
 
-var focused := true
+var focused : bool
 var _erasing := false
 var _active_cell : Vector2i
 var _brush_size : int

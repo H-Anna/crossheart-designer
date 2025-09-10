@@ -11,7 +11,7 @@ var thread : XStitchThread
 
 func execute():
 	for cell in cells_to_draw:
-		layer.draw_cell(thread, cell)
+		layer.draw_cell(cell, thread)
 
 func undo():
 	for cell in previous_stitches:
