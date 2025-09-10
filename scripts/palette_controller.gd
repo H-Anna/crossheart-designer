@@ -32,6 +32,7 @@ func on_thread_button_pressed(thread: XStitchThread, button: ThreadButton, conta
 func add_thread_command(thread: XStitchThread):
 	var cmd = AddThreadCommand.new()
 	cmd.thread = thread
+	cmd.symbol = SymbolsAtlas.assign_symbol()
 	SignalBus.command_created.emit(cmd)
 
 
@@ -77,9 +78,7 @@ func select_thread(index: int = -1):
 
 
 func remove_thread(thread: XStitchThread):
-	if palette.threads.find(thread) == palette.selected:
-		select_thread()
-	
+	select_thread()
 	palette.threads.erase(thread)
 	ui_palette_container.remove_thread(thread)
 
