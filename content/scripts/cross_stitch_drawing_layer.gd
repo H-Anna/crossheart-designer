@@ -11,40 +11,35 @@ func _ready() -> void:
 func get_mouse_position():
 	return local_to_map(get_global_mouse_position())
 
-func draw_pixel(thread: XStitchThread, cell: Vector2i):
-	_set_cell_modulated(cell, thread)
-
-func erase_pixel(cell: Vector2i):
-	erase_cell(cell)
-
 func get_stitch_at(cell: Vector2i):
 	return _modulated_tile_cache.find_key(get_cell_alternative_tile(cell))
 
 func get_brush_area(center: Vector2i, size: int):
 	# Get the used cells of a given brush size
 	var brush_cells = tile_set.get_pattern(size - 1).get_used_cells()
-	# Offset the cells so that they are in the context of the layer
-	var layer_cells = brush_cells.map(func(x): return x - Globals.BRUSH_CENTER_POINT[size] + center)
-	return layer_cells
+	# Offset the cells to given center point
+	var offset = center - Globals.BRUSH_CENTER_POINT[size]
+	var cells = brush_cells.map(func(x): return x + offset)
+	return cells
 
-func draw_stitch(thread: XStitchThread, cell: Vector2i, bounding_rect: Rect2i, size: int) -> void:
-	var pixels = get_brush_area(cell, size)
-	for pixel in pixels:
-		if bounding_rect.has_point(pixel):
-			_set_cell_modulated(pixel, thread)
+func draw_stitch(thread: XStitchThread, center: Vector2i, bounding_rect: Rect2i, size: int) -> void:
+	var cells = get_brush_area(center, size)
+	for cell in cells:
+		if bounding_rect.has_point(cell):
+			draw_cell(cell, thread)
 
 func erase_stitch(cell: Vector2i, bounding_rect: Rect2i, size: int) -> void:
-	var pixels = get_brush_area(cell, size)
-	for pixel in pixels:
-		if bounding_rect.has_point(pixel):
-			erase_cell(pixel)
+	var cells = get_brush_area(cell, size)
+	for c in cells:
+		if bounding_rect.has_point(c):
+			erase_cell(c)
 
 func erase_all():
 	for cell in get_used_cells():
 		erase_cell(cell)
 
 
-func _set_cell_modulated(cell: Vector2i, thread: XStitchThread, tile: Vector2i = CURSOR_TILE) -> void:
+func draw_cell(cell: Vector2i, thread: XStitchThread, tile: Vector2i = CURSOR_TILE) -> void:
 	if thread == null:
 		set_cell(cell, 0, tile)
 		return
@@ -76,7 +71,7 @@ func _erase_cells_with_thread(thread: XStitchThread) -> Array[Vector2i]:
 
 func add_stitches(thread: XStitchThread, context: Array[Vector2i]):
 	for cell in context:
-		_set_cell_modulated(cell, thread)
+		draw_cell(cell, thread)
 
 
 func serialize():
@@ -101,4 +96,4 @@ func deserialize(data: Array):
 		
 		var thread = ThreadsAtlas.get_thread_by_global_id(thread_id)
 		for cell in coordinates:
-			_set_cell_modulated(cell, thread, tile)
+			draw_cell(cell, thread, tile)

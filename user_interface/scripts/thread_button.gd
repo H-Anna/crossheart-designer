@@ -29,6 +29,10 @@ func assign_thread(_thread: XStitchThread) -> void:
 	thread = _thread
 	tooltip_text = thread.color_name
 	icon_color = get_icon_color()
+	
+	if thread.symbol != null:
+		set_button_icon(thread.symbol.data)
+	
 	set_theme_overrides()
 
 ## Calculate the icon luminance based on the background color.
