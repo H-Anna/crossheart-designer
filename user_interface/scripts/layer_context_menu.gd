@@ -7,8 +7,9 @@ const MOVE_DOWN = 3
 const DELETE = 5
 
 func _on_visibility_changed() -> void:
+	var layer_count = %Canvas.get_layer_count()
 	var is_first = caller.get_index() == 0
-	var is_last = caller.get_index() == %LayersContainer.get_child_count() - 1
+	var is_last = caller.get_index() == layer_count - 1
 	set_item_disabled(DELETE, is_first && is_last)
 	set_item_disabled(MOVE_UP, is_first)
 	set_item_disabled(MOVE_DOWN, is_last)

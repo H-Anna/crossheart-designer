@@ -105,7 +105,7 @@ func remove_layer(layer: XStitchMasterLayer) -> void:
 	var active = layer.is_active()
 	%LayersContainer.remove_child(layer)
 	if active:
-		active_layer = %LayersContainer.get_child(idx % %LayersContainer.get_child_count())
+		active_layer = %LayersContainer.get_child(idx % get_layer_count())
 	SignalBus.layer_removed.emit(layer)
 
 func cell_is_in_canvas(p: Vector2i) -> bool:
@@ -128,6 +128,9 @@ func remove_stitches(thread: XStitchThread) -> Dictionary:
 	for master_layer in %LayersContainer.get_children():
 		context[master_layer.name] = master_layer.remove_stitches(thread)
 	return context
+
+func get_layer_count():
+	return $LayersContainer.get_child_count()
 
 func serialize():
 	var data = {}
