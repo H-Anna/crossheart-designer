@@ -6,15 +6,12 @@ func _ready() -> void:
 	max_value = Globals.MAX_BRUSH_SIZE
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("increase-brush-size", true):
-		set_value_no_signal(mini(value + 1, max_value))
-		SignalBus.brush_size_changed.emit(value)
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("increase-brush-size", false, true):
+		value += 1
 	
-	if Input.is_action_just_pressed("decrease-brush-size", true):
-		set_value_no_signal(maxi(value - 1, min_value))
-		SignalBus.brush_size_changed.emit(value)
+	if event.is_action_pressed("decrease-brush-size", false, true):
+		value -= 1
 
 
 func _on_value_changed(_value: float) -> void:
