@@ -3,7 +3,6 @@ extends Node2D
 
 ## Manages multiple [XStitchDrawingLayer]s. Handles calls from [XStitchCanvas].
 
-## The [ThreadLayer] data associated with this master layer.
 @onready var id : String = Extensions.generate_unique_string(Extensions.layer_name_length):
 	set(value):
 		id = value
