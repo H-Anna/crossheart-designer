@@ -6,6 +6,8 @@ extends Node2D
 ## Layer scene to instantiate.
 @export var layer_scene : PackedScene
 
+@export var ui_layer_button_container : LayerButtonContainer
+
 ## Whether the canvas can be drawn on.
 var can_draw := false
 
@@ -30,7 +32,7 @@ func _ready() -> void:
 	
 	SignalBus.layer_selected.connect(select_layer)
 	
-	bounding_rect = %BackgroundLayer.get_used_rect()
+	bounding_rect = $BackgroundLayer.get_used_rect()
 	
 	add_layer()
 
@@ -90,23 +92,25 @@ func _update_command():
 func add_layer(layer: XStitchMasterLayer = null) -> XStitchMasterLayer:
 	if !layer:
 		layer = layer_scene.instantiate() as XStitchMasterLayer
-	%LayersContainer.add_child(layer)
+	$LayersContainer.add_child(layer)
+	
 	if !active_layer:
-		active_layer = layer
+		select_layer(layer)
 		
-	SignalBus.layer_added.emit(layer)
+	ui_layer_button_container.add_layer(layer)
 	return layer
 
 func select_layer(layer: XStitchMasterLayer) -> void:
 	active_layer = layer
 
 func remove_layer(layer: XStitchMasterLayer) -> void:
-	var idx = layer.get_index()
-	var active = layer.is_active()
-	%LayersContainer.remove_child(layer)
-	if active:
-		active_layer = %LayersContainer.get_child(idx % get_layer_count())
-	SignalBus.layer_removed.emit(layer)
+	if layer.is_active():
+		var idx = layer.get_index()
+		var next_layer = $LayersContainer.get_child((idx + 1) % get_layer_count())
+		select_layer(next_layer)
+	
+	$LayersContainer.remove_child(layer)
+	ui_layer_button_container.remove_layer(layer)
 
 func cell_is_in_canvas(p: Vector2i) -> bool:
 	if p.x < 0 || p.y < 0:
@@ -119,13 +123,13 @@ func get_current_thread():
 	return %PaletteController.get_selected_thread()
 
 func add_stitches(thread: XStitchThread, context: Dictionary):
-	for master_layer in %LayersContainer.get_children():
+	for master_layer in $LayersContainer.get_children():
 		master_layer.add_stitches(thread, context[master_layer.name])
 	pass
 
 func remove_stitches(thread: XStitchThread) -> Dictionary:
 	var context: Dictionary
-	for master_layer in %LayersContainer.get_children():
+	for master_layer in $LayersContainer.get_children():
 		context[master_layer.name] = master_layer.remove_stitches(thread)
 	return context
 
@@ -139,7 +143,7 @@ func serialize():
 	data.get_or_add("size_y", bounding_rect.size.y)
 	
 	var layers = []
-	for child in %LayersContainer.get_children():
+	for child in $LayersContainer.get_children():
 		layers.append(child.serialize())
 	
 	data.get_or_add("layers", layers)
@@ -147,7 +151,7 @@ func serialize():
 
 func deserialize(data: Dictionary):
 	active_layer = null
-	for layer in %LayersContainer.get_children():
+	for layer in $LayersContainer.get_children():
 		remove_layer(layer)
 	
 	var size_x = data["size_x"]

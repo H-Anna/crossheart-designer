@@ -376,7 +376,7 @@ text = "Layers"
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="LayersContainer" type="VBoxContainer" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer"]
+[node name="LayerButtonContainer" type="VBoxContainer" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar/LayersMenu/VBoxContainer2/ScrollContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -398,8 +398,9 @@ gui_disable_input = true
 size = Vector2i(1129, 659)
 render_target_update_mode = 4
 
-[node name="Canvas" parent="UserInterface/VBoxContainer/HSplitContainer/SubViewportContainer/CanvasViewport" instance=ExtResource("21_f6a44")]
+[node name="Canvas" parent="UserInterface/VBoxContainer/HSplitContainer/SubViewportContainer/CanvasViewport" node_paths=PackedStringArray("ui_layer_button_container") instance=ExtResource("21_f6a44")]
 unique_name_in_owner = true
+ui_layer_button_container = NodePath("../../../SideBar/LayersMenu/VBoxContainer2/ScrollContainer/LayerButtonContainer")
 
 [node name="StatusBar" type="PanelContainer" parent="UserInterface/VBoxContainer"]
 custom_minimum_size = Vector2(0, 30)
