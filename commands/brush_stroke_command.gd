@@ -8,8 +8,13 @@ var cells_to_draw : Dictionary
 var previous_stitches : Dictionary
 ## The thread to draw with.
 var thread : XStitchThread
+var preview : bool = true
 
 func execute():
+	if preview:
+		preview = false
+		return
+	
 	for cell in cells_to_draw:
 		layer.draw_cell(cell, thread)
 

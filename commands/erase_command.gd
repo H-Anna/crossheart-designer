@@ -4,8 +4,13 @@ extends Command
 var layer : XStitchDrawingLayer
 var cells_to_erase : Dictionary
 var previous_stitches : Dictionary
+var preview : bool = true
 
 func execute():
+	if preview:
+		preview = false
+		return
+	
 	for cell in cells_to_erase:
 		layer.erase_cell(cell)
 

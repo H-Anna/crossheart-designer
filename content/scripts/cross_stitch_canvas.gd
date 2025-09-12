@@ -5,11 +5,11 @@ extends Node2D
 
 ## Layer scene to instantiate.
 @export var layer_scene : PackedScene
-
+## The UI element that contains LayerButtons.
 @export var ui_layer_button_container : LayerButtonContainer
 
-## Whether the canvas can be drawn on.
-var can_draw := false
+## Whether the canvas has GUI input focus.
+var focused := false
 
 ## The size and position of the canvas.
 ## Used to restrict drawing within the canvas.
@@ -32,62 +32,88 @@ func _ready() -> void:
 	
 	SignalBus.layer_selected.connect(select_layer)
 	
+	# TODO: ability for custom size or resize canvas
 	bounding_rect = $BackgroundLayer.get_used_rect()
 	
 	add_layer()
 
-func _process(_delta: float) -> void:
-	if !can_draw || !get_current_thread():
+
+func _unhandled_input(event: InputEvent) -> void:
+	if !accepts_input():
 		return
 	
-	_handle_drawing()
-	_handle_erase()
+	handle_draw_input(event)
 	
-	if _cmd:
-		_update_command()
+	handle_erase_input(event)
+	pass
 
-func _focus_changed(focused: bool):
-	can_draw = focused
-	if !can_draw && _cmd:
-		_commit()
 
-func _handle_drawing():
-	if Input.is_action_just_pressed("draw"):
+func handle_draw_input(event: InputEvent):
+	## Starting brush stroke
+	if event.is_action_pressed("draw"):
 		if active_layer.locked:
 			SignalBus.toast_notification.emit("Layer locked! Unlock to draw on it.")
 		else:
-			_cmd = BrushStrokeCommand.new()
-			_cmd.layer = active_layer.get_active_sublayer()
-			_cmd.thread = get_current_thread()
-	elif Input.is_action_just_released("draw"):
-		_commit()
+			brush_stroke_command()
+	
+	if event is InputEventMouseMotion && _cmd is BrushStrokeCommand:
+		update_brush_stroke()
+	
+	## Ending brush stroke
+	if event.is_action_released("draw"):
+		finalize_command()
 
-func _handle_erase():
-	if Input.is_action_just_pressed("erase"):
-		_cmd = EraseCommand.new()
+func update_brush_stroke():
+	var point = _cmd.layer.get_mouse_position()
+	var cells = _cmd.layer.get_brush_area(point, brush_size)
+	for cell in cells.filter(cell_is_in_canvas):
+		_cmd.previous_stitches.get_or_add(cell, _cmd.layer.get_stitch_at(cell))
+		_cmd.cells_to_draw.get_or_add(cell, _cmd.layer.CURSOR_TILE)
+		_cmd.layer.draw_cell(cell, get_current_thread())
+
+func brush_stroke_command():
+		_cmd = BrushStrokeCommand.new()
 		_cmd.layer = active_layer.get_active_sublayer()
-	elif Input.is_action_just_released("erase"):
-		_commit()
+		_cmd.thread = get_current_thread()
 
-func _commit():
+func handle_erase_input(event: InputEvent):
+	if event.is_action_pressed("erase"):
+		print("Erasing start!")
+		if active_layer.locked:
+			SignalBus.toast_notification.emit("Layer locked! Unlock to draw on it.")
+		else:
+			erase_command()
+	
+	if event is InputEventMouseMotion && _cmd is EraseCommand:
+		update_erase()
+	
+	if event.is_action_released("erase"):
+		print("Erasing ended!")
+		finalize_command()
+
+func update_erase():
+	var point = _cmd.layer.get_mouse_position()
+	var cells = _cmd.layer.get_brush_area(point, brush_size)
+	for cell in cells:
+		_cmd.previous_stitches.get_or_add(cell, _cmd.layer.get_stitch_at(cell))
+		_cmd.cells_to_erase.get_or_add(cell, _cmd.layer.CURSOR_TILE)
+		_cmd.layer.erase_cell(cell)
+
+func erase_command():
+	_cmd = EraseCommand.new()
+	_cmd.layer = active_layer.get_active_sublayer()
+
+func finalize_command():
 	if _cmd:
 		SignalBus.command_created.emit(_cmd)
 		_cmd = null
 
-func _update_command():
-	var point = _cmd.layer.get_mouse_position()
-	if _cmd is BrushStrokeCommand:
-		var cells = _cmd.layer.get_brush_area(point, brush_size)
-		for cell in cells.filter(cell_is_in_canvas):
-			_cmd.previous_stitches.get_or_add(cell, _cmd.layer.get_stitch_at(cell))
-			_cmd.cells_to_draw.get_or_add(cell, _cmd.layer.CURSOR_TILE)
-			_cmd.layer.draw_cell(cell, get_current_thread())
-	if _cmd is EraseCommand:
-		var cells = _cmd.layer.get_brush_area(point, brush_size)
-		for cell in cells:
-			_cmd.previous_stitches.get_or_add(cell, _cmd.layer.get_stitch_at(cell))
-			_cmd.cells_to_erase.get_or_add(cell, _cmd.layer.CURSOR_TILE)
-			_cmd.layer.erase_cell(cell)
+
+func _focus_changed(_focused: bool):
+	focused = _focused
+	if !focused && _cmd:
+		finalize_command()
+
 
 func add_layer(layer: XStitchMasterLayer = null) -> XStitchMasterLayer:
 	if !layer:
@@ -135,6 +161,9 @@ func remove_stitches(thread: XStitchThread) -> Dictionary:
 
 func get_layer_count():
 	return $LayersContainer.get_child_count()
+
+func accepts_input():
+	return focused && get_current_thread()
 
 func serialize():
 	var data = {}
