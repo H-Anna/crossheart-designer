@@ -37,16 +37,17 @@ func _ready() -> void:
 	
 	add_layer()
 
+#region Input Handling
 
 func _unhandled_input(event: InputEvent) -> void:
 	if !accepts_input():
 		return
 	
+	if event is InputEventMouseMotion:
+		active_layer.update_command()
 	handle_draw_input(event)
-	
 	handle_erase_input(event)
 	pass
-
 
 func handle_draw_input(event: InputEvent):
 	## Starting brush stroke
@@ -54,70 +55,42 @@ func handle_draw_input(event: InputEvent):
 		if active_layer.locked:
 			SignalBus.toast_notification.emit("Layer locked! Unlock to draw on it.")
 		else:
-			brush_stroke_command()
-	
-	if event is InputEventMouseMotion && _cmd is BrushStrokeCommand:
-		update_brush_stroke()
+			active_layer.create_brush_stroke_command(get_current_thread(), brush_size)
+			active_layer.update_command()
 	
 	## Ending brush stroke
 	if event.is_action_released("draw"):
-		finalize_command()
-
-func update_brush_stroke():
-	var point = _cmd.layer.get_mouse_position()
-	var cells = _cmd.layer.get_brush_area(point, brush_size)
-	for cell in cells.filter(cell_is_in_canvas):
-		_cmd.previous_stitches.get_or_add(cell, _cmd.layer.get_stitch_at(cell))
-		_cmd.cells_to_draw.get_or_add(cell, _cmd.layer.CURSOR_TILE)
-		_cmd.layer.draw_cell(cell, get_current_thread())
-
-func brush_stroke_command():
-		_cmd = BrushStrokeCommand.new()
-		_cmd.layer = active_layer.get_active_sublayer()
-		_cmd.thread = get_current_thread()
+		active_layer.finalize_command()
 
 func handle_erase_input(event: InputEvent):
 	if event.is_action_pressed("erase"):
-		print("Erasing start!")
 		if active_layer.locked:
 			SignalBus.toast_notification.emit("Layer locked! Unlock to draw on it.")
 		else:
-			erase_command()
-	
-	if event is InputEventMouseMotion && _cmd is EraseCommand:
-		update_erase()
+			active_layer.create_erase_command(brush_size)
+			active_layer.update_command()
 	
 	if event.is_action_released("erase"):
-		print("Erasing ended!")
-		finalize_command()
+		active_layer.finalize_command()
 
-func update_erase():
-	var point = _cmd.layer.get_mouse_position()
-	var cells = _cmd.layer.get_brush_area(point, brush_size)
-	for cell in cells:
-		_cmd.previous_stitches.get_or_add(cell, _cmd.layer.get_stitch_at(cell))
-		_cmd.cells_to_erase.get_or_add(cell, _cmd.layer.CURSOR_TILE)
-		_cmd.layer.erase_cell(cell)
+func accepts_input():
+	return focused && get_current_thread()
 
-func erase_command():
-	_cmd = EraseCommand.new()
-	_cmd.layer = active_layer.get_active_sublayer()
+#endregion
 
-func finalize_command():
-	if _cmd:
-		SignalBus.command_created.emit(_cmd)
-		_cmd = null
 
 
 func _focus_changed(_focused: bool):
 	focused = _focused
 	if !focused && _cmd:
-		finalize_command()
+		active_layer.finalize_command()
 
+#region Layer Management
 
 func add_layer(layer: XStitchMasterLayer = null) -> XStitchMasterLayer:
 	if !layer:
 		layer = layer_scene.instantiate() as XStitchMasterLayer
+		layer.bounding_rect = bounding_rect
 	$LayersContainer.add_child(layer)
 	
 	if !active_layer:
@@ -137,16 +110,12 @@ func remove_layer(layer: XStitchMasterLayer) -> void:
 	
 	$LayersContainer.remove_child(layer)
 	ui_layer_button_container.remove_layer(layer)
-
-func cell_is_in_canvas(p: Vector2i) -> bool:
-	if p.x < 0 || p.y < 0:
-		return false
-	if p.x >= bounding_rect.size.x || p.y >= bounding_rect.size.y:
-		return false
-	return true
+#endregion
 
 func get_current_thread():
 	return %PaletteController.get_selected_thread()
+
+#region Commands actions (Swap thread, Remove thread)
 
 func add_stitches(thread: XStitchThread, context: Dictionary):
 	for master_layer in $LayersContainer.get_children():
@@ -159,11 +128,10 @@ func remove_stitches(thread: XStitchThread) -> Dictionary:
 		context[master_layer.name] = master_layer.remove_stitches(thread)
 	return context
 
+#endregion
+
 func get_layer_count():
 	return $LayersContainer.get_child_count()
-
-func accepts_input():
-	return focused && get_current_thread()
 
 func serialize():
 	var data = {}
