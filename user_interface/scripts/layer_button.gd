@@ -15,7 +15,7 @@ func _ready() -> void:
 	pass
 
 func set_context_menu(context_menu: Node) -> void:
-	find_child("RMB").context_menu = context_menu
+	$RMB.context_menu = context_menu
 
 func rename_layer() -> void:
 	%NameField.text = text

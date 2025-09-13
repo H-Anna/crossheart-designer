@@ -3,7 +3,6 @@ extends Node2D
 
 ## Manages multiple [XStitchDrawingLayer]s. Handles calls from [XStitchCanvas].
 
-## The [ThreadLayer] data associated with this master layer.
 @onready var id : String = Extensions.generate_unique_string(Extensions.layer_name_length):
 	set(value):
 		id = value
@@ -11,8 +10,6 @@ extends Node2D
 
 @onready var layers : Dictionary = {
 	"FULL" : %FullStitchLayer,
-	#"SMALL" : %SmallStitchLayer,
-	#"KNOT" : %KnotLayer,
 	#"BACK" : %BackStitchLayer
 }
 
@@ -23,9 +20,13 @@ var display_name : String = "New Layer"
 ## Locking or hiding a layer prevents drawing.
 var locked : bool = false
 
-func _ready() -> void:
-	name = id
-	pass
+## The stored command.
+var _cmd : Command
+
+## The size and position of the canvas.
+## Used to restrict drawing within the canvas.
+var bounding_rect : Rect2i
+
 
 func is_active():
 	return Globals.canvas.active_layer == self
@@ -46,30 +47,52 @@ func remove_stitches(thread: XStitchThread) -> Dictionary:
 		context[key] = layers[key]._erase_cells_with_thread(thread)
 	return context
 
-func draw_stitch(thread: XStitchThread, size: int, bounding_rect: Rect2i):
-	# TODO: draw on layer based on tool, let layer handle drawing
-	if !thread:
-		return # TODO: notification? error?
-	if size == 0:
-		return # TODO: error? this shouldn't ever happen
-	if !is_active():
+func update_command():
+	if !_cmd:
 		return
-	#if locked:
-		#SignalBus.toast_notification.emit("Layer locked! Unlock to draw on it.")
-		#return # TODO: notification? UI thingy?
-	
-	var pos = %FullStitchLayer.local_to_map(get_global_mouse_position())
-	%FullStitchLayer.draw_stitch(thread, pos, bounding_rect, size)
-	pass
+	if _cmd is BrushStrokeCommand:
+		update_brush_stroke_command()
+	if _cmd is EraseCommand:
+		update_erase_command()
 
-func erase_stitch(size: int, bounding_rect: Rect2i):
-	# TODO: erase on layer based on tool
-	if !is_active(): return
-	if size == 0: return
-	
-	var pos = %FullStitchLayer.local_to_map(get_global_mouse_position())
-	%FullStitchLayer.erase_stitch(pos, bounding_rect, size)
-	pass
+func update_brush_stroke_command():
+	var point = _cmd.layer.get_mouse_position()
+	var cells = _cmd.layer.get_brush_area(point, _cmd.brush_size)
+	for cell in cells.filter(cell_is_in_canvas):
+		_cmd.previous_stitches.get_or_add(cell, _cmd.layer.get_stitch_at(cell))
+		_cmd.cells_to_draw.get_or_add(cell, _cmd.layer.CURSOR_TILE)
+		_cmd.layer.draw_cell(cell, _cmd.thread)
+
+func create_brush_stroke_command(thread: XStitchThread, brush_size: int):
+		_cmd = BrushStrokeCommand.new()
+		_cmd.layer = get_active_sublayer()
+		_cmd.thread = thread
+		_cmd.brush_size = brush_size
+
+func update_erase_command():
+	var point = _cmd.layer.get_mouse_position()
+	var cells = _cmd.layer.get_brush_area(point, _cmd.brush_size)
+	for cell in cells:
+		_cmd.previous_stitches.get_or_add(cell, _cmd.layer.get_stitch_at(cell))
+		_cmd.cells_to_erase.get_or_add(cell, _cmd.layer.CURSOR_TILE)
+		_cmd.layer.erase_cell(cell)
+
+func create_erase_command(brush_size: int):
+	_cmd = EraseCommand.new()
+	_cmd.layer = get_active_sublayer()
+	_cmd.brush_size = brush_size
+
+func finalize_command():
+	if _cmd:
+		SignalBus.command_created.emit(_cmd)
+		_cmd = null
+
+func cell_is_in_canvas(p: Vector2i) -> bool:
+	if p.x < 0 || p.y < 0:
+		return false
+	if p.x >= bounding_rect.size.x || p.y >= bounding_rect.size.y:
+		return false
+	return true
 
 func serialize():
 	var data = {}
