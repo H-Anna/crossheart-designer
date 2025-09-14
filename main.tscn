@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://s1bmq54ffm5f"]
+[gd_scene load_steps=33 format=3 uid="uid://s1bmq54ffm5f"]
 
 [ext_resource type="Script" uid="uid://ba1jthx0oawo3" path="res://content/scripts/app_manager.gd" id="1_gc8s6"]
 [ext_resource type="Script" uid="uid://cc3vfh7yxmat1" path="res://user_interface/scripts/file_menu.gd" id="2_qsp4k"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://dm7g0drk7toco" path="res://user_interface/icons/stamp-2-svgrepo-com.svg" id="6_jq2sk"]
 [ext_resource type="Texture2D" uid="uid://no3ch4iluw0s" path="res://user_interface/icons/text-svgrepo-com.svg" id="7_4k2k6"]
 [ext_resource type="Texture2D" uid="uid://1bjbsjetsgf0" path="res://user_interface/icons/cross-icon.svg" id="8_0rl1p"]
+[ext_resource type="Texture2D" uid="uid://cnk6lkx8moi10" path="res://user_interface/icons/eyedropper tool-svgrepo-com.svg" id="8_qsp4k"]
 [ext_resource type="Texture2D" uid="uid://brvl7shde4jk7" path="res://user_interface/icons/halfcross-ltr-icon.svg" id="9_ok6jj"]
 [ext_resource type="Texture2D" uid="uid://u3lrn5bi4i3i" path="res://user_interface/icons/smallfullcross-icon.svg" id="10_facbu"]
 [ext_resource type="Script" uid="uid://bmct46kbsh8ig" path="res://user_interface/scripts/brush_size_spin_box.gd" id="11_b1qrp"]
@@ -129,7 +130,7 @@ size_flags_horizontal = 3
 theme_override_constants/separation = 8
 alignment = 1
 
-[node name="Button" type="Button" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolButtons"]
+[node name="DrawEraseButton" type="Button" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolButtons"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 tooltip_text = "Draw & Erase"
@@ -141,6 +142,7 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="Button2" type="Button" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolButtons"]
+visible = false
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 tooltip_text = "Fill"
@@ -152,6 +154,7 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="Button3" type="Button" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolButtons"]
+visible = false
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 tooltip_text = "Select"
@@ -163,6 +166,7 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="Button4" type="Button" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolButtons"]
+visible = false
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 tooltip_text = "Stamp"
@@ -174,6 +178,7 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="Button5" type="Button" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolButtons"]
+visible = false
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 tooltip_text = "Insert Text"
@@ -181,6 +186,17 @@ disabled = true
 toggle_mode = true
 button_group = SubResource("ButtonGroup_6iyjs")
 icon = ExtResource("7_4k2k6")
+icon_alignment = 1
+expand_icon = true
+
+[node name="ColorPickButton" type="Button" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolButtons"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+tooltip_text = "Color Pick"
+disabled = true
+toggle_mode = true
+button_group = SubResource("ButtonGroup_6iyjs")
+icon = ExtResource("8_qsp4k")
 icon_alignment = 1
 expand_icon = true
 
@@ -393,6 +409,7 @@ script = ExtResource("20_wnkbs")
 
 [node name="CanvasViewport" type="SubViewport" parent="UserInterface/VBoxContainer/HSplitContainer/SubViewportContainer"]
 unique_name_in_owner = true
+handle_input_locally = false
 size = Vector2i(1129, 659)
 render_target_update_mode = 4
 
