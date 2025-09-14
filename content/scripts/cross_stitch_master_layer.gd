@@ -99,6 +99,25 @@ func pick_thread() -> XStitchThread:
 	var cell = layer.get_mouse_position()
 	return layer.get_stitch_at(cell)
 
+func create_fill_command(thread: XStitchThread):
+	var layer = get_active_sublayer()
+	var start = layer.get_mouse_position()
+	var previous_thread = layer.get_stitch_at(start)
+	# Stop immediately if trying to fill a same color area.
+	# This prevents filling the command history with junk.
+	if previous_thread == thread:
+		return
+	
+	var area = layer.get_contiguous_area(start, cell_is_in_canvas)
+	
+	_cmd = FillCommand.new()
+	_cmd.layer = layer
+	_cmd.area = area
+	_cmd.previous_thread = previous_thread
+	_cmd.thread = thread
+	finalize_command()
+	pass
+
 func serialize():
 	var data = {}
 	data.get_or_add("id", id)

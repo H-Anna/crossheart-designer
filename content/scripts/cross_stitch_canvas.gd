@@ -51,9 +51,11 @@ func _unhandled_input(event: InputEvent) -> void:
 				active_layer.update_command()
 			handle_draw_input(event)
 			handle_erase_input(event)
+			
 		XStitchTool.Method.COLOR_PICK:
 			handle_color_pick_input(event)
 		_:
+			handle_fill_input(event)
 			pass
 	pass
 
@@ -87,6 +89,11 @@ func handle_color_pick_input(event: InputEvent):
 		if thread != null:
 			%PaletteController.pick_thread(thread)
 			%XStitchToolController.select_tool(XStitchTool.Method.DRAW_ERASE)
+
+func handle_fill_input(event: InputEvent):
+	if event.is_action_pressed("draw"):
+		active_layer.create_fill_command(get_current_thread())
+		pass
 
 func accepts_input():
 	return focused && get_current_thread()
@@ -138,7 +145,7 @@ func get_top_layer() -> XStitchMasterLayer:
 func get_current_thread():
 	return %PaletteController.get_selected_thread()
 
-#region Commands actions (Swap thread, Remove thread)
+#region Commands actions
 
 func add_stitches(thread: XStitchThread, context: Dictionary):
 	for master_layer in $LayersContainer.get_children():
