@@ -31,6 +31,7 @@ func _ready() -> void:
 	SignalBus.brush_size_changed.connect(func(size): brush_size = size)
 	
 	SignalBus.layer_selected.connect(select_layer)
+	%XStitchToolController.tool_selected.connect(update_tool)
 	
 	# TODO: ability for custom size or resize canvas
 	bounding_rect = $BackgroundLayer.get_used_rect()
@@ -43,10 +44,17 @@ func _unhandled_input(event: InputEvent) -> void:
 	if !accepts_input():
 		return
 	
-	if event is InputEventMouseMotion:
-		active_layer.update_command()
-	handle_draw_input(event)
-	handle_erase_input(event)
+	var tool = %XStitchToolController.get_current_tool()
+	match tool.method:
+		XStitchTool.Method.DRAW_ERASE:
+			if event is InputEventMouseMotion:
+				active_layer.update_command()
+			handle_draw_input(event)
+			handle_erase_input(event)
+		XStitchTool.Method.COLOR_PICK:
+			handle_color_pick_input(event)
+		_:
+			pass
 	pass
 
 func handle_draw_input(event: InputEvent):
@@ -73,8 +81,17 @@ func handle_erase_input(event: InputEvent):
 	if event.is_action_released("erase"):
 		active_layer.finalize_command()
 
+func handle_color_pick_input(event: InputEvent):
+	if event.is_action_pressed("draw"):
+		var thread = get_top_layer().pick_thread()
+		%PaletteController.pick_thread(thread)
+		%XStitchToolController.select_draw_erase_tool()
+
 func accepts_input():
 	return focused && get_current_thread()
+
+func update_tool(tool: XStitchTool):
+	$CursorLayer.visible = tool.enable_cursor
 
 #endregion
 
@@ -82,6 +99,7 @@ func accepts_input():
 
 func _focus_changed(_focused: bool):
 	focused = _focused
+	
 	if !focused && _cmd:
 		active_layer.finalize_command()
 
@@ -110,6 +128,10 @@ func remove_layer(layer: XStitchMasterLayer) -> void:
 	
 	$LayersContainer.remove_child(layer)
 	ui_layer_button_container.remove_layer(layer)
+
+func get_top_layer() -> XStitchMasterLayer:
+	return $LayersContainer.get_child(-1)
+
 #endregion
 
 func get_current_thread():

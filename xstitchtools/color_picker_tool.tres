@@ -4,4 +4,6 @@
 
 [resource]
 script = ExtResource("1_wcvdg")
+method = 1
+enable_cursor = false
 metadata/_custom_type_script = "uid://cryxn80ljfkle"

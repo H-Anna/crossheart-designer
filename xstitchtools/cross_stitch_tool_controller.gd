@@ -1,6 +1,8 @@
 class_name XStitchToolController
 extends Node
 
+signal tool_selected(tool: XStitchTool)
+
 @export var draw_erase_tool: XStitchTool
 @export var color_picker_tool: XStitchTool
 
@@ -24,9 +26,11 @@ func select_draw_erase_tool():
 		elem.hide()
 	ui_draw_erase_tool_settings.show()
 	print("Draw tool selected")
+	tool_selected.emit(current_tool)
 
 func select_color_picker_tool():
 	current_tool = color_picker_tool
 	for elem in ui_settings:
 		elem.hide()
 	print("Color picker tool selected")
+	tool_selected.emit(current_tool)

@@ -12,12 +12,12 @@ var _active_cell : Vector2i
 var _brush_size : int
 
 func _ready() -> void:
-	SignalBus.canvas_focus_changed.connect(_focus_changed)
+	#SignalBus.canvas_focus_changed.connect(_focus_changed)
 	pass
 
 func _process(_delta: float) -> void:
-	if !focused:
-		return
+	#if !focused:
+		#return
 	
 	# Don't draw anything if no thread is selected.
 	if !Globals.canvas.get_current_thread():
@@ -32,10 +32,11 @@ func _process(_delta: float) -> void:
 	_draw_cursor()
 
 func _focus_changed(_focused: bool):
-	focused = _focused
-	
-	if !focused:
-		_erase_cursor()
+	visible = _focused
+	#focused = _focused
+	#
+	#if !focused:
+		#_erase_cursor()
 
 func _erase_cursor():
 	_sublayer.erase_all()

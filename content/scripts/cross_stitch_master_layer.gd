@@ -94,6 +94,11 @@ func cell_is_in_canvas(p: Vector2i) -> bool:
 		return false
 	return true
 
+func pick_thread() -> XStitchThread:
+	var layer = get_active_sublayer()
+	var cell = layer.get_mouse_position()
+	return layer.get_stitch_at(cell)
+
 func serialize():
 	var data = {}
 	data.get_or_add("id", id)
