@@ -1,7 +1,7 @@
 class_name XStitchTool
 extends Resource
 
-enum Method {DRAW_ERASE, COLOR_PICK}
+enum Method {DRAW_ERASE, COLOR_PICK, FILL}
 
 @export var method: Method
 @export var enable_cursor_layer: bool
