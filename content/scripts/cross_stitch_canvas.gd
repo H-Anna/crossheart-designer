@@ -84,14 +84,15 @@ func handle_erase_input(event: InputEvent):
 func handle_color_pick_input(event: InputEvent):
 	if event.is_action_pressed("draw"):
 		var thread = get_top_layer().pick_thread()
-		%PaletteController.pick_thread(thread)
-		%XStitchToolController.select_draw_erase_tool()
+		if thread != null:
+			%PaletteController.pick_thread(thread)
+			%XStitchToolController.select_draw_erase_tool()
 
 func accepts_input():
 	return focused && get_current_thread()
 
 func update_tool(tool: XStitchTool):
-	$CursorLayer.visible = tool.enable_cursor
+	$CursorLayer.visible = tool.enable_cursor_layer
 
 #endregion
 

@@ -22,15 +22,15 @@ func get_current_tool() -> XStitchTool:
 
 func select_draw_erase_tool():
 	current_tool = draw_erase_tool
+	Input.set_custom_mouse_cursor(current_tool.cursor_image, 0, current_tool.cursor_hotspot)
 	for elem in ui_settings:
 		elem.hide()
 	ui_draw_erase_tool_settings.show()
-	print("Draw tool selected")
 	tool_selected.emit(current_tool)
 
 func select_color_picker_tool():
 	current_tool = color_picker_tool
+	Input.set_custom_mouse_cursor(current_tool.cursor_image, 0, current_tool.cursor_hotspot)
 	for elem in ui_settings:
 		elem.hide()
-	print("Color picker tool selected")
 	tool_selected.emit(current_tool)
