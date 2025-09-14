@@ -1,0 +1,2 @@
+class_name XStitchTool
+extends Resource

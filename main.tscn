@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://s1bmq54ffm5f"]
+[gd_scene load_steps=36 format=3 uid="uid://s1bmq54ffm5f"]
 
 [ext_resource type="Script" uid="uid://ba1jthx0oawo3" path="res://content/scripts/app_manager.gd" id="1_gc8s6"]
 [ext_resource type="Script" uid="uid://cc3vfh7yxmat1" path="res://user_interface/scripts/file_menu.gd" id="2_qsp4k"]
@@ -29,6 +29,9 @@
 [ext_resource type="Script" uid="uid://cknqpddqck2gf" path="res://user_interface/scripts/thread_context_menu.gd" id="25_blkrb"]
 [ext_resource type="Script" uid="uid://dhraiic6maytg" path="res://user_interface/scripts/layer_context_menu.gd" id="26_abqjc"]
 [ext_resource type="Script" uid="uid://bgk2h0b357aq2" path="res://scripts/palette_controller.gd" id="30_kq58d"]
+[ext_resource type="Script" uid="uid://cv2dpwg8g8oc5" path="res://xstitchtools/cross_stitch_tool_controller.gd" id="30_seu75"]
+[ext_resource type="Resource" uid="uid://3yxj3qdx8pl1" path="res://xstitchtools/draw_erase_tool.tres" id="31_htxhm"]
+[ext_resource type="Resource" uid="uid://bwvhg72uchdec" path="res://xstitchtools/color_picker_tool.tres" id="32_jq2sk"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_6iyjs"]
 
@@ -193,7 +196,6 @@ expand_icon = true
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 tooltip_text = "Color Pick"
-disabled = true
 toggle_mode = true
 button_group = SubResource("ButtonGroup_6iyjs")
 icon = ExtResource("8_qsp4k")
@@ -555,6 +557,13 @@ script = ExtResource("30_kq58d")
 ui_palette_container = NodePath("../UserInterface/VBoxContainer/HSplitContainer/SideBar/PaletteMenu/VBoxContainer/ScrollContainer/PaletteContainer")
 ui_add_thread_container = NodePath("../UserInterface/VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/AddThreadContainer")
 ui_swap_thread_container = NodePath("../UserInterface/VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer/SwapThreadContainer")
+
+[node name="XStitchToolController" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("30_seu75")
+draw_erase_tool = ExtResource("31_htxhm")
+color_picker_tool = ExtResource("32_jq2sk")
+metadata/brush_size = 1
 
 [connection signal="index_pressed" from="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/MenuBar/File" to="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/MenuBar/File" method="_on_index_pressed"]
 [connection signal="value_changed" from="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolSettings/SizeSetting/BrushSizeSpinBox" to="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolSettings/SizeSetting/BrushSizeSpinBox" method="_on_value_changed"]
