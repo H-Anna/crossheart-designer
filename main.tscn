@@ -123,6 +123,7 @@ item_2/text = "Element 3"
 item_2/id = 2
 
 [node name="ToolBar" type="HBoxContainer" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 3
 alignment = 1
@@ -202,22 +203,22 @@ icon = ExtResource("8_qsp4k")
 icon_alignment = 1
 expand_icon = true
 
-[node name="ToolSettings" type="HBoxContainer" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar"]
+[node name="DrawEraseToolSettings" type="HBoxContainer" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar"]
 layout_mode = 2
 size_flags_horizontal = 6
 theme_override_constants/separation = 50
 alignment = 2
 
-[node name="ModeSetting" type="HBoxContainer" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolSettings"]
+[node name="ModeSetting" type="HBoxContainer" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/DrawEraseToolSettings"]
 layout_mode = 2
 theme_override_constants/separation = 15
 
-[node name="Label" type="Label" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolSettings/ModeSetting"]
+[node name="Label" type="Label" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/DrawEraseToolSettings/ModeSetting"]
 layout_mode = 2
 theme = SubResource("Theme_5dpkv")
 text = "Mode:"
 
-[node name="OptionButton" type="OptionButton" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolSettings/ModeSetting"]
+[node name="OptionButton" type="OptionButton" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/DrawEraseToolSettings/ModeSetting"]
 layout_mode = 2
 tooltip_text = "Mode: the type of stitch currently being drawn."
 selected = 0
@@ -238,15 +239,15 @@ popup/item_4/id = 4
 popup/item_5/text = "Small half stitch"
 popup/item_5/id = 5
 
-[node name="SizeSetting" type="HBoxContainer" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolSettings"]
+[node name="SizeSetting" type="HBoxContainer" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/DrawEraseToolSettings"]
 layout_mode = 2
 theme_override_constants/separation = 15
 
-[node name="Label" type="Label" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolSettings/SizeSetting"]
+[node name="Label" type="Label" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/DrawEraseToolSettings/SizeSetting"]
 layout_mode = 2
 text = "Size:"
 
-[node name="BrushSizeSpinBox" type="SpinBox" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolSettings/SizeSetting"]
+[node name="BrushSizeSpinBox" type="SpinBox" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/DrawEraseToolSettings/SizeSetting"]
 layout_mode = 2
 tooltip_text = "Size: the brush/eraser size."
 min_value = 1.0
@@ -558,15 +559,20 @@ ui_palette_container = NodePath("../UserInterface/VBoxContainer/HSplitContainer/
 ui_add_thread_container = NodePath("../UserInterface/VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/AddThreadContainer")
 ui_swap_thread_container = NodePath("../UserInterface/VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer/SwapThreadContainer")
 
-[node name="XStitchToolController" type="Node" parent="."]
+[node name="XStitchToolController" type="Node" parent="." node_paths=PackedStringArray("ui_draw_erase_tool_button", "ui_draw_erase_tool_settings", "ui_color_picker_tool_button")]
 unique_name_in_owner = true
 script = ExtResource("30_seu75")
 draw_erase_tool = ExtResource("31_htxhm")
 color_picker_tool = ExtResource("32_jq2sk")
+ui_draw_erase_tool_button = NodePath("../UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolButtons/DrawEraseButton")
+ui_draw_erase_tool_settings = NodePath("../UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/DrawEraseToolSettings")
+ui_color_picker_tool_button = NodePath("../UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolButtons/ColorPickButton")
 metadata/brush_size = 1
 
 [connection signal="index_pressed" from="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/MenuBar/File" to="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/MenuBar/File" method="_on_index_pressed"]
-[connection signal="value_changed" from="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolSettings/SizeSetting/BrushSizeSpinBox" to="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolSettings/SizeSetting/BrushSizeSpinBox" method="_on_value_changed"]
+[connection signal="pressed" from="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolButtons/DrawEraseButton" to="XStitchToolController" method="select_draw_erase_tool"]
+[connection signal="pressed" from="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolButtons/ColorPickButton" to="XStitchToolController" method="select_color_picker_tool"]
+[connection signal="value_changed" from="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/DrawEraseToolSettings/SizeSetting/BrushSizeSpinBox" to="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/DrawEraseToolSettings/SizeSetting/BrushSizeSpinBox" method="_on_value_changed"]
 [connection signal="pressed" from="UserInterface/VBoxContainer/HSplitContainer/SideBar/PaletteMenu/VBoxContainer/ScrollContainer/PaletteContainer/AddButton" to="UserInterface/VBoxContainer/HSplitContainer/SideBar/PaletteMenu" method="hide"]
 [connection signal="pressed" from="UserInterface/VBoxContainer/HSplitContainer/SideBar/PaletteMenu/VBoxContainer/ScrollContainer/PaletteContainer/AddButton" to="UserInterface/VBoxContainer/HSplitContainer/SideBar/AddThreadMenu" method="show"]
 [connection signal="visibility_changed" from="UserInterface/VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/AddThreadContainer" to="UserInterface/VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/AddThreadContainer" method="_on_visibility_changed"]
