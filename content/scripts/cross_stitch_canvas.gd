@@ -86,7 +86,7 @@ func handle_color_pick_input(event: InputEvent):
 		var thread = get_top_layer().pick_thread()
 		if thread != null:
 			%PaletteController.pick_thread(thread)
-			%XStitchToolController.select_draw_erase_tool()
+			%XStitchToolController.select_tool(XStitchTool.Method.DRAW_ERASE)
 
 func accepts_input():
 	return focused && get_current_thread()
