@@ -65,6 +65,8 @@ func add_thread(thread: XStitchThread, index: int = -1) -> int:
 	ui_palette_container.add_thread(thread)
 	return index
 
+func pick_thread(thread: XStitchThread):
+	select_thread(get_thread_index(thread))
 
 func select_thread(index: int = -1):
 	palette.selected = index
