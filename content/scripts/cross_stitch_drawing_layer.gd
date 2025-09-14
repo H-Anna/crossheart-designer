@@ -11,7 +11,7 @@ func _ready() -> void:
 func get_mouse_position():
 	return local_to_map(get_global_mouse_position())
 
-func get_stitch_at(cell: Vector2i):
+func get_stitch_at(cell: Vector2i) -> XStitchThread:
 	return _modulated_tile_cache.find_key(get_cell_alternative_tile(cell))
 
 func get_brush_area(center: Vector2i, size: int):
@@ -72,6 +72,39 @@ func _erase_cells_with_thread(thread: XStitchThread) -> Array[Vector2i]:
 func add_stitches(thread: XStitchThread, context: Array[Vector2i]):
 	for cell in context:
 		draw_cell(cell, thread)
+
+
+## Returns a contiguous area from a starting point.
+## A contiguous area is a set of neighboring cells that are the same color.
+func get_contiguous_area(start: Vector2i, is_in_boundary: Callable) -> Array[Vector2i]:
+	var result: Array[Vector2i] # The resulting area
+	var thread = get_stitch_at(start) # The thread at the starting point
+	var visited: Dictionary[Vector2i, bool] # Keeps track of visited cells
+	var frontier: Array[Vector2i] # The working array. Cells are added and removed to this
+	
+	frontier.push_front(start)
+	while !frontier.is_empty():
+		var cell = frontier.pop_back()
+		# If this cell has been visited, skip it
+		if visited.has(cell):
+			continue
+		visited.get_or_add(cell, true)
+		
+		# If it's out of bounds, skip it
+		if !is_in_boundary.call(cell):
+			continue
+		
+		# If it doesn't have the same thread, skip it
+		if get_stitch_at(cell) != thread:
+			continue
+		
+		# All checks passed.
+		#  - Add to results
+		#  - Add neighbors to frontier
+		result.append(cell)
+		frontier.append_array(Extensions.get_neighbor_cells(self, cell))
+		
+	return result
 
 
 func serialize():

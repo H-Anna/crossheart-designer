@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="XStitchTool" load_steps=3 format=3 uid="uid://brhghxvrpjkpo"]
+
+[ext_resource type="Texture2D" uid="uid://da7wjq6688me4" path="res://cursor/drawing_bucket.png" id="1_l1l6u"]
+[ext_resource type="Script" uid="uid://cryxn80ljfkle" path="res://xstitchtools/cross_stitch_tool.gd" id="1_ur6o0"]
+
+[resource]
+script = ExtResource("1_ur6o0")
+method = 2
+enable_cursor_layer = false
+cursor_image = ExtResource("1_l1l6u")
+cursor_hotspot = Vector2(6, 28)
+metadata/_custom_type_script = "uid://cryxn80ljfkle"
