@@ -3,6 +3,8 @@ extends Node
 
 signal tool_selected(tool: XStitchTool)
 
+@export var tool_dictionary: Dictionary[XStitchTool.Method, XStitchTool]
+
 @export var draw_erase_tool: XStitchTool
 @export var color_picker_tool: XStitchTool
 
@@ -15,22 +17,12 @@ signal tool_selected(tool: XStitchTool)
 var current_tool: XStitchTool
 
 func _ready() -> void:
-	select_draw_erase_tool()
+	select_tool(XStitchTool.Method.DRAW_ERASE)
 
 func get_current_tool() -> XStitchTool:
 	return current_tool
 
-func select_draw_erase_tool():
-	current_tool = draw_erase_tool
+func select_tool(method: XStitchTool.Method):
+	current_tool = tool_dictionary[method]
 	Input.set_custom_mouse_cursor(current_tool.cursor_image, 0, current_tool.cursor_hotspot)
-	for elem in ui_settings:
-		elem.hide()
-	ui_draw_erase_tool_settings.show()
-	tool_selected.emit(current_tool)
-
-func select_color_picker_tool():
-	current_tool = color_picker_tool
-	Input.set_custom_mouse_cursor(current_tool.cursor_image, 0, current_tool.cursor_hotspot)
-	for elem in ui_settings:
-		elem.hide()
 	tool_selected.emit(current_tool)
