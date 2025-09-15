@@ -46,7 +46,7 @@ func vector2i_is_within_rect2i(coords: Vector2i, rect: Rect2i) -> bool:
 const layer_name_length = 8
 
 var ascii_letters_and_digits = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-func generate_unique_string(length: int) -> String:
+func generate_unique_string(length: int = layer_name_length) -> String:
 	var result = ""
 	for i in range(length):
 		result += ascii_letters_and_digits[randi() % ascii_letters_and_digits.length()]

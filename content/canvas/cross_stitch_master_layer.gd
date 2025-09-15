@@ -3,7 +3,7 @@ extends Node2D
 
 ## Manages multiple [XStitchDrawingLayer]s. Handles calls from [XStitchCanvas].
 
-@onready var id : String = Extensions.generate_unique_string(Extensions.layer_name_length):
+var id:
 	set(value):
 		id = value
 		name = value
@@ -27,6 +27,8 @@ var _cmd : Command
 ## Used to restrict drawing within the canvas.
 var bounding_rect : Rect2i
 
+func _ready() -> void:
+	id = Extensions.generate_unique_string()
 
 func is_active():
 	return Globals.canvas.active_layer == self
