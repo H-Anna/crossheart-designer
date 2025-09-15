@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8sa0ghfu7nfy"
-path="res://.godot/imported/knot8.png-e7ba6ad304fd77d346ce556cb9b7de72.ctex"
+uid="uid://hurr5ae38x07"
+path="res://.godot/imported/drawing_picker.png-d5b761d8a2a7add10ad26c43ac5e4d5a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://content/resources/knot8.png"
-dest_files=["res://.godot/imported/knot8.png-e7ba6ad304fd77d346ce556cb9b7de72.ctex"]
+source_file="res://content/xstitchtools/drawing_picker.png"
+dest_files=["res://.godot/imported/drawing_picker.png-d5b761d8a2a7add10ad26c43ac5e4d5a.ctex"]
 
 [params]
 

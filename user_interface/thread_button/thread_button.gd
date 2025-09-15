@@ -1,4 +1,4 @@
-@icon("res://icons/ThreadButton.svg")
+@icon("res://icons/thread_green.svg")
 class_name ThreadButton
 extends Button
 

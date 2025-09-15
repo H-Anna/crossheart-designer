@@ -1,6 +1,6 @@
 ## A container for thread buttons. Populates and manages array of children
 ## based on thread data it receives.
-@icon("res://icons/ThreadButtonContainer.svg")
+@icon("res://icons/thread_green.svg")
 class_name ThreadButtonContainer
 extends Container
 

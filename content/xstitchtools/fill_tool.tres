@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="XStitchTool" load_steps=3 format=3 uid="uid://brhghxvrpjkpo"]
 
-[ext_resource type="Texture2D" uid="uid://da7wjq6688me4" path="res://cursor/drawing_bucket.png" id="1_l1l6u"]
-[ext_resource type="Script" uid="uid://cryxn80ljfkle" path="res://xstitchtools/cross_stitch_tool.gd" id="1_ur6o0"]
+[ext_resource type="Texture2D" uid="uid://da7wjq6688me4" path="res://content/xstitchtools/drawing_bucket.png" id="1_l1l6u"]
+[ext_resource type="Script" uid="uid://cryxn80ljfkle" path="res://content/xstitchtools/cross_stitch_tool.gd" id="1_ur6o0"]
 
 [resource]
 script = ExtResource("1_ur6o0")

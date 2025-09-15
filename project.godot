@@ -18,11 +18,11 @@ config/features=PackedStringArray("4.4", "GL Compatibility")
 
 [autoload]
 
-Extensions="*res://scripts/extensions.gd"
-SignalBus="*res://scripts/signal_bus.gd"
-FileHandler="*res://scripts/file_handler.gd"
-ThreadsAtlas="*res://scripts/threads_atlas.gd"
-SymbolsAtlas="*res://scripts/symbols_atlas.gd"
+Extensions="*res://content/extensions.gd"
+SignalBus="*res://content/signal_bus.gd"
+FileHandler="*res://content/file_handler.gd"
+ThreadsAtlas="*res://content/data/threads_atlas.gd"
+SymbolsAtlas="*res://content/data/symbols_atlas.gd"
 Globals="*res://content/globals.gd"
 
 [debug]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://hurr5ae38x07"
-path="res://.godot/imported/drawing_picker.png-087205da7e4a9aeadf2f42dd0cbd7860.ctex"
+uid="uid://d2cnmslfcklya"
+path="res://.godot/imported/tile16.png-0bf6b6ffe1a045bdb9589cfbee448925.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://cursor/drawing_picker.png"
-dest_files=["res://.godot/imported/drawing_picker.png-087205da7e4a9aeadf2f42dd0cbd7860.ctex"]
+source_file="res://content/canvas/tile16.png"
+dest_files=["res://.godot/imported/tile16.png-0bf6b6ffe1a045bdb9589cfbee448925.ctex"]
 
 [params]
 

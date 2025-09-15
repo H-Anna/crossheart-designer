@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=4 uid="uid://dj1tyn5td2irm"]
 
-[ext_resource type="TileSet" uid="uid://bpejnnnkx57tt" path="res://content/resources/background_tileset.tres" id="1_4o8a3"]
-[ext_resource type="Script" uid="uid://35w8lt5sew6y" path="res://content/scripts/cross_stitch_canvas.gd" id="1_ncd2v"]
-[ext_resource type="Script" uid="uid://ii0oylecxeb5" path="res://content/scripts/camera.gd" id="2_o3cl0"]
-[ext_resource type="PackedScene" uid="uid://nxbfjf30u43n" path="res://content/scenes/cursor_layer.tscn" id="4_e8dy0"]
-[ext_resource type="PackedScene" uid="uid://mqe0068ic2xw" path="res://content/scenes/master_layer.tscn" id="4_gu1yr"]
+[ext_resource type="TileSet" uid="uid://bpejnnnkx57tt" path="res://content/canvas/background_tileset.tres" id="1_4o8a3"]
+[ext_resource type="Script" uid="uid://35w8lt5sew6y" path="res://content/canvas/cross_stitch_canvas.gd" id="1_ncd2v"]
+[ext_resource type="Script" uid="uid://ii0oylecxeb5" path="res://content/camera.gd" id="2_o3cl0"]
+[ext_resource type="PackedScene" uid="uid://nxbfjf30u43n" path="res://content/canvas/cursor_layer.tscn" id="4_e8dy0"]
+[ext_resource type="PackedScene" uid="uid://mqe0068ic2xw" path="res://content/canvas/master_layer.tscn" id="4_gu1yr"]
 
 [node name="Canvas" type="Node2D"]
 script = ExtResource("1_ncd2v")

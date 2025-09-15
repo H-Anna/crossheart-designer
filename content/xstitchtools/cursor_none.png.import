@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7k1cuftoo1om"
-path="res://.godot/imported/background.png-be38b6ec22854a781a85a18045c8a87b.ctex"
+uid="uid://bol10pftw3g04"
+path="res://.godot/imported/cursor_none.png-9cf751a13f73b5c12130299c6c74c139.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://content/resources/background.png"
-dest_files=["res://.godot/imported/background.png-be38b6ec22854a781a85a18045c8a87b.ctex"]
+source_file="res://content/xstitchtools/cursor_none.png"
+dest_files=["res://.godot/imported/cursor_none.png-9cf751a13f73b5c12130299c6c74c139.ctex"]
 
 [params]
 

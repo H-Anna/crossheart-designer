@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bk0k2m8menh3c"
-path="res://.godot/imported/ThreadButtonContainer.svg-666f5ce00f8cb3e0b19e7b7dadcd3745.ctex"
+uid="uid://da7wjq6688me4"
+path="res://.godot/imported/drawing_bucket.png-06a25c9f405042ad318438809d331473.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://icons/ThreadButtonContainer.svg"
-dest_files=["res://.godot/imported/ThreadButtonContainer.svg-666f5ce00f8cb3e0b19e7b7dadcd3745.ctex"]
+source_file="res://content/xstitchtools/drawing_bucket.png"
+dest_files=["res://.godot/imported/drawing_bucket.png-06a25c9f405042ad318438809d331473.ctex"]
 
 [params]
 
@@ -32,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=0.05
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

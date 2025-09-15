@@ -1,0 +1,284 @@
+[gd_scene load_steps=15 format=3 uid="uid://nxbfjf30u43n"]
+
+[sub_resource type="GDScript" id="GDScript_xgk0w"]
+script/source = "class_name XStitchCursorLayer
+extends XStitchMasterLayer
+
+## A special layer that draws the cursor in real-time, providing visual feedback
+## to the user.
+
+@onready var _sublayer = %FullStitchLayer
+
+var focused : bool
+var _erasing := false
+var _active_cell : Vector2i
+var _brush_size : int
+
+func _ready() -> void:
+	#SignalBus.canvas_focus_changed.connect(_focus_changed)
+	pass
+
+func _process(_delta: float) -> void:
+	#if !focused:
+		#return
+	
+	# Don't draw anything if no thread is selected.
+	if !Globals.canvas.get_current_thread():
+		return
+	
+	if Input.is_action_just_pressed(\"erase\"):
+		_erasing = true
+	elif Input.is_action_just_released(\"erase\"):
+		_erasing = false
+	
+	_update_cursor_position()
+	_draw_cursor()
+
+func _focus_changed(_focused: bool):
+	visible = _focused
+	#focused = _focused
+	#
+	#if !focused:
+		#_erase_cursor()
+
+func _erase_cursor():
+	_sublayer.erase_all()
+
+func _update_cursor_position():
+	var current_cell = _sublayer.local_to_map(get_global_mouse_position())
+	# Determine if an update is necessary.
+	# It's only necessary when the cell under the cursor changed,
+	# or the brush size changed.
+	if _active_cell == current_cell && _brush_size == Globals.canvas.brush_size:
+		return
+	
+	_active_cell = current_cell
+	_brush_size = Globals.canvas.brush_size
+
+func _draw_cursor():
+	_sublayer.erase_all()
+	if !_erasing:
+		_sublayer.draw_stitch(Globals.canvas.get_current_thread(), _active_cell, Globals.canvas.bounding_rect, _brush_size)
+"
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_78hhg"]
+tile_data = PackedInt32Array(0, 0, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_kte4v"]
+tile_data = PackedInt32Array(0, 0, 0, 65536, 0, 0, 1, 0, 0, 65537, 0, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_qqf6s"]
+tile_data = PackedInt32Array(65536, 0, 0, 1, 0, 0, 65537, 0, 0, 131073, 0, 0, 65538, 0, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_w6uqa"]
+tile_data = PackedInt32Array(0, 0, 0, 65536, 0, 0, 131072, 0, 0, 1, 0, 0, 65537, 0, 0, 131073, 0, 0, 2, 0, 0, 65538, 0, 0, 131074, 0, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_vqjqa"]
+tile_data = PackedInt32Array(131072, 0, 0, 65537, 0, 0, 131073, 0, 0, 196609, 0, 0, 2, 0, 0, 65538, 0, 0, 131074, 0, 0, 196610, 0, 0, 262146, 0, 0, 65539, 0, 0, 131075, 0, 0, 196611, 0, 0, 131076, 0, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_1hvwv"]
+tile_data = PackedInt32Array(65536, 0, 0, 131072, 0, 0, 196608, 0, 0, 1, 0, 0, 65537, 0, 0, 131073, 0, 0, 196609, 0, 0, 262145, 0, 0, 2, 0, 0, 65538, 0, 0, 131074, 0, 0, 196610, 0, 0, 262146, 0, 0, 3, 0, 0, 65539, 0, 0, 131075, 0, 0, 196611, 0, 0, 262147, 0, 0, 65540, 0, 0, 131076, 0, 0, 196612, 0, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_y1nw1"]
+tile_data = PackedInt32Array(131072, 0, 0, 196608, 0, 0, 262144, 0, 0, 65537, 0, 0, 131073, 0, 0, 196609, 0, 0, 262145, 0, 0, 327681, 0, 0, 2, 0, 0, 65538, 0, 0, 131074, 0, 0, 196610, 0, 0, 262146, 0, 0, 327682, 0, 0, 393218, 0, 0, 3, 0, 0, 65539, 0, 0, 131075, 0, 0, 196611, 0, 0, 262147, 0, 0, 327683, 0, 0, 393219, 0, 0, 4, 0, 0, 65540, 0, 0, 131076, 0, 0, 196612, 0, 0, 262148, 0, 0, 327684, 0, 0, 393220, 0, 0, 65541, 0, 0, 131077, 0, 0, 196613, 0, 0, 262149, 0, 0, 327685, 0, 0, 131078, 0, 0, 196614, 0, 0, 262150, 0, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_7w1ms"]
+tile_data = PackedInt32Array(131072, 0, 0, 196608, 0, 0, 262144, 0, 0, 327680, 0, 0, 393216, 0, 0, 65537, 0, 0, 131073, 0, 0, 196609, 0, 0, 262145, 0, 0, 327681, 0, 0, 393217, 0, 0, 458753, 0, 0, 2, 0, 0, 65538, 0, 0, 131074, 0, 0, 196610, 0, 0, 262146, 0, 0, 327682, 0, 0, 393218, 0, 0, 458754, 0, 0, 524290, 0, 0, 3, 0, 0, 65539, 0, 0, 131075, 0, 0, 196611, 0, 0, 262147, 0, 0, 327683, 0, 0, 393219, 0, 0, 458755, 0, 0, 524291, 0, 0, 4, 0, 0, 65540, 0, 0, 131076, 0, 0, 196612, 0, 0, 262148, 0, 0, 327684, 0, 0, 393220, 0, 0, 458756, 0, 0, 524292, 0, 0, 5, 0, 0, 65541, 0, 0, 131077, 0, 0, 196613, 0, 0, 262149, 0, 0, 327685, 0, 0, 393221, 0, 0, 458757, 0, 0, 524293, 0, 0, 6, 0, 0, 65542, 0, 0, 131078, 0, 0, 196614, 0, 0, 262150, 0, 0, 327686, 0, 0, 393222, 0, 0, 458758, 0, 0, 524294, 0, 0, 65543, 0, 0, 131079, 0, 0, 196615, 0, 0, 262151, 0, 0, 327687, 0, 0, 393223, 0, 0, 458759, 0, 0, 131080, 0, 0, 196616, 0, 0, 262152, 0, 0, 327688, 0, 0, 393224, 0, 0)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0wrci"]
+load_path = "res://.godot/imported/tile16.png-0bf6b6ffe1a045bdb9589cfbee448925.ctex"
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uash4"]
+texture = SubResource("CompressedTexture2D_0wrci")
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_d62i2"]
+sources/0 = SubResource("TileSetAtlasSource_uash4")
+pattern_0 = SubResource("TileMapPattern_78hhg")
+pattern_1 = SubResource("TileMapPattern_kte4v")
+pattern_2 = SubResource("TileMapPattern_qqf6s")
+pattern_3 = SubResource("TileMapPattern_w6uqa")
+pattern_4 = SubResource("TileMapPattern_vqjqa")
+pattern_5 = SubResource("TileMapPattern_1hvwv")
+pattern_6 = SubResource("TileMapPattern_y1nw1")
+pattern_7 = SubResource("TileMapPattern_7w1ms")
+
+[sub_resource type="GDScript" id="GDScript_2a6ss"]
+script/source = "class_name XStitchDrawingLayer
+extends TileMapLayer
+
+var CURSOR_TILE := Vector2i(0,0)
+
+var _modulated_tile_cache: Dictionary
+
+func _ready() -> void:
+	pass
+
+func get_mouse_position():
+	return local_to_map(get_global_mouse_position())
+
+func get_stitch_at(cell: Vector2i) -> XStitchThread:
+	return _modulated_tile_cache.find_key(get_cell_alternative_tile(cell))
+
+func get_brush_area(center: Vector2i, size: int):
+	# Get the used cells of a given brush size
+	var brush_cells = tile_set.get_pattern(size - 1).get_used_cells()
+	# Offset the cells to given center point
+	var offset = center - Globals.BRUSH_CENTER_POINT[size]
+	var cells = brush_cells.map(func(x): return x + offset)
+	return cells
+
+func draw_stitch(thread: XStitchThread, center: Vector2i, bounding_rect: Rect2i, size: int) -> void:
+	var cells = get_brush_area(center, size)
+	for cell in cells:
+		if bounding_rect.has_point(cell):
+			draw_cell(cell, thread)
+
+func erase_stitch(cell: Vector2i, bounding_rect: Rect2i, size: int) -> void:
+	var cells = get_brush_area(cell, size)
+	for c in cells:
+		if bounding_rect.has_point(c):
+			erase_cell(c)
+
+func erase_all():
+	for cell in get_used_cells():
+		erase_cell(cell)
+
+
+func draw_cell(cell: Vector2i, thread: XStitchThread, tile: Vector2i = CURSOR_TILE) -> void:
+	if thread == null:
+		set_cell(cell, 0, tile)
+		return
+	
+	if thread in _modulated_tile_cache:
+		set_cell(cell, 0, tile, _modulated_tile_cache[thread])
+		return
+	
+	var source := tile_set.get_source(0) as TileSetAtlasSource
+	var alt_tile_id := source.create_alternative_tile(tile)
+	var tile_data := source.get_tile_data(tile, alt_tile_id)
+	tile_data.modulate = thread.color
+	_modulated_tile_cache[thread] = alt_tile_id
+	set_cell(cell, 0, tile, alt_tile_id)
+
+
+func _erase_cells_with_thread(thread: XStitchThread) -> Array[Vector2i]:
+	var used_cells : Array[Vector2i]
+	
+	if _modulated_tile_cache.has(thread):
+		var alt_id = _modulated_tile_cache[thread]
+		used_cells = get_used_cells_by_id(0, CURSOR_TILE, alt_id)
+		for cell in used_cells:
+			erase_cell(cell)
+		_modulated_tile_cache.erase(thread)
+	
+	return used_cells
+
+
+func add_stitches(thread: XStitchThread, context: Array[Vector2i]):
+	for cell in context:
+		draw_cell(cell, thread)
+
+
+## Returns a contiguous area from a starting point.
+## A contiguous area is a set of neighboring cells that are the same color.
+func get_contiguous_area(start: Vector2i, is_in_boundary: Callable) -> Array[Vector2i]:
+	var result: Array[Vector2i] # The resulting area
+	var thread = get_stitch_at(start) # The thread at the starting point
+	var visited: Dictionary[Vector2i, bool] # Keeps track of visited cells
+	var frontier: Array[Vector2i] # The working array. Cells are added and removed to this
+	
+	frontier.push_front(start)
+	while !frontier.is_empty():
+		var cell = frontier.pop_back()
+		# If this cell has been visited, skip it
+		if visited.has(cell):
+			continue
+		visited.get_or_add(cell, true)
+		
+		# If it's out of bounds, skip it
+		if !is_in_boundary.call(cell):
+			continue
+		
+		# If it doesn't have the same thread, skip it
+		if get_stitch_at(cell) != thread:
+			continue
+		
+		# All checks passed.
+		#  - Add to results
+		#  - Add neighbors to frontier
+		result.append(cell)
+		frontier.append_array(Extensions.get_neighbor_cells(self, cell))
+		
+	return result
+
+
+func serialize():
+	var data = []
+	for thread in _modulated_tile_cache:
+		var threads_coords_dict = {}
+		var alt_id = _modulated_tile_cache[thread]
+		threads_coords_dict.get_or_add(\"thread_id\", thread.get_identifying_name())
+		threads_coords_dict.get_or_add(\"tile\", CURSOR_TILE)
+		threads_coords_dict.get_or_add(\"coordinates\", get_used_cells_by_id(0, CURSOR_TILE, alt_id))
+		data.append(threads_coords_dict)
+	return data
+
+func deserialize(data: Array):
+	clear()
+	_modulated_tile_cache.clear()
+	
+	for stitches in data:
+		var thread_id = stitches.get(\"thread_id\")
+		var tile = stitches.get(\"tile\")
+		var coordinates = stitches.get(\"coordinates\")
+		
+		var thread = ThreadsAtlas.get_thread_by_global_id(thread_id)
+		for cell in coordinates:
+			draw_cell(cell, thread, tile)
+"
+
+[sub_resource type="GDScript" id="GDScript_8sq3g"]
+script/source = "class_name BackStitchDrawingLayer
+extends Node2D
+
+# XStitchThread to Array[BackStitch]
+var _modulated_stitches_cache: Dictionary
+
+func get_mouse_position():
+	return get_global_mouse_position()
+
+func serialize():
+	var data = []
+	
+	return data
+	#var data: Array[Dictionary]
+	#for thread in _modulated_stitches_cache:
+		#var thread_coords_data: Dictionary
+		#thread_coords_data.get_or_add(\"thread_id\", thread.get_identifying_name())
+		#var coordinates: Array[Dictionary]
+		#for stitch in _modulated_stitches_cache[thread]:
+			#var entry: Dictionary
+			#entry.get_or_add(\"from\", stitch.from_coordinate)
+			#entry.get_or_add(\"to\", stitch.to_coordinate)
+			#coordinates.append(entry)
+		#thread_coords_data.get_or_add(\"coordinates\")
+		#data.append(thread_coords_data)
+
+func deserialize(data):
+	pass
+"
+
+[node name="CursorLayer" type="Node2D"]
+script = SubResource("GDScript_xgk0w")
+
+[node name="FullStitchLayer" type="TileMapLayer" parent="."]
+unique_name_in_owner = true
+tile_set = SubResource("TileSet_d62i2")
+collision_enabled = false
+navigation_enabled = false
+script = SubResource("GDScript_2a6ss")
+
+[node name="BackStitchLayer" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = SubResource("GDScript_8sq3g")

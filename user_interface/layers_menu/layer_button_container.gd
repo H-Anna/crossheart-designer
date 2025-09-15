@@ -1,4 +1,4 @@
-@icon("res://icons/LayerButtonContainer.svg")
+@icon("res://icons/thread_green.svg")
 class_name LayerButtonContainer
 extends Container
 
