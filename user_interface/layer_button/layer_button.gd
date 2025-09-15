@@ -1,18 +1,29 @@
 class_name LayerButton
 extends Button
+## A UI button used to control an [XStitchMasterLayer].
 
+## Icon that appears on the Visibility button
+## when the layer is visible.
 @export var show_icon : CompressedTexture2D
+
+## Icon that appears on the Visibility button
+## when the layer is hidden.
 @export var hide_icon : CompressedTexture2D
+
+## Icon that appears on the Lock button
+## when the layer is locked.
 @export var locked_icon : CompressedTexture2D
+
+## Icon that appears on the Lock button
+## when the layer is unlocked.
 @export var unlocked_icon : CompressedTexture2D
 
+## The [XStitchMasterLayer] controlled by this button.
 var data : XStitchMasterLayer:
 	set(value):
 		data = value
 		_update_ui()
 
-func _ready() -> void:
-	pass
 
 func set_context_menu(context_menu: Node) -> void:
 	$RMB.context_menu = context_menu

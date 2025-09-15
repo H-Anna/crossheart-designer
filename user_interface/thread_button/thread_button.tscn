@@ -4,7 +4,7 @@
 [ext_resource type="ButtonGroup" uid="uid://5m4cps4hjh3w" path="res://user_interface/thread_button/thread_button_group.tres" id="2_mvevd"]
 [ext_resource type="Texture2D" uid="uid://iun3wcxblamr" path="res://assets/svg-symbols/moon-outline.svg" id="3_mfayi"]
 [ext_resource type="Script" uid="uid://b7c7s6ykx2csv" path="res://user_interface/thread_button/thread_button.gd" id="4_5ojna"]
-[ext_resource type="Script" uid="uid://cobqbkyaa2hiw" path="res://user_interface/context_menu/rmb_context_menu_activator.gd" id="4_yxpmc"]
+[ext_resource type="Script" uid="uid://cobqbkyaa2hiw" path="res://user_interface/context_menu/context_menu_button.gd" id="4_yxpmc"]
 
 [node name="ThreadButton" type="Button"]
 custom_minimum_size = Vector2(40, 40)

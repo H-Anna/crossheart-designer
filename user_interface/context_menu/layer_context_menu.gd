@@ -1,11 +1,31 @@
+class_name LayerContextMenu
 extends ContextMenu
+## Context menu for [LayerButton]s 
+## and corresponding [XStitchMasterLayer]s.
 
+## "Add layer" menu option.
+## Selecting this adds a new layer at the top.[br]
 const ADD_LAYER = 0
+
+## "Rename layer" menu option.
+## Allows the user to rename the layer.[br]
 const RENAME = 1
+
+## "Move up" menu option.
+## Allows the user to move the layer toward the top.[br]
 const MOVE_UP = 2
+
+## "Move down" menu option.
+## Allows the user to move the layer toward the bottom.[br]
 const MOVE_DOWN = 3
+
+## "Delete" menu option.
+## Allows the user to delete the layer.[br]
 const DELETE = 5
 
+## Called when the context menu shows or hides.
+## Enables or disables certain menu options based on
+## the caller.
 func _on_visibility_changed() -> void:
 	var layer_count = %Canvas.get_layer_count()
 	var is_first = caller.get_index() == 0
@@ -14,7 +34,7 @@ func _on_visibility_changed() -> void:
 	set_item_disabled(MOVE_UP, is_first)
 	set_item_disabled(MOVE_DOWN, is_last)
 
-
+## Called when one of the options is selected.
 func _on_index_pressed(index: int) -> void:
 	match index:
 		ADD_LAYER:

@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dy5wj6tqmqp8d" path="res://user_interface/layer_button/layer_button.gd" id="2_fc6ya"]
 [ext_resource type="Texture2D" uid="uid://bg3vbvo600vk1" path="res://user_interface/layer_button/eye-svgrepo-com.svg" id="2_qnf8a"]
 [ext_resource type="Texture2D" uid="uid://jmmr1xap6tda" path="res://user_interface/layer_button/lock-open-svgrepo-com.svg" id="3_buf6k"]
-[ext_resource type="Script" uid="uid://cobqbkyaa2hiw" path="res://user_interface/context_menu/rmb_context_menu_activator.gd" id="4_c8u5a"]
+[ext_resource type="Script" uid="uid://cobqbkyaa2hiw" path="res://user_interface/context_menu/context_menu_button.gd" id="4_c8u5a"]
 [ext_resource type="Texture2D" uid="uid://bw6lfxepwp3ae" path="res://user_interface/layer_button/eye-closed-svgrepo-com.svg" id="4_k5gk4"]
 [ext_resource type="Texture2D" uid="uid://cuqnxe622evau" path="res://user_interface/layer_button/lock-svgrepo-com.svg" id="5_gn5y1"]
 
