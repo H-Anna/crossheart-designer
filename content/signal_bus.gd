@@ -21,8 +21,6 @@ signal load_requested(filename: String)
 
 ## Layer signals
 signal layer_selected(layer: XStitchMasterLayer)
-signal layer_added(layer: XStitchMasterLayer)
-signal layer_removed(layer: TileMapLayer, new_snapshot: bool)
 
 ## Command signals
 signal command_created(command: Command)

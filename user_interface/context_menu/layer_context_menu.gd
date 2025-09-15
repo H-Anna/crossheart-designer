@@ -23,6 +23,7 @@ const MOVE_DOWN = 3
 ## Allows the user to delete the layer.[br]
 const DELETE = 5
 
+
 ## Called when the context menu shows or hides.
 ## Enables or disables certain menu options based on
 ## the caller.
@@ -33,6 +34,7 @@ func _on_visibility_changed() -> void:
 	set_item_disabled(DELETE, is_first && is_last)
 	set_item_disabled(MOVE_UP, is_first)
 	set_item_disabled(MOVE_DOWN, is_last)
+
 
 ## Called when one of the options is selected.
 func _on_index_pressed(index: int) -> void:

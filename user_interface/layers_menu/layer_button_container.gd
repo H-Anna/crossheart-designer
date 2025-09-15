@@ -4,42 +4,51 @@ extends Container
 
 @export var layer_button : PackedScene
 
-var thread_layers : Array[XStitchMasterLayer]:
-	set(value):
-		thread_layers = value
-		_change_layers()
+var _master_layers : Array[XStitchMasterLayer]:
+	set = set_master_layers
 
-var _created_layer_buttons : Array[LayerButton]
+var _buttons : Array[LayerButton]
 
-func _ready() -> void:
-	SignalBus.layer_added.connect(add_layer)
-	SignalBus.layer_removed.connect(remove_layer)
-	pass
 
-func get_layer_count() -> int:
-	return thread_layers.size()
+
+#region Getters and Setters
+
+## Set the collection of master layers.
+func set_master_layers(value: Array[XStitchMasterLayer]) -> void:
+	_master_layers = value
+	_change_layers()
+
+#endregion
+
+
+#region Layer operations
 
 func add_layer(layer: XStitchMasterLayer) -> void:
-	thread_layers.append(layer)
+	_master_layers.append(layer)
 	var btn = _create_layer_button(layer)
-	_created_layer_buttons.append(btn)
+	_buttons.append(btn)
+
 
 func remove_layer(layer: XStitchMasterLayer) -> void:
-	thread_layers.erase(layer)
-	for btn in _created_layer_buttons:
+	_master_layers.erase(layer)
+	for btn in _buttons:
 		if btn.data == layer:
 			btn.queue_free()
 
+
 func _change_layers() -> void:
 	# Delete all current
-	for layer in _created_layer_buttons:
-		layer.queue_free()
+	for btn in _buttons:
+		btn.queue_free()
 	
-	_created_layer_buttons.clear()
+	_buttons.clear()
 	
-	for layer in thread_layers:
+	for layer in _master_layers:
 		var btn = _create_layer_button(layer)
-		_created_layer_buttons.append(btn)
+		_buttons.append(btn)
+
+#endregion
+
 
 func _create_layer_button(data: XStitchMasterLayer) -> LayerButton:
 	var btn = layer_button.instantiate() as LayerButton
@@ -52,5 +61,5 @@ func _create_layer_button(data: XStitchMasterLayer) -> LayerButton:
 	return btn
 
 
-func on_layer_button_clicked(button: LayerButton):
+func on_layer_button_clicked(button: LayerButton) -> void:
 	print("Layer Button pressed: %s" % button.data.display_name)
