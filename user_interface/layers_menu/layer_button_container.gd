@@ -2,14 +2,19 @@
 class_name LayerButtonContainer
 extends Container
 
+## Container UI for [LayerButton]s. Manages its own buttons.
+
+## The layer button scene.
 @export var layer_button : PackedScene
 
+## Array of [XStitchMasterLayer]s created in the canvas.
 var _master_layers : Array[XStitchMasterLayer]:
 	set = set_master_layers
 
+## Array of [LayerButton]s that are children of this container.
 var _buttons : Array[LayerButton]
 
-
+# TODO: overhaul API
 
 #region Getters and Setters
 
@@ -23,19 +28,20 @@ func set_master_layers(value: Array[XStitchMasterLayer]) -> void:
 
 #region Layer operations
 
+## Adds a layer to the array, and creates a button associated with the layer.
 func add_layer(layer: XStitchMasterLayer) -> void:
 	_master_layers.append(layer)
 	var btn = _create_layer_button(layer)
 	_buttons.append(btn)
 
-
+## Removes a layer from the array, and deletes the button associated with this layer.
 func remove_layer(layer: XStitchMasterLayer) -> void:
 	_master_layers.erase(layer)
 	for btn in _buttons:
 		if btn.data == layer:
 			btn.queue_free()
 
-
+## Deletes all of its buttons and creates new ones.
 func _change_layers() -> void:
 	# Delete all current
 	for btn in _buttons:
@@ -49,17 +55,14 @@ func _change_layers() -> void:
 
 #endregion
 
-
+## Creates a [LayerButton] and adds it as a child.
+## Adds the [param data] master layer to the button.[br]
+## Returns the new layer button.
 func _create_layer_button(data: XStitchMasterLayer) -> LayerButton:
 	var btn = layer_button.instantiate() as LayerButton
-	add_child(btn)
-	move_child(btn, 0)
 	btn.data = data
-	btn.pressed.connect(on_layer_button_clicked.bind(btn))
 	btn.set_context_menu(%LayerContextMenu)
 	btn.set_pressed_no_signal(data.is_active())
+	add_child(btn)
+	move_child(btn, 0)
 	return btn
-
-
-func on_layer_button_clicked(button: LayerButton) -> void:
-	print("Layer Button pressed: %s" % button.data.display_name)
