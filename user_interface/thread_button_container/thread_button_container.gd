@@ -77,3 +77,24 @@ func _search_matches_thread(text: String, thread: XStitchThread) -> bool:
 	var id := thread.id.to_lower()
 	var color_name := thread.color_name.to_lower()
 	return id.contains(text) or color_name.contains(text)
+
+## Adds a single thread to the [member threads] array, and appends the corresponding button.
+func add_thread(thread: XStitchThread):
+	threads.append(thread)
+	var btn = create_thread_button(thread)
+	_created_buttons.append(btn)
+
+## Selects a single button assigned to [param thread].
+func select_thread(thread: XStitchThread):
+	for btn in _created_buttons:
+		if btn.thread == thread:
+			btn.set_pressed_no_signal(true)
+
+## Removes the thread from [member threads] and deletes the button.
+func remove_thread(thread: XStitchThread):
+	threads.erase(thread)
+	for btn in _created_buttons:
+		if btn.thread == thread:
+			_created_buttons.erase(btn)
+			btn.queue_free()
+			break
