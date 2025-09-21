@@ -1,8 +1,16 @@
 class_name EraseCommand
 extends Command
 
+## A command that describes an erase stroke.
+
+## The layer to erase from.
 var layer : XStitchDrawingLayer
+
+## The vector positions to erase.
 var cells_to_erase : Dictionary
+
+## The thread colors at the cells this command erases.
+## Used to restore state before erasing.
 var previous_stitches : Dictionary
 
 ## The brush size.
@@ -13,7 +21,8 @@ var brush_size: int
 ## handled by separate logic.
 var preview : bool = true
 
-func execute():
+## Commits an erase stroke.
+func execute() -> void:
 	if preview:
 		preview = false
 		return
@@ -21,7 +30,8 @@ func execute():
 	for cell in cells_to_erase:
 		layer.erase_cell(cell)
 
-func undo():
+## Undoes the erase stroke, restoring previous cell data.
+func undo() -> void:
 	for cell in previous_stitches:
 		if previous_stitches[cell]:
 			layer.draw_cell(cell, previous_stitches[cell])

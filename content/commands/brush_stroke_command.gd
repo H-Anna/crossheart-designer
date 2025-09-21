@@ -1,6 +1,8 @@
 class_name BrushStrokeCommand
 extends Command
 
+## A command that describes a brush stroke.
+
 ## The layer to draw on.
 var layer : XStitchDrawingLayer
 
@@ -15,11 +17,11 @@ var thread : XStitchThread
 var brush_size: int
 
 ## Whether the command has already had a preview.
-## Prevents executing on initial creation, as this is
-## handled by separate logic.
+## Prevents executing on initial creation, as this is handled by separate logic.
 var preview : bool = true
 
-func execute():
+## Executes the brush stroke.
+func execute() -> void:
 	if preview:
 		preview = false
 		return
@@ -27,7 +29,8 @@ func execute():
 	for cell in cells_to_draw:
 		layer.draw_cell(cell, thread)
 
-func undo():
+## Deletes the brush stroke.
+func undo() -> void:
 	for cell in previous_stitches:
 		if previous_stitches[cell]:
 			layer.draw_cell(cell, thread)
