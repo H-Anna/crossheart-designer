@@ -20,14 +20,36 @@ extends Button
 
 ## The [XStitchMasterLayer] controlled by this button.
 var data : XStitchMasterLayer:
-	set(value):
-		data = value
-		_update_ui()
+	set = set_data
 
 
+#region Getters and Setters
+
+## Sets the [ContextMenu] for this button.
 func set_context_menu(context_menu: Node) -> void:
 	$RMB.context_menu = context_menu
 
+## Sets the [XStitchMasterLayer] for this button.
+## The button will then manage the underlying layer.
+## Updates the button UI to reflect the current state of the layer.
+func set_data(value: XStitchMasterLayer) -> void:
+	data = value
+	text = data.display_name
+	update_visibility_button()
+	update_lock_button()
+	update_display_name()
+
+#endregion
+
+#region Button operations
+
+## Emits a signal to select this button's [XStitchMasterLayer].
+func _on_pressed() -> void:
+	SignalBus.layer_selected.emit(data)
+
+
+## Initiates the layer renaming process.
+## Shows a [LineEdit] field and gives focus to it.
 func rename_layer() -> void:
 	%NameField.text = text
 	text = ""
@@ -35,12 +57,46 @@ func rename_layer() -> void:
 	%NameField.grab_focus()
 	%NameField.select_all()
 
-func _update_ui():
-	text = data.display_name
-	update_visibility_button()
-	update_lock_button()
-	update_display_name()
 
+## Hides the [LineEdit] name field when it loses focus.
+func _on_name_field_focus_exited() -> void:
+	text = data.display_name
+	%NameField.hide()
+
+
+## Changes the icon on the button when the layer becomes visible or hidden.
+func update_visibility_button() -> void:
+	if data.visible:
+		%VisibilityButton.icon = show_icon
+	else:
+		%VisibilityButton.icon = hide_icon
+
+
+## Changes the icon on the button when the layer is locked or unlocked.
+func update_lock_button() -> void:
+	if data.locked:
+		%LockButton.icon = locked_icon
+	else:
+		%LockButton.icon = unlocked_icon
+
+
+## Updates the button text when the layer is renamed.
+func update_display_name() -> void:
+	text = data.display_name
+
+#endregion
+
+#region Layer operations
+
+## Creates a command that changes the locked state of the layer.
+func _on_lock_button_pressed() -> void:
+	var cmd = ToggleLayerLockedCommand.new()
+	cmd.layer = data
+	cmd.button = self
+	SignalBus.command_created.emit(cmd)
+
+
+## Creates a command that changes the name of the layer.
 func _on_name_field_text_submitted(new_text: String) -> void:
 	new_text = new_text.strip_edges()
 	if !new_text.is_empty():
@@ -49,39 +105,14 @@ func _on_name_field_text_submitted(new_text: String) -> void:
 		cmd.button = self
 		cmd.new_name = new_text
 		SignalBus.command_created.emit(cmd)
-		
 	%NameField.hide()
 
-func _on_name_field_focus_exited() -> void:
-	text = data.display_name
-	%NameField.hide()
 
+## Creates a command that changes the visibility of the layer.
 func _on_visibility_button_pressed() -> void:
 	var cmd = ToggleLayerVisibleCommand.new()
 	cmd.layer = data
 	cmd.button = self
 	SignalBus.command_created.emit(cmd)
 
-func update_visibility_button():
-	if data.visible:
-		%VisibilityButton.icon = show_icon
-	else:
-		%VisibilityButton.icon = hide_icon
-
-func _on_lock_button_pressed() -> void:
-	var cmd = ToggleLayerLockedCommand.new()
-	cmd.layer = data
-	cmd.button = self
-	SignalBus.command_created.emit(cmd)
-
-func update_lock_button():
-	if data.locked:
-		%LockButton.icon = locked_icon
-	else:
-		%LockButton.icon = unlocked_icon
-
-func update_display_name():
-	text = data.display_name
-
-func _on_pressed() -> void:
-	SignalBus.layer_selected.emit(data)
+#endregion
