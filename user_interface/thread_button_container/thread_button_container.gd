@@ -33,7 +33,7 @@ func create_thread_button(thread: XStitchThread):
 	var btn = thread_button.instantiate() as ThreadButton
 	_created_buttons.append(btn)
 	add_child(btn)
-	btn.assign_thread(thread)
+	btn.set_thread(thread)
 
 func _on_search_bar_text_changed(new_text: String) -> void:
 	# Get text contents
