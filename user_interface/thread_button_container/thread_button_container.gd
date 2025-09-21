@@ -10,35 +10,20 @@ extends Container
 ## populated with these buttons.
 @export var thread_button: PackedScene
 
-## The thread data.
-var threads: Array[XStitchThread]:
-	set = set_threads
+## A dictionary that stores threads and the associated thread buttons.
+var thread_button_dictionary: Dictionary[XStitchThread, ThreadButton]
 
-## Array of buttons managed by this container.
-var _created_buttons: Array[ThreadButton]
 
-func _ready() -> void:
-	threads = ThreadsAtlas.get_all_threads()
-
-## Sets the [member threads] value.
-func set_threads(value: Array[XStitchThread]) -> void:
-	threads = value
-	reset_buttons()
-
-## Deletes all created buttons, recreates them based on the contents of [member threads]
-## and adds them to [member _created_buttons].
-func reset_buttons() -> void:
-	# Delete all current buttons
-	for btn in _created_buttons:
-		btn.queue_free()
+## Sets the [member threads] value. Deletes all buttons and recreates them.
+func set_threads(threads: Array[XStitchThread]) -> void:
+	for key in thread_button_dictionary:
+		thread_button_dictionary[key].queue_free()
 	
-	# Clear array
-	_created_buttons.clear()
+	thread_button_dictionary.clear()
 	
-	# For each thread, create a button and add to array
 	for t in threads:
-		var btn = create_thread_button(t)
-		_created_buttons.append(btn)
+		add_thread(t)
+
 
 ## Creates a [ThreadButton] associated with an [XStitchThread].
 func create_thread_button(thread: XStitchThread) -> ThreadButton:
@@ -46,6 +31,7 @@ func create_thread_button(thread: XStitchThread) -> ThreadButton:
 	add_child(btn)
 	btn.set_thread(thread)
 	return btn
+
 
 ## When the search bar contents change, filters buttons based on if their
 ## [XStitchThread] matches the contents.
@@ -55,21 +41,22 @@ func _on_search_bar_text_changed(new_text: String) -> void:
 	
 	# If empty, show all entries
 	if new_text.is_empty():
-		for btn in _created_buttons:
+		for btn in thread_button_dictionary.values():
 			btn.show()
 		return
 	
 	# If not empty, filter own array for matching threads
-	var matching_threads = threads.filter(
+	var matching_threads = thread_button_dictionary.keys().filter(
 		func(t): return _search_matches_thread(new_text, t)
 	)
 	
 	# Show buttons associated with matching threads and hide the rest
-	for btn in _created_buttons:
-		if btn.thread in matching_threads:
-			btn.show()
-		else:
-			btn.hide()
+	for btn in thread_button_dictionary.values():
+		btn.hide()
+	
+	for thread in matching_threads:
+		thread_button_dictionary[thread].show()
+
 
 ## Returns true if [param thread] partially contains [param text] in its name or ID.
 func _search_matches_thread(text: String, thread: XStitchThread) -> bool:
@@ -78,23 +65,8 @@ func _search_matches_thread(text: String, thread: XStitchThread) -> bool:
 	var color_name := thread.color_name.to_lower()
 	return id.contains(text) or color_name.contains(text)
 
-## Adds a single thread to the [member threads] array, and appends the corresponding button.
-func add_thread(thread: XStitchThread):
-	threads.append(thread)
+
+## Adds a thread to the dictionary, and the corresponding button to the scene.
+func add_thread(thread: XStitchThread) -> void:
 	var btn = create_thread_button(thread)
-	_created_buttons.append(btn)
-
-## Selects a single button assigned to [param thread].
-func select_thread(thread: XStitchThread):
-	for btn in _created_buttons:
-		if btn.thread == thread:
-			btn.set_pressed_no_signal(true)
-
-## Removes the thread from [member threads] and deletes the button.
-func remove_thread(thread: XStitchThread):
-	threads.erase(thread)
-	for btn in _created_buttons:
-		if btn.thread == thread:
-			_created_buttons.erase(btn)
-			btn.queue_free()
-			break
+	thread_button_dictionary.set(thread, btn)

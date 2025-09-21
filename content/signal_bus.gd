@@ -4,6 +4,7 @@ extends Node
 signal scheme_parser_ready(parser: SchemeParser, content: Dictionary)
 
 ## Window signals
+signal thread_swap_in_progress(thread: XStitchThread)
 signal thread_swap_requested(thread: XStitchThread)
 
 ## UI signals

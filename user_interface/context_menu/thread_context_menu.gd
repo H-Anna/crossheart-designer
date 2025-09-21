@@ -22,6 +22,7 @@ const DELETE = 3
 func _on_id_pressed(id: int) -> void:
 	match id:
 		SWAP:
+			SignalBus.thread_swap_in_progress.emit(caller.thread)
 			%PaletteMenu.hide()
 			%SwapThreadMenu.show()
 			var target = await SignalBus.thread_swap_requested

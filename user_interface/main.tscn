@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://s1bmq54ffm5f"]
+[gd_scene load_steps=39 format=3 uid="uid://s1bmq54ffm5f"]
 
 [ext_resource type="Script" uid="uid://cc3vfh7yxmat1" path="res://user_interface/menu_bar/file_menu.gd" id="2_qsp4k"]
 [ext_resource type="Texture2D" uid="uid://c84tjppmo3qgo" path="res://user_interface/tool_bar/draw-edit-message-pen-pencil-text-svgrepo-com.svg" id="3_kq58d"]
@@ -14,8 +14,9 @@
 [ext_resource type="Script" uid="uid://b0wpnx4cmh8fe" path="res://user_interface/thread_button_container/palette_thread_button_container.gd" id="12_come4"]
 [ext_resource type="PackedScene" uid="uid://skecvvmk7e26" path="res://user_interface/thread_button/thread_button.tscn" id="13_h8e4i"]
 [ext_resource type="Texture2D" uid="uid://hjub8afgui3d" path="res://user_interface/thread_button_container/plus-svgrepo-com.svg" id="14_4lmeg"]
-[ext_resource type="Script" uid="uid://do361w8lxdjb4" path="res://user_interface/thread_button_container/thread_button_container.gd" id="15_kq58d"]
+[ext_resource type="Script" uid="uid://bnrgi6moqp877" path="res://user_interface/thread_button_container/add_thread_button_container.gd" id="15_tjmwq"]
 [ext_resource type="Texture2D" uid="uid://brursbtjqwkfw" path="res://user_interface/thread_button_container/back-curved-arrow-svgrepo-com.svg" id="16_d2t1y"]
+[ext_resource type="Script" uid="uid://cvwqeex1u2x41" path="res://user_interface/thread_button_container/swap_thread_button_container.gd" id="17_nl1pb"]
 [ext_resource type="Script" uid="uid://ce85rmbbfkx1h" path="res://user_interface/layers_menu/layer_button_container.gd" id="18_0n3wm"]
 [ext_resource type="PackedScene" uid="uid://d3fimv4fp01uq" path="res://user_interface/layer_button/layer_button.tscn" id="19_qnost"]
 [ext_resource type="Script" uid="uid://bd48yyerxdbxk" path="res://user_interface/canvas_viewport_container.gd" id="20_wnkbs"]
@@ -391,7 +392,7 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("15_kq58d")
+script = ExtResource("15_tjmwq")
 thread_button = ExtResource("13_h8e4i")
 
 [node name="BackButton" type="Button" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/AddThreadContainer"]
@@ -430,7 +431,7 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("15_kq58d")
+script = ExtResource("17_nl1pb")
 thread_button = ExtResource("13_h8e4i")
 
 [node name="BackButton" type="Button" parent="UserInterface/VBoxContainer/HSplitContainer/SideBar/SwapThreadMenu/VBoxContainer/ScrollContainer/SwapThreadContainer"]
