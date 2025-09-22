@@ -1,0 +1,44 @@
+extends Node
+
+## A file that loads data from a [JSON] file and provides [XStitchThread]s
+## to other classes.
+
+## Filepath to JSON file.
+const FILE := "res://assets/dmc_colors.json"
+
+## Dictionary containing [XStitchThread]s
+var threads: Dictionary[String, XStitchThread]
+
+func _ready() -> void:
+	_load_data()
+
+## Loads data from the [constant FILE].
+func _load_data():
+	FileHandler.load_file(FileHandler.Format.FORMAT_JSON, FILE)
+	if FileHandler.get_error() != OK:
+		# Fallback
+		print_debug("Unable to get file contents: %s" % error_string(FileHandler.get_error()))
+		return
+	
+	var content = FileHandler.get_result()
+	
+	# Load color information
+	for entry in content["colors"]:
+		var thread = XStitchThread.new()
+		thread.brand = str(content["brand"])
+		thread.id = str(entry["floss"])
+		thread.color_name = str(entry["name"])
+		var r = int(entry["r"]) / 255.0
+		var g = int(entry["g"]) / 255.0
+		var b = int(entry["b"]) / 255.0
+		thread.color = Color(r, g, b)
+		# Add thread to dictionary
+		threads.get_or_add(thread.get_identifying_name(), thread)
+
+## Returns an array of all loaded threads.
+func get_all_threads() -> Array[XStitchThread]:
+	return threads.values()
+
+## Returns an [XStitchThread] by its unique ID.
+func get_thread_by_global_id(id: String) -> XStitchThread:
+	return threads.get(id, null)
