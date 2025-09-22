@@ -1,20 +1,31 @@
 class_name XStitchDrawingLayer
 extends TileMapLayer
 
-var CURSOR_TILE := Vector2i(0,0)
+## A drawing layer that uses [TileMapLayer] API. Draws tiles at
+## [Vector2i] positions in response to mouse input.
+## @experimental: This class needs refactoring in the method names.
+# TODO refactor method names
 
+## @experimental: This member is subject to change.
+## The coordinates of the tile being used in the tilemap.
+const CURSOR_TILE = Vector2i(0,0)
+
+## Dictionary that contains integer keys and [XStitchThread] values.[br]
+## As threads are used on a given layer, modulating individual tiles is
+## achieved by adding alternative tile IDs. This dictionary stores which
+## alternative ID corresponds to which thread.
 var _modulated_tile_cache: Dictionary
 
-func _ready() -> void:
-	pass
-
-func get_mouse_position():
+## Returns the cell under the mouse pointer.
+func get_mouse_position() -> Vector2i:
 	return local_to_map(get_global_mouse_position())
 
+## Returns the thread used in a cell.
 func get_stitch_at(cell: Vector2i) -> XStitchThread:
 	return _modulated_tile_cache.find_key(get_cell_alternative_tile(cell))
 
-func get_brush_area(center: Vector2i, size: int):
+## Returns array of [Vector2i] cells covered by the given brush area.
+func get_brush_area(center: Vector2i, size: int) -> Array:
 	# Get the used cells of a given brush size
 	var brush_cells = tile_set.get_pattern(size - 1).get_used_cells()
 	# Offset the cells to given center point
@@ -22,23 +33,29 @@ func get_brush_area(center: Vector2i, size: int):
 	var cells = brush_cells.map(func(x): return x + offset)
 	return cells
 
+## Draws multiple tiles with the given [param thread] and brush [param size],
+## within [param bounding_rect].
 func draw_stitch(thread: XStitchThread, center: Vector2i, bounding_rect: Rect2i, size: int) -> void:
 	var cells = get_brush_area(center, size)
 	for cell in cells:
 		if bounding_rect.has_point(cell):
 			draw_cell(cell, thread)
 
+## Erases multiple tiles, similar to [method draw_stitch].
 func erase_stitch(cell: Vector2i, bounding_rect: Rect2i, size: int) -> void:
 	var cells = get_brush_area(cell, size)
 	for c in cells:
 		if bounding_rect.has_point(c):
 			erase_cell(c)
 
-func erase_all():
+## Erases all cells.
+func erase_all() -> void:
 	for cell in get_used_cells():
 		erase_cell(cell)
 
-
+## Draws a single tile.[br]
+## Drawing with this thread for the first time, adds it to 
+## the [member _modulated_tile_cache].
 func draw_cell(cell: Vector2i, thread: XStitchThread, tile: Vector2i = CURSOR_TILE) -> void:
 	if thread == null:
 		set_cell(cell, 0, tile)
@@ -48,6 +65,8 @@ func draw_cell(cell: Vector2i, thread: XStitchThread, tile: Vector2i = CURSOR_TI
 		set_cell(cell, 0, tile, _modulated_tile_cache[thread])
 		return
 	
+	# Create an alternative tile, and modify the tile data,
+	# so that all tiles are modulated.
 	var source := tile_set.get_source(0) as TileSetAtlasSource
 	var alt_tile_id := source.create_alternative_tile(tile)
 	var tile_data := source.get_tile_data(tile, alt_tile_id)
@@ -55,10 +74,13 @@ func draw_cell(cell: Vector2i, thread: XStitchThread, tile: Vector2i = CURSOR_TI
 	_modulated_tile_cache[thread] = alt_tile_id
 	set_cell(cell, 0, tile, alt_tile_id)
 
-
+## Erases all tiles that were drawn with the [param thread].
+## Returns the erased cell positions.
 func _erase_cells_with_thread(thread: XStitchThread) -> Array[Vector2i]:
 	var used_cells : Array[Vector2i]
 	
+	# If the cache contains this thread, get all cells that use it,
+	# and erase them. Then erase the 
 	if _modulated_tile_cache.has(thread):
 		var alt_id = _modulated_tile_cache[thread]
 		used_cells = get_used_cells_by_id(0, CURSOR_TILE, alt_id)
@@ -68,7 +90,7 @@ func _erase_cells_with_thread(thread: XStitchThread) -> Array[Vector2i]:
 	
 	return used_cells
 
-
+## Draws multiple tiles based on the given context.
 func add_stitches(thread: XStitchThread, context: Array[Vector2i]):
 	for cell in context:
 		draw_cell(cell, thread)

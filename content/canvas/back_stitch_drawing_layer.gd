@@ -1,28 +1,11 @@
 class_name BackStitchDrawingLayer
 extends Node2D
 
-# XStitchThread to Array[BackStitch]
+## A drawing layer meant to hold [Line2D] data, to replicate a backstitch layer.
+
+## Dictionary with [XStitchThread] keys and arrays of [Line2D] for values.
 var _modulated_stitches_cache: Dictionary
 
-func get_mouse_position():
+## Returns the current mouse position.
+func get_mouse_position() -> Vector2:
 	return get_global_mouse_position()
-
-func serialize():
-	var data = []
-	
-	return data
-	#var data: Array[Dictionary]
-	#for thread in _modulated_stitches_cache:
-		#var thread_coords_data: Dictionary
-		#thread_coords_data.get_or_add("thread_id", thread.get_identifying_name())
-		#var coordinates: Array[Dictionary]
-		#for stitch in _modulated_stitches_cache[thread]:
-			#var entry: Dictionary
-			#entry.get_or_add("from", stitch.from_coordinate)
-			#entry.get_or_add("to", stitch.to_coordinate)
-			#coordinates.append(entry)
-		#thread_coords_data.get_or_add("coordinates")
-		#data.append(thread_coords_data)
-
-func deserialize(data):
-	pass
