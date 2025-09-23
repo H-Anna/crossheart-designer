@@ -27,10 +27,23 @@ navigation_enabled = false
 
 [node name="CursorLayer" parent="." instance=ExtResource("4_e8dy0")]
 
-[node name="GridElements" type="Node2D" parent="."]
+[node name="GridElements" type="Node2D" parent="." node_paths=PackedStringArray("markers")]
 script = ExtResource("6_xs5af")
 sparse_line_width = 1.5
 dense_grid_color = Color(0.294118, 0.294118, 0.294118, 0.156863)
 sparse_grid_color = Color(0, 0, 0, 1)
+center_marker_color = Color(0.942823, 0.942823, 0.942823, 1)
+markers = {
+NodePath("North"): PackedVector2Array(0, 0, -5, -10, 5, -10),
+NodePath("South"): PackedVector2Array(0, 0, -5, 10, 5, 10),
+NodePath("East"): PackedVector2Array(0, 0, 10, -5, 10, 5),
+NodePath("West"): PackedVector2Array(0, 0, -10, -5, -10, 5)
+}
 
-[node name="Marker2D" type="Marker2D" parent="GridElements"]
+[node name="North" type="Marker2D" parent="GridElements"]
+
+[node name="South" type="Marker2D" parent="GridElements"]
+
+[node name="East" type="Marker2D" parent="GridElements"]
+
+[node name="West" type="Marker2D" parent="GridElements"]

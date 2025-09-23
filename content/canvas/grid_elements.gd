@@ -23,30 +23,60 @@ const CELL_SIZE := Vector2i(16, 16)
 ## Color used to draw the sparse grid (every 10 tiles).
 @export var sparse_grid_color := Color(0.0, 1.0, 0.0)
 
+## Color used for centerpoint/halfway point markers.
+@export var center_marker_color := Color(0.0, 1.0, 0.0)
+
+## Marker nodes and their positions.
+@export var markers : Dictionary[Marker2D, PackedVector2Array]
+
 ## The [Rect2i] boundaries of the canvas.
 var tilemap_rect : Rect2i
 
+## Draws static lines and polygons.
 func _draw() -> void:
 	draw_grid(dense_grid_color, dense_steps, dense_line_width)
 	draw_grid(sparse_grid_color, sparse_steps, sparse_line_width)
+	
+	set_marker_positions()
+	draw_markers()
+
+## Returns the true canvas size in [Vector2]: the result of the [member tilemap_rect] and the [constant CELL_SIZE].
+func get_canvas_size() -> Vector2:
+	return Vector2(tilemap_rect.size.x * CELL_SIZE.x, tilemap_rect.size.y * CELL_SIZE.y)
 
 ## Returns an array that describes [Vector2] endpoints of a grid.[br]
 ## [param steps] is the number of tiles to surround.
 ## The default value is 1, meaning a dense grid is returned.
 func get_grid_points(steps: int = 1) -> PackedVector2Array:
 	var array: PackedVector2Array
+	var canvas_size = get_canvas_size()
 	for y in range(0, tilemap_rect.size.y + 1, steps):
 		array.push_back(Vector2(0, y * CELL_SIZE.y))
-		array.push_back(Vector2(tilemap_rect.size.x * CELL_SIZE.x, y * CELL_SIZE.y))
+		array.push_back(Vector2(canvas_size.x, y * CELL_SIZE.y))
 	
 	for x in range(0, tilemap_rect.size.x + 1, steps):
 		array.push_back(Vector2(x * CELL_SIZE.x, 0))
-		array.push_back(Vector2(x * CELL_SIZE.x, tilemap_rect.size.y * CELL_SIZE.y))
+		array.push_back(Vector2(x * CELL_SIZE.x, canvas_size.y))
 	
 	return array
 
+## Repositions each marker child so that they sit at the halfway points
+## of the canvas.
+func set_marker_positions() -> void:
+	var canvas_size = get_canvas_size()
+	$North.position = Vector2(canvas_size.x / 2, 0)
+	$South.position = Vector2(canvas_size.x / 2, canvas_size.y)
+	$West.position = Vector2(0, canvas_size.y / 2)
+	$East.position = Vector2(canvas_size.x, canvas_size.y / 2)
 
 ## Draws a grid with the given [param color], in [param steps] of cells.
 func draw_grid(color: Color, steps: int, line_width: float) -> void:
 	var grid_points = get_grid_points(steps)
 	draw_multiline(grid_points, color, line_width)
+
+## Draws triangle markers at points specified in [member markers].
+func draw_markers() -> void:
+	for key in markers:
+		var marker_points = markers[key] as Array[Vector2]
+		marker_points = marker_points.map(func(x): return x + key.position)
+		draw_colored_polygon(marker_points, center_marker_color)
