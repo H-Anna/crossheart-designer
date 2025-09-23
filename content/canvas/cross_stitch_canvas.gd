@@ -37,6 +37,8 @@ func _ready() -> void:
 	
 	# TODO: ability for custom size or resize canvas
 	bounding_rect = $BackgroundLayer.get_used_rect()
+	$GridElements.tilemap_rect = bounding_rect
+	$GridElements.queue_redraw()
 	
 	add_layer()
 
