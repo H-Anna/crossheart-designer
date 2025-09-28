@@ -8,6 +8,12 @@ func to_packedvector2array(input: Array) -> PackedVector2Array:
 		array.append(elem)
 	return array
 
+func unique(input: Array) -> Array:
+	var output : Array = []
+	for item in input:
+		if !output.has(item):
+			output.append(item)
+	return output
 #endregion
 
 #region CELL OPERATIONS
