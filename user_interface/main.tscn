@@ -1,7 +1,8 @@
-[gd_scene load_steps=39 format=3 uid="uid://s1bmq54ffm5f"]
+[gd_scene load_steps=41 format=3 uid="uid://s1bmq54ffm5f"]
 
 [ext_resource type="Script" uid="uid://cc3vfh7yxmat1" path="res://user_interface/menu_bar/file_menu.gd" id="2_qsp4k"]
 [ext_resource type="Texture2D" uid="uid://c84tjppmo3qgo" path="res://user_interface/tool_bar/draw-edit-message-pen-pencil-text-svgrepo-com.svg" id="3_kq58d"]
+[ext_resource type="Texture2D" uid="uid://bwbmxana8jtah" path="res://user_interface/tool_bar/line-tool-svgrepo-com.svg" id="3_nl1pb"]
 [ext_resource type="Texture2D" uid="uid://drdr6jh61xxws" path="res://user_interface/tool_bar/fill-svgrepo-com.svg" id="4_seu75"]
 [ext_resource type="Texture2D" uid="uid://duba8w62maq15" path="res://user_interface/tool_bar/cursor-marquee-svgrepo-com.svg" id="5_htxhm"]
 [ext_resource type="Texture2D" uid="uid://dm7g0drk7toco" path="res://user_interface/tool_bar/stamp-2-svgrepo-com.svg" id="6_jq2sk"]
@@ -34,6 +35,7 @@
 [ext_resource type="Resource" uid="uid://3yxj3qdx8pl1" path="res://content/xstitchtools/draw_erase_tool.tres" id="30_w7kqq"]
 [ext_resource type="Resource" uid="uid://bwvhg72uchdec" path="res://content/xstitchtools/color_picker_tool.tres" id="31_a46cb"]
 [ext_resource type="Resource" uid="uid://brhghxvrpjkpo" path="res://content/xstitchtools/fill_tool.tres" id="32_tjmwq"]
+[ext_resource type="Resource" uid="uid://dllm0mpnox777" path="res://content/xstitchtools/backstitch_tool.tres" id="36_tgsj8"]
 
 [sub_resource type="GDScript" id="GDScript_mef27"]
 script/source = "extends Node
@@ -214,6 +216,16 @@ toggle_mode = true
 button_pressed = true
 button_group = SubResource("ButtonGroup_6iyjs")
 icon = ExtResource("3_kq58d")
+icon_alignment = 1
+expand_icon = true
+
+[node name="BackstitchButton" type="Button" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolButtons"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+tooltip_text = "Backstitch"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_6iyjs")
+icon = ExtResource("3_nl1pb")
 icon_alignment = 1
 expand_icon = true
 
@@ -482,7 +494,7 @@ script = ExtResource("20_wnkbs")
 [node name="CanvasViewport" type="SubViewport" parent="UserInterface/VBoxContainer/HSplitContainer/SubViewportContainer"]
 unique_name_in_owner = true
 handle_input_locally = false
-size = Vector2i(2, 2)
+size = Vector2i(1129, 659)
 render_target_update_mode = 4
 
 [node name="Canvas" parent="UserInterface/VBoxContainer/HSplitContainer/SubViewportContainer/CanvasViewport" node_paths=PackedStringArray("ui_layer_button_container") instance=ExtResource("21_f6a44")]
@@ -634,7 +646,8 @@ script = ExtResource("29_w7kqq")
 tool_dictionary = Dictionary[int, ExtResource("30_a46cb")]({
 0: ExtResource("30_w7kqq"),
 1: ExtResource("31_a46cb"),
-2: ExtResource("32_tjmwq")
+2: ExtResource("32_tjmwq"),
+3: ExtResource("36_tgsj8")
 })
 tool_ui_dictionary = {
 0: NodePath("../UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/DrawEraseToolSettings")
@@ -643,6 +656,7 @@ metadata/brush_size = 1
 
 [connection signal="index_pressed" from="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/MenuBar/File" to="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/MenuBar/File" method="_on_index_pressed"]
 [connection signal="pressed" from="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolButtons/DrawEraseButton" to="XStitchToolController" method="select_tool" binds= [0]]
+[connection signal="pressed" from="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolButtons/BackstitchButton" to="XStitchToolController" method="select_tool" binds= [3]]
 [connection signal="pressed" from="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolButtons/FillButton" to="XStitchToolController" method="select_tool" binds= [2]]
 [connection signal="pressed" from="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolButtons/ColorPickButton" to="XStitchToolController" method="select_tool" binds= [1]]
 [connection signal="value_changed" from="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/DrawEraseToolSettings/SizeSetting/BrushSizeSpinBox" to="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/DrawEraseToolSettings/SizeSetting/BrushSizeSpinBox" method="_on_value_changed"]
