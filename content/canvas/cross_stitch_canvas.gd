@@ -113,6 +113,8 @@ func handle_fill_input(event: InputEvent) -> void:
 func handle_backstitch_input(event: InputEvent) -> void:
 	if event.is_action_pressed("draw"):
 		active_layer.create_backstitch_draw_command(get_current_thread())
+	if event.is_action_released("draw"):
+		active_layer.finalize_command()
 	
 	if event.is_action_pressed("erase"):
 		pass

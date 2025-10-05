@@ -337,6 +337,33 @@ value = 1.0
 suffix = "px"
 script = ExtResource("11_b1qrp")
 
+[node name="BackstitchToolSettings" type="HBoxContainer" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 50
+
+[node name="ModeSetting" type="HBoxContainer" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/BackstitchToolSettings"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/BackstitchToolSettings/ModeSetting"]
+layout_mode = 2
+theme = SubResource("Theme_5dpkv")
+text = "Mode:"
+
+[node name="OptionButton" type="OptionButton" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/BackstitchToolSettings/ModeSetting"]
+layout_mode = 2
+tooltip_text = "Mode: the type of stitch currently being drawn."
+selected = 0
+item_count = 3
+popup/item_0/text = "Single line"
+popup/item_0/id = 0
+popup/item_1/text = "Polyline"
+popup/item_1/id = 1
+popup/item_2/text = "Move"
+popup/item_2/id = 2
+
 [node name="HSplitContainer" type="HSplitContainer" parent="UserInterface/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -650,7 +677,8 @@ tool_dictionary = Dictionary[int, ExtResource("30_a46cb")]({
 3: ExtResource("36_tgsj8")
 })
 tool_ui_dictionary = {
-0: NodePath("../UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/DrawEraseToolSettings")
+0: NodePath("../UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/DrawEraseToolSettings"),
+3: NodePath("../UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/BackstitchToolSettings")
 }
 metadata/brush_size = 1
 

@@ -109,6 +109,10 @@ func create_erase_command(brush_size: int):
 ## Sends a finished command.
 func finalize_command():
 	if _cmd:
+		if _cmd is AddBackstitchCommand:
+			_cmd.points.push_back(_cmd.layer.get_mouse_position())
+			print_debug(_cmd.points)
+		
 		SignalBus.command_created.emit(_cmd)
 		_cmd = null
 
@@ -148,10 +152,12 @@ func create_fill_command(thread: XStitchThread):
 	finalize_command()
 	pass
 
-#TODO document, create command
+## Creates an [AddBackstitchCommand].
 func create_backstitch_draw_command(thread: XStitchThread):
-	var layer = get_active_sublayer()
-	layer.draw_stitch(thread)
+	_cmd = AddBackstitchCommand.new()
+	_cmd.layer = get_active_sublayer()
+	_cmd.thread = thread
+	_cmd.points.push_back(_cmd.layer.get_mouse_position())
 
 func serialize():
 	var data = {}

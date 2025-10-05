@@ -31,7 +31,7 @@ func get_current_tool() -> XStitchTool:
 ## [param method]: the [enum XStitchTool.Method] associated with the tool.[br]
 ## [param visible]: the visibility to set.
 func set_tool_ui_visibility(method: XStitchTool.Method, visible: bool) -> void:
-	if method < tool_ui_dictionary.size():
+	if method in tool_ui_dictionary:
 		tool_ui_dictionary[method].visible = visible
 
 #endregion
