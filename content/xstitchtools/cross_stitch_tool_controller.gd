@@ -18,6 +18,7 @@ signal tool_selected(tool: XStitchTool)
 var current_tool: XStitchTool
 
 func _ready() -> void:
+	Globals.xstitch_tool_controller = self
 	select_tool(XStitchTool.Method.DRAW_ERASE)
 
 #region Getters and Setters

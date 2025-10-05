@@ -62,6 +62,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			
 		XStitchTool.Method.FILL:
 			handle_fill_input(event)
+		
+		XStitchTool.Method.BACKSTITCH:
+			handle_backstitch_input(event)
 		_:
 			pass
 	pass
@@ -104,6 +107,14 @@ func handle_color_pick_input(event: InputEvent) -> void:
 func handle_fill_input(event: InputEvent) -> void:
 	if event.is_action_pressed("draw"):
 		active_layer.create_fill_command(get_current_thread())
+		pass
+
+## Handles input for the backstitch tool.
+func handle_backstitch_input(event: InputEvent) -> void:
+	if event.is_action_pressed("draw"):
+		active_layer.create_backstitch_draw_command(get_current_thread())
+	
+	if event.is_action_pressed("erase"):
 		pass
 
 ## Returns true or false depending on if the canvas accepts input.

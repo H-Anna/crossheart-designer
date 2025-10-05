@@ -43,8 +43,13 @@ func get_current_cell():
 
 ## @experimental: Currently only returns the basic cross stitch layer.
 ## Returns the active sublayer based on the current tool.
-func get_active_sublayer() -> XStitchDrawingLayer:
-	return %FullStitchLayer #TODO: return based on active tool
+func get_active_sublayer(): ##TODO: restore
+	var tool = Globals.xstitch_tool_controller.get_current_tool()
+	match tool.method:
+		XStitchTool.Method.BACKSTITCH:
+			return %BackStitchLayer
+		_:
+			return %FullStitchLayer #TODO: return based on active tool
 
 ## Draws multiple stitches to its sublayers with [param thread].
 ## [param context] contains the sublayers and the positions.
@@ -142,6 +147,11 @@ func create_fill_command(thread: XStitchThread):
 	_cmd.thread = thread
 	finalize_command()
 	pass
+
+#TODO document, create command
+func create_backstitch_draw_command(thread: XStitchThread):
+	var layer = get_active_sublayer()
+	layer.draw_stitch(thread)
 
 func serialize():
 	var data = {}
