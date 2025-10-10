@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://s1bmq54ffm5f"]
+[gd_scene load_steps=42 format=3 uid="uid://s1bmq54ffm5f"]
 
 [ext_resource type="Script" uid="uid://cc3vfh7yxmat1" path="res://user_interface/menu_bar/file_menu.gd" id="2_qsp4k"]
 [ext_resource type="Texture2D" uid="uid://c84tjppmo3qgo" path="res://user_interface/tool_bar/draw-edit-message-pen-pencil-text-svgrepo-com.svg" id="3_kq58d"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://u3lrn5bi4i3i" path="res://user_interface/tool_settings_menu/smallfullcross-icon.svg" id="10_facbu"]
 [ext_resource type="Script" uid="uid://bmct46kbsh8ig" path="res://user_interface/tool_settings_menu/brush_size_spin_box.gd" id="11_b1qrp"]
 [ext_resource type="Script" uid="uid://b0wpnx4cmh8fe" path="res://user_interface/thread_button_container/palette_thread_button_container.gd" id="12_come4"]
+[ext_resource type="Script" uid="uid://dma272b5ei5b6" path="res://user_interface/tool_settings_menu/xstitchtool_option_button.gd" id="13_6esvu"]
 [ext_resource type="PackedScene" uid="uid://skecvvmk7e26" path="res://user_interface/thread_button/thread_button.tscn" id="13_h8e4i"]
 [ext_resource type="Texture2D" uid="uid://hjub8afgui3d" path="res://user_interface/thread_button_container/plus-svgrepo-com.svg" id="14_4lmeg"]
 [ext_resource type="Script" uid="uid://bnrgi6moqp877" path="res://user_interface/thread_button_container/add_thread_button_container.gd" id="15_tjmwq"]
@@ -352,7 +353,7 @@ layout_mode = 2
 theme = SubResource("Theme_5dpkv")
 text = "Mode:"
 
-[node name="OptionButton" type="OptionButton" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/BackstitchToolSettings/ModeSetting"]
+[node name="BackstitchModeOptionButton" type="OptionButton" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/BackstitchToolSettings/ModeSetting"]
 layout_mode = 2
 tooltip_text = "Mode: the type of stitch currently being drawn."
 selected = 0
@@ -363,6 +364,33 @@ popup/item_1/text = "Polyline"
 popup/item_1/id = 1
 popup/item_2/text = "Move"
 popup/item_2/id = 2
+script = ExtResource("13_6esvu")
+tool = ExtResource("36_tgsj8")
+metadata_name = &"mode"
+
+[node name="SnappingSetting" type="HBoxContainer" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/BackstitchToolSettings"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/BackstitchToolSettings/SnappingSetting"]
+layout_mode = 2
+theme = SubResource("Theme_5dpkv")
+text = "Snapping:"
+
+[node name="SnappingOptionButton" type="OptionButton" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/BackstitchToolSettings/SnappingSetting"]
+layout_mode = 2
+tooltip_text = "Mode: the type of stitch currently being drawn."
+selected = 0
+item_count = 3
+popup/item_0/text = "Corners"
+popup/item_0/id = 0
+popup/item_1/text = "Dense"
+popup/item_1/id = 1
+popup/item_2/text = "Freeform"
+popup/item_2/id = 2
+script = ExtResource("13_6esvu")
+tool = ExtResource("36_tgsj8")
+metadata_name = &"snap"
 
 [node name="HSplitContainer" type="HSplitContainer" parent="UserInterface/VBoxContainer"]
 layout_mode = 2
@@ -688,6 +716,10 @@ metadata/brush_size = 1
 [connection signal="pressed" from="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolButtons/FillButton" to="XStitchToolController" method="select_tool" binds= [2]]
 [connection signal="pressed" from="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/ToolButtons/ColorPickButton" to="XStitchToolController" method="select_tool" binds= [1]]
 [connection signal="value_changed" from="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/DrawEraseToolSettings/SizeSetting/BrushSizeSpinBox" to="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/DrawEraseToolSettings/SizeSetting/BrushSizeSpinBox" method="_on_value_changed"]
+[connection signal="item_focused" from="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/BackstitchToolSettings/ModeSetting/BackstitchModeOptionButton" to="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/BackstitchToolSettings/ModeSetting/BackstitchModeOptionButton" method="set_tool_metadata"]
+[connection signal="item_selected" from="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/BackstitchToolSettings/ModeSetting/BackstitchModeOptionButton" to="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/BackstitchToolSettings/ModeSetting/BackstitchModeOptionButton" method="set_tool_metadata"]
+[connection signal="item_focused" from="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/BackstitchToolSettings/SnappingSetting/SnappingOptionButton" to="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/BackstitchToolSettings/SnappingSetting/SnappingOptionButton" method="set_tool_metadata"]
+[connection signal="item_selected" from="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/BackstitchToolSettings/SnappingSetting/SnappingOptionButton" to="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/BackstitchToolSettings/SnappingSetting/SnappingOptionButton" method="set_tool_metadata"]
 [connection signal="pressed" from="UserInterface/VBoxContainer/HSplitContainer/SideBar/PaletteMenu/VBoxContainer/ScrollContainer/PaletteContainer/AddButton" to="UserInterface/VBoxContainer/HSplitContainer/SideBar/PaletteMenu" method="hide"]
 [connection signal="pressed" from="UserInterface/VBoxContainer/HSplitContainer/SideBar/PaletteMenu/VBoxContainer/ScrollContainer/PaletteContainer/AddButton" to="UserInterface/VBoxContainer/HSplitContainer/SideBar/AddThreadMenu" method="show"]
 [connection signal="visibility_changed" from="UserInterface/VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/AddThreadContainer" to="UserInterface/VBoxContainer/HSplitContainer/SideBar/AddThreadMenu/VBoxContainer/ScrollContainer/AddThreadContainer" method="_on_visibility_changed"]

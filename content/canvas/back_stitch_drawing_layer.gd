@@ -4,6 +4,8 @@ extends Node2D
 ## A drawing layer meant to hold [Line2D] data, to replicate a backstitch layer.
 ## Maintains a 'preview line' for user feedback.
 
+enum CursorSnap { GRID = 0, DENSE = 1, FREEFORM = 2}
+
 ## The [Line2D] scene used to create backstitches.
 @export var line_scene: PackedScene
 
@@ -15,7 +17,17 @@ var _modulated_stitches_cache: Dictionary[XStitchThread, Array] = {}
 
 ## Returns the current mouse position.
 func get_mouse_position() -> Vector2:
-	return get_global_mouse_position()
+	var snap = Globals.xstitch_tool_controller.get_current_tool().get_meta("snap")
+	match snap:
+		CursorSnap.GRID:
+			return get_global_mouse_position().snapped(Globals.CELL_SIZE)
+		CursorSnap.DENSE:
+			return get_global_mouse_position().snapped(Globals.CELL_SIZE / 2)
+		CursorSnap.FREEFORM:
+			return get_global_mouse_position()
+		_:
+			print_debug("ERROR: Value ", snap, " does not exist in enum CursorSnap")
+			return get_global_mouse_position()
 
 ## Sets the preview line visibility.
 func set_preview_backstitch_visible(show: bool) -> void:
