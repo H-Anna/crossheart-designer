@@ -11,10 +11,10 @@ func _ready() -> void:
 ## Called when unhandled input is detected (eg. key press).
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("increase-brush-size", false, true):
-		value += 1
+		value += step
 	
 	if event.is_action_pressed("decrease-brush-size", false, true):
-		value -= 1
+		value -= step
 
 ## Called when the value has been changed.
 func _on_value_changed(_value: float) -> void:
