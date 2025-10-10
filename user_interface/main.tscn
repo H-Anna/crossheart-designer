@@ -521,7 +521,7 @@ script = ExtResource("20_wnkbs")
 [node name="CanvasViewport" type="SubViewport" parent="UserInterface/VBoxContainer/HSplitContainer/SubViewportContainer"]
 unique_name_in_owner = true
 handle_input_locally = false
-size = Vector2i(2, 2)
+size = Vector2i(1129, 659)
 render_target_update_mode = 4
 
 [node name="Canvas" parent="UserInterface/VBoxContainer/HSplitContainer/SubViewportContainer/CanvasViewport" node_paths=PackedStringArray("ui_layer_button_container") instance=ExtResource("21_f6a44")]

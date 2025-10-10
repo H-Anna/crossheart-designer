@@ -4,9 +4,6 @@ extends Node
 ## Class that interfaces with other classes
 ## for selecting and using [XStitchTool]s.
 
-## Emitted when an [XStitchTool] is selected.
-signal tool_selected(tool: XStitchTool)
-
 ## Dictionary of methods and corresponding tools.
 @export var tool_dictionary: Dictionary[XStitchTool.Method, XStitchTool]
 
@@ -48,6 +45,6 @@ func select_tool(method: XStitchTool.Method) -> void:
 	set_tool_ui_visibility(method, true)
 	
 	Input.set_custom_mouse_cursor(current_tool.cursor_image, 0, current_tool.cursor_hotspot)
-	tool_selected.emit(current_tool)
+	SignalBus.tool_selected.emit(current_tool)
 
 #endregion

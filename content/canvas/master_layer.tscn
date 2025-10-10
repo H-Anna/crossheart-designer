@@ -14,6 +14,7 @@ unique_name_in_owner = true
 z_index = 1
 script = ExtResource("6_k4oxk")
 line_scene = ExtResource("5_qwayn")
+unfocused_modulate = Color(1, 1, 1, 0.392157)
 
 [node name="PreviewBackstitch" parent="BackStitchLayer" instance=ExtResource("5_qwayn")]
 visible = false
@@ -25,3 +26,4 @@ tile_set = ExtResource("2_oc7mr")
 collision_enabled = false
 navigation_enabled = false
 script = ExtResource("3_w46b7")
+unfocused_modulate = Color(1, 1, 1, 0.392157)

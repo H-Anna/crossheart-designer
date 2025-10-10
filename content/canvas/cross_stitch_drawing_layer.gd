@@ -6,6 +6,9 @@ extends TileMapLayer
 ## @experimental: This class needs refactoring in the method names.
 # TODO refactor method names
 
+## The color of this layer when the drawing tool is not in use.
+@export var unfocused_modulate: Color
+
 ## @experimental: This member is subject to change.
 ## The coordinates of the tile being used in the tilemap.
 const CURSOR_TILE = Vector2i(0,0)
@@ -15,6 +18,9 @@ const CURSOR_TILE = Vector2i(0,0)
 ## achieved by adding alternative tile IDs. This dictionary stores which
 ## alternative ID corresponds to which thread.
 var _modulated_tile_cache: Dictionary
+
+func _ready() -> void:
+	SignalBus.tool_selected.connect(on_tool_selected)
 
 ## Returns the cell under the mouse pointer.
 func get_mouse_position() -> Vector2i:
@@ -32,6 +38,15 @@ func get_brush_area(center: Vector2i, size: int) -> Array:
 	var offset = center - Globals.BRUSH_CENTER_POINT[size]
 	var cells = brush_cells.map(func(x): return x + offset)
 	return cells
+
+## Modulates self and all children when the backstitch tool is not selected.
+## Causes backstitches to be slightly transparent.
+func on_tool_selected(tool: XStitchTool) -> void:
+	if tool.method == XStitchTool.Method.DRAW_ERASE:
+		modulate = Color.WHITE
+	else:
+		modulate = unfocused_modulate
+
 
 ## Draws multiple tiles with the given [param thread] and brush [param size],
 ## within [param bounding_rect].

@@ -33,7 +33,7 @@ func _ready() -> void:
 	SignalBus.brush_size_changed.connect(func(size): brush_size = size)
 	
 	SignalBus.layer_selected.connect(select_layer)
-	%XStitchToolController.tool_selected.connect(update_tool)
+	SignalBus.tool_selected.connect(update_tool)
 	
 	# TODO: ability for custom size or resize canvas
 	bounding_rect = $BackgroundLayer.get_used_rect()

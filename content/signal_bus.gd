@@ -25,3 +25,6 @@ signal layer_selected(layer: XStitchMasterLayer)
 
 ## Command signals
 signal command_created(command: Command)
+
+## Emitted when an [XStitchTool] is selected.
+signal tool_selected(tool: XStitchTool)
