@@ -23,6 +23,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 ## Executes the incoming command and saves it to the command history.
 func execute_command(cmd: Command) -> void:
+	if !cmd.is_valid():
+		return
+	
 	if current_command_idx < command_history.size() - 1:
 		command_history.resize(current_command_idx + 1)
 	cmd.execute()

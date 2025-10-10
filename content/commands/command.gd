@@ -15,3 +15,9 @@ func undo() -> void:
 ## Can be used to push debug messages.
 func get_string() -> String:
 	return "Override this method!"
+
+## Checks if the command is valid based on its data.
+## If not, the command manager discards it.
+## True by default.
+func is_valid() -> bool:
+	return true

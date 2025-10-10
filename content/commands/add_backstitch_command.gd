@@ -12,6 +12,9 @@ var thread : XStitchThread
 ## The points of the Line2D.
 var points : Array[Vector2]
 
+## The number of points in the Line2D.
+var points_count : int
+
 ## The resulting line.
 var line : Line2D
 
@@ -38,3 +41,10 @@ func undo() -> void:
 ## Can be used to push debug messages.
 func get_string() -> String:
 	return "Override this method!"
+
+func is_valid() -> bool:
+	if points.size() <= 1:
+		return false
+	if points.size() == 2 && points.front() == points.back():
+		return false
+	return true

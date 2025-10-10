@@ -64,6 +64,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			handle_fill_input(event)
 		
 		XStitchTool.Method.BACKSTITCH:
+			if event is InputEventMouseMotion:
+				active_layer.update_command()
 			handle_backstitch_input(event)
 		_:
 			pass

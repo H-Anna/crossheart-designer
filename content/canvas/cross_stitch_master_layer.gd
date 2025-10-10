@@ -12,7 +12,7 @@ var id:
 ## The various sublayers managed by this master layer.
 @onready var sublayers : Dictionary = {
 	"FULL" : %FullStitchLayer,
-	#"BACK" : %BackStitchLayer
+	"BACK" : %BackStitchLayer
 }
 
 ## The name of the layer displayed to the user.
@@ -38,22 +38,22 @@ func is_active():
 	return Globals.canvas.active_layer == self
 
 ## Returns the cell under the mouse pointer.
-func get_current_cell():
+func get_current_cell() -> Vector2i:
 	return get_active_sublayer().get_mouse_position()
 
-## @experimental: Currently only returns the basic cross stitch layer.
+
 ## Returns the active sublayer based on the current tool.
-func get_active_sublayer(): ##TODO: restore
+func get_active_sublayer(): ##TODO: restore return type
 	var tool = Globals.xstitch_tool_controller.get_current_tool()
 	match tool.method:
 		XStitchTool.Method.BACKSTITCH:
 			return %BackStitchLayer
 		_:
-			return %FullStitchLayer #TODO: return based on active tool
+			return %FullStitchLayer
 
 ## Draws multiple stitches to its sublayers with [param thread].
 ## [param context] contains the sublayers and the positions.
-func add_stitches(thread: XStitchThread, context: Dictionary):
+func add_stitches(thread: XStitchThread, context: Dictionary) -> void:
 	for key in sublayers:
 		sublayers[key].add_stitches(thread, context[key])
 
@@ -62,21 +62,23 @@ func add_stitches(thread: XStitchThread, context: Dictionary):
 func remove_stitches(thread: XStitchThread) -> Dictionary:
 	var context: Dictionary
 	for key in sublayers:
-		context[key] = sublayers[key]._erase_cells_with_thread(thread)
+		context[key] = sublayers[key].erase_with_thread(thread)
 	return context
 
 ## Updates a command that needs continuous data, such as a
 ## [BrushStrokeCommand] or [EraseCommand].
-func update_command():
+func update_command() -> void:
 	if !_cmd:
 		return
 	if _cmd is BrushStrokeCommand:
 		update_brush_stroke_command()
 	if _cmd is EraseCommand:
 		update_erase_command()
+	if _cmd is AddBackstitchCommand:
+		update_backstitch_draw_command()
 
 ## Updates a [BrushStrokeCommand] with cell data.
-func update_brush_stroke_command():
+func update_brush_stroke_command() -> void:
 	var point = _cmd.layer.get_mouse_position()
 	var cells = _cmd.layer.get_brush_area(point, _cmd.brush_size)
 	for cell in cells.filter(cell_is_in_canvas):
@@ -85,14 +87,14 @@ func update_brush_stroke_command():
 		_cmd.layer.draw_cell(cell, _cmd.thread)
 
 ## Creates a [BrushStrokeCommand].
-func create_brush_stroke_command(thread: XStitchThread, brush_size: int):
+func create_brush_stroke_command(thread: XStitchThread, brush_size: int) -> void:
 		_cmd = BrushStrokeCommand.new()
 		_cmd.layer = get_active_sublayer()
 		_cmd.thread = thread
 		_cmd.brush_size = brush_size
 
 ## Updates an [EraseCommand] with cell data.
-func update_erase_command():
+func update_erase_command() -> void:
 	var point = _cmd.layer.get_mouse_position()
 	var cells = _cmd.layer.get_brush_area(point, _cmd.brush_size)
 	for cell in cells:
@@ -101,17 +103,18 @@ func update_erase_command():
 		_cmd.layer.erase_cell(cell)
 
 ## Creates an [EraseCommand].
-func create_erase_command(brush_size: int):
+func create_erase_command(brush_size: int) -> void:
 	_cmd = EraseCommand.new()
 	_cmd.layer = get_active_sublayer()
 	_cmd.brush_size = brush_size
 
 ## Sends a finished command.
-func finalize_command():
+func finalize_command() -> void:
 	if _cmd:
 		if _cmd is AddBackstitchCommand:
-			_cmd.points.push_back(_cmd.layer.get_mouse_position())
-			print_debug(_cmd.points)
+			_cmd.layer.set_preview_backstitch_visible(false)
+			# Command is discarded if line is not rendered
+			# TODO: add this method to all other commands?
 		
 		SignalBus.command_created.emit(_cmd)
 		_cmd = null
@@ -133,7 +136,7 @@ func pick_thread() -> XStitchThread:
 
 ## Creates a [FillCommand], passing it the contiguous area under
 ## the mouse position.
-func create_fill_command(thread: XStitchThread):
+func create_fill_command(thread: XStitchThread) -> void:
 	var layer = get_active_sublayer()
 	var start = layer.get_mouse_position()
 	var previous_thread = layer.get_stitch_at(start)
@@ -153,11 +156,24 @@ func create_fill_command(thread: XStitchThread):
 	pass
 
 ## Creates an [AddBackstitchCommand].
-func create_backstitch_draw_command(thread: XStitchThread):
+func create_backstitch_draw_command(thread: XStitchThread) -> void:
 	_cmd = AddBackstitchCommand.new()
 	_cmd.layer = get_active_sublayer()
 	_cmd.thread = thread
 	_cmd.points.push_back(_cmd.layer.get_mouse_position())
+	_cmd.points_count = 1
+	
+	_cmd.layer.set_preview_backstitch_color(_cmd.thread.color)
+	_cmd.layer.set_preview_backstitch_points(_cmd.points)
+	_cmd.layer.set_preview_backstitch_visible(true)
+
+## Updates an [AddBackstitchCommand] with mouse pointer data.
+func update_backstitch_draw_command() -> void:
+	var point = _cmd.layer.get_mouse_position()
+	if _cmd.points.size() > _cmd.points_count:
+		_cmd.points.pop_back()
+	_cmd.points.push_back(point)
+	_cmd.layer.set_preview_backstitch_points(_cmd.points)
 
 func serialize():
 	var data = {}

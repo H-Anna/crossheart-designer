@@ -15,6 +15,9 @@ z_index = 1
 script = ExtResource("6_k4oxk")
 line_scene = ExtResource("5_qwayn")
 
+[node name="PreviewBackstitch" parent="BackStitchLayer" instance=ExtResource("5_qwayn")]
+visible = false
+
 [node name="FullStitchLayer" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
 texture_filter = 1
