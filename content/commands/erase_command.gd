@@ -35,3 +35,10 @@ func undo() -> void:
 	for cell in previous_stitches:
 		if previous_stitches[cell]:
 			layer.draw_cell(cell, previous_stitches[cell])
+
+## This command is only valid if anything has been erased.
+func is_valid() -> bool:
+	for cell in cells_to_erase:
+		if previous_stitches[cell]:
+			return true
+	return false
