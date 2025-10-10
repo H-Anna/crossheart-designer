@@ -8,6 +8,7 @@
 
 [node name="MasterLayer" type="Node2D" groups=["master_layers"]]
 script = ExtResource("1_m0dbt")
+unfocused_modulate = Color(1, 1, 1, 0.392157)
 
 [node name="BackStitchLayer" type="Node2D" parent="."]
 unique_name_in_owner = true

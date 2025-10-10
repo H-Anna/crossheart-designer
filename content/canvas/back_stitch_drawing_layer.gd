@@ -13,9 +13,6 @@ extends Node2D
 ## Dictionary with [XStitchThread] keys and arrays of [Line2D] for values.
 var _modulated_stitches_cache: Dictionary[XStitchThread, Array] = {}
 
-func _ready() -> void:
-	SignalBus.tool_selected.connect(on_tool_selected)
-
 ## Returns the current mouse position.
 func get_mouse_position() -> Vector2:
 	return get_global_mouse_position()
@@ -31,14 +28,6 @@ func set_preview_backstitch_color(color: Color) -> void:
 ## Sets the preview line points.
 func set_preview_backstitch_points(points: Array[Vector2]) -> void:
 	$PreviewBackstitch.points = points
-
-## Modulates self and all children when the backstitch tool is not selected.
-## Causes backstitches to be slightly transparent.
-func on_tool_selected(tool: XStitchTool) -> void:
-	if tool.method == XStitchTool.Method.BACKSTITCH:
-		modulate = Color.WHITE
-	else:
-		modulate = unfocused_modulate
 
 ## Draws a stitch with the given [param thread] color.
 func draw_stitch(thread: XStitchThread, points: Array[Vector2]) -> Line2D:

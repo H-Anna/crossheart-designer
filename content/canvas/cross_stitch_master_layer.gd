@@ -11,9 +11,12 @@ var id:
 
 ## The various sublayers managed by this master layer.
 @onready var sublayers : Dictionary = {
-	"FULL" : %FullStitchLayer,
-	"BACK" : %BackStitchLayer
+	"FULL" : $FullStitchLayer,
+	"BACK" : $BackStitchLayer
 }
+
+## The color of the sublayer when the associated drawing tool is not in use.
+@export var unfocused_modulate: Color
 
 ## The name of the layer displayed to the user.
 var display_name : String = "New Layer"
@@ -32,6 +35,8 @@ var bounding_rect : Rect2i
 ## Generates a unique ID for itself.
 func _ready() -> void:
 	id = Extensions.generate_unique_string()
+	
+	SignalBus.tool_selected.connect(on_tool_selected)
 
 ## Returns true if this is the active layer.
 func is_active():
@@ -47,9 +52,19 @@ func get_active_sublayer(): ##TODO: restore return type
 	var tool = Globals.xstitch_tool_controller.get_current_tool()
 	match tool.method:
 		XStitchTool.Method.BACKSTITCH:
-			return %BackStitchLayer
+			return $BackStitchLayer
 		_:
-			return %FullStitchLayer
+			return $FullStitchLayer
+
+## Modulates sublayer and all its children when the associated
+## drawing tool is not selected.
+func on_tool_selected(tool: XStitchTool) -> void:
+	var current = get_active_sublayer()
+	for sublayer in sublayers.values():
+		if sublayer == current:
+			sublayer.modulate = Color.WHITE
+		else:
+			sublayer.modulate = unfocused_modulate
 
 ## Draws multiple stitches to its sublayers with [param thread].
 ## [param context] contains the sublayers and the positions.
