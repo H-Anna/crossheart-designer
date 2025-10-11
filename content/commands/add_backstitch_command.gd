@@ -20,7 +20,7 @@ var line : Line2D
 
 ## Whether the command has already had a preview.
 ## Prevents executing on initial creation, as this is handled by separate logic.
-var preview : bool #= true
+var preview : bool
 
 ## Adds the backstitch.
 func execute() -> void:
