@@ -11,6 +11,8 @@ func execute() -> void:
 func undo() -> void:
 	push_warning("Override this undo method!")
 
+## Called before the command is discarded and freed from memory.
+## Deletes command data such as references to other nodes.
 func discard() -> void:
 	push_warning("Discarded this command!")
 

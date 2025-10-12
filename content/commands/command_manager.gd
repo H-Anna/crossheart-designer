@@ -49,6 +49,9 @@ func redo() -> void:
 	else:
 		print("Nothing to redo.")
 
+## Runs [method Command.discard]. Ideally this is the last place the command is
+## referenced, meaning that once the method is executed, no references remain,
+## and Godot frees the resource.
 func discard_command(cmd: Command) -> void:
 	cmd.discard()
 

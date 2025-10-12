@@ -25,6 +25,7 @@ func _ready() -> void:
 	$PreviewBackstitch.hide()
 	$CursorSprite.hide()
 
+## Sets the cursor color to the color of the given [param thread].
 func set_cursor_color(thread: XStitchThread) -> void:
 	if !thread:
 		$CursorSprite.hide()
@@ -32,8 +33,8 @@ func set_cursor_color(thread: XStitchThread) -> void:
 		$CursorSprite.show()
 		$CursorSprite.self_modulate = thread.color
 
+## Updates cursor position.
 func update_cursor() -> void:
-	#$CursorSprite.self_modulate = Globals.canvas.get_current_thread().color
 	$CursorSprite.position = get_mouse_position()
 
 ## Returns the current mouse position.

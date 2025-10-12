@@ -136,6 +136,7 @@ func finalize_command() -> void:
 		SignalBus.command_created.emit(_cmd)
 		_cmd = null
 
+## Sends a command to be discarded by the [CommandManager].
 func discard_command() -> void:
 	if has_command_in_progress():
 		SignalBus.command_discarded.emit(_cmd)
