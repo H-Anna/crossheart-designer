@@ -6,9 +6,6 @@ extends TileMapLayer
 ## @experimental: This class needs refactoring in the method names.
 # TODO refactor method names
 
-## The color of this layer when the drawing tool is not in use.
-@export var unfocused_modulate: Color
-
 ## @experimental: This member is subject to change.
 ## The coordinates of the tile being used in the tilemap.
 const CURSOR_TILE = Vector2i(0,0)
@@ -131,6 +128,8 @@ func get_contiguous_area(start: Vector2i, is_in_boundary: Callable) -> Array[Vec
 		
 	return result
 
+func update_cursor() -> void:
+	pass
 
 func serialize():
 	var data = []

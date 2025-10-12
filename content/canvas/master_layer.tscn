@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://mqe0068ic2xw"]
+[gd_scene load_steps=7 format=3 uid="uid://mqe0068ic2xw"]
 
 [ext_resource type="Script" uid="uid://cfq1frsbcwbsn" path="res://content/canvas/cross_stitch_master_layer.gd" id="1_m0dbt"]
 [ext_resource type="TileSet" uid="uid://csepo0h2nws1a" path="res://content/canvas/fullstitch_tileset.tres" id="2_oc7mr"]
 [ext_resource type="Script" uid="uid://d2a0te282sf4m" path="res://content/canvas/cross_stitch_drawing_layer.gd" id="3_w46b7"]
+[ext_resource type="Texture2D" uid="uid://c5iux0rg6r5e0" path="res://assets/png/circle.png" id="4_q4llw"]
 [ext_resource type="PackedScene" uid="uid://bbkg7of2awyhm" path="res://content/canvas/backstitch_line2d.tscn" id="5_qwayn"]
 [ext_resource type="Script" uid="uid://b3m1v0rnwf3i5" path="res://content/canvas/back_stitch_drawing_layer.gd" id="6_k4oxk"]
 
@@ -15,15 +16,17 @@ unique_name_in_owner = true
 z_index = 1
 script = ExtResource("6_k4oxk")
 line_scene = ExtResource("5_qwayn")
-unfocused_modulate = Color(1, 1, 1, 0.392157)
 maximum_erase_distance = 4.0
 
 [node name="PreviewBackstitch" type="Line2D" parent="BackStitchLayer"]
-visible = false
 width = 5.0
 joint_mode = 2
 begin_cap_mode = 2
 end_cap_mode = 2
+
+[node name="CursorSprite" type="Sprite2D" parent="BackStitchLayer"]
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("4_q4llw")
 
 [node name="FullStitchLayer" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
@@ -32,4 +35,3 @@ tile_set = ExtResource("2_oc7mr")
 collision_enabled = false
 navigation_enabled = false
 script = ExtResource("3_w46b7")
-unfocused_modulate = Color(1, 1, 1, 0.392157)

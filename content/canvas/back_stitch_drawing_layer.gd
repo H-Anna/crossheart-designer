@@ -10,9 +10,6 @@ enum CursorSnap { GRID = 0, DENSE = 1, FREEFORM = 2}
 ## The [Line2D] scene used to create backstitches.
 @export var line_scene: PackedScene
 
-## The color of this layer when the backstitch tool is not in use.
-@export var unfocused_modulate: Color
-
 ## The maximum distance the cursor can be from a stitch,
 ## while erasing backstitches.
 @export var maximum_erase_distance: float = 2.0
@@ -22,6 +19,22 @@ var _modulated_stitches_cache: Dictionary[XStitchThread, Array] = {}
 
 ## Array of backstitch [Line2D]s the layer keeps track of.
 var tracked_lines: Array[Line2D]
+
+func _ready() -> void:
+	SignalBus.thread_selected.connect(set_cursor_color)
+	$PreviewBackstitch.hide()
+	$CursorSprite.hide()
+
+func set_cursor_color(thread: XStitchThread) -> void:
+	if !thread:
+		$CursorSprite.hide()
+	else:
+		$CursorSprite.show()
+		$CursorSprite.self_modulate = thread.color
+
+func update_cursor() -> void:
+	#$CursorSprite.self_modulate = Globals.canvas.get_current_thread().color
+	$CursorSprite.position = get_mouse_position()
 
 ## Returns the current mouse position.
 func get_mouse_position() -> Vector2:

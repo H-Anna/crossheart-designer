@@ -97,6 +97,7 @@ func select_thread(index: int = -1) -> void:
 	palette.selected = index
 	var thread = get_selected_thread()
 	ui_palette_container.select_thread(thread)
+	SignalBus.thread_selected.emit(thread)
 	
 	if index == -1:
 		print_debug("No thread selected.")

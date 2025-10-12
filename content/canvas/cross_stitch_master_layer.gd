@@ -84,6 +84,9 @@ func remove_stitches(thread: XStitchThread) -> Dictionary:
 		context[key] = sublayers[key].erase_with_thread(thread)
 	return context
 
+func update_cursor(event: InputEvent) -> void:
+	get_active_sublayer().update_cursor()
+
 ## Updates a command that needs continuous data, such as a
 ## [BrushStrokeCommand] or [EraseCommand].
 func update_command() -> void:

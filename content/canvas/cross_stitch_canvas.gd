@@ -53,7 +53,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	match tool.method:
 		XStitchTool.Method.DRAW_ERASE:
 			if event is InputEventMouseMotion:
-				active_layer.update_command()
+				if active_layer.has_command_in_progress():
+					active_layer.update_command()
+				else:
+					active_layer.update_cursor(event)
 			handle_draw_input(event)
 			handle_erase_input(event)
 			
@@ -65,12 +68,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 		XStitchTool.Method.BACKSTITCH:
 			if event is InputEventMouseMotion:
-				active_layer.update_command()
+				if active_layer.has_command_in_progress():
+					active_layer.update_command()
+				else:
+					active_layer.update_cursor(event)
 			handle_backstitch_draw_input(event)
 			handle_backstitch_erase_input(event)
 		_:
 			pass
-	pass
 
 ## Handles brush stroke input.
 func handle_draw_input(event: InputEvent) -> void:
