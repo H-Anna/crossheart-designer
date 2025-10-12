@@ -19,13 +19,11 @@ func execute() -> void:
 		preview = false
 		return
 	
-	for line in lines:
-		layer.remove_child(line)
+	layer.remove_lines(lines)
 
 ## Initiates operations that aim to do the "opposite" of [method execute].
 func undo() -> void:
-	for line in lines:
-		layer.add_child(line)
+	layer.add_lines(lines)
 
 ## Returns [code]true[/code] if the number of [member lines] is greater than zero.
 func is_valid() -> bool:

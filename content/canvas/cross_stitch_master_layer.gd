@@ -182,9 +182,7 @@ func create_backstitch_draw_command(thread: XStitchThread) -> void:
 	_cmd.points.push_back(_cmd.layer.get_mouse_position())
 	_cmd.points_count = 1
 	
-	_cmd.layer.set_preview_backstitch_color(_cmd.thread.color)
-	_cmd.layer.set_preview_backstitch_points(_cmd.points)
-	_cmd.layer.set_preview_backstitch_visible(true)
+	_cmd.layer.start_preview(_cmd.thread.color, _cmd.points)
 
 ## Updates an [AddBackstitchCommand] with mouse pointer data.
 func update_backstitch_draw_command() -> void:
@@ -192,7 +190,8 @@ func update_backstitch_draw_command() -> void:
 	if _cmd.points.size() > _cmd.points_count:
 		_cmd.points.pop_back()
 	_cmd.points.push_back(point)
-	_cmd.layer.set_preview_backstitch_points(_cmd.points)
+	
+	_cmd.layer.update_preview(_cmd.points)
 
 ## Creates an [EraseBackstitchCommand].
 func create_backstitch_erase_command() -> void:

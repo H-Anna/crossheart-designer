@@ -30,12 +30,13 @@ func execute() -> void:
 	
 	if !line:
 		line = layer.draw_stitch(thread, points)
+		layer.end_preview()
 	else:
-		layer.add_child(line)
+		layer.add_line(line)
 
 ## Deletes the backstitch added previously.
 func undo() -> void:
-	layer.remove_child(line)
+	layer.remove_line(line)
 
 ## Prints a string associated with this command.
 ## Can be used to push debug messages.

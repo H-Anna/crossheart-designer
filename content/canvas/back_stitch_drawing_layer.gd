@@ -53,18 +53,6 @@ func get_line2ds_near_point(point: Vector2) -> Array[Line2D]:
 	
 	return result
 
-## Sets the preview line visibility.
-func set_preview_backstitch_visible(show: bool) -> void:
-	$PreviewBackstitch.visible = show
-
-## Sets the preview line color.
-func set_preview_backstitch_color(color: Color) -> void:
-	$PreviewBackstitch.default_color = color
-
-## Sets the preview line points.
-func set_preview_backstitch_points(points: Array[Vector2]) -> void:
-	$PreviewBackstitch.points = points
-
 ## Draws a stitch with the given [param thread] color.
 func draw_stitch(thread: XStitchThread, points: Array[Vector2]) -> Line2D:
 	var line = line_scene.instantiate() as Line2D
@@ -75,11 +63,11 @@ func draw_stitch(thread: XStitchThread, points: Array[Vector2]) -> Line2D:
 		_modulated_stitches_cache[thread] = []
 	_modulated_stitches_cache[thread].push_back(line)
 	
-	add_child(line)
+	add_line(line)
 	return line
 
 ## Adds stitches with the given [param thread] color based on the [param context].
-func add_stitches(thread: XStitchThread, context: Array):
+func add_stitches(thread: XStitchThread, context: Array) -> void:
 	if !_modulated_stitches_cache.has(thread):
 		_modulated_stitches_cache[thread] = []
 	
@@ -104,3 +92,43 @@ func erase_with_thread(thread: XStitchThread) -> Array:
 		_modulated_stitches_cache.erase(thread)
 	
 	return used_lines
+
+## Adds one backstitch.
+func add_line(line: Line2D) -> void:
+	tracked_lines.push_back(line)
+	add_child(line)
+
+## Adds multiple backstitches.
+func add_lines(lines: Array[Line2D]) -> void:
+	for line in lines:
+		add_line(line)
+
+## Removes one backstitch.
+func remove_line(line: Line2D) -> void:
+	tracked_lines.erase(line)
+	remove_line(line)
+
+## Removes multiple backstitches.
+func remove_lines(lines: Array[Line2D]) -> void:
+	for line in lines:
+		remove_line(line)
+
+## Starts a preview. Resets variables in preview node.
+func start_preview(color: Color, points: Array[Vector2]) -> void:
+	$PreviewBackstitch.default_color = color
+	$PreviewBackstitch.points = points
+	$PreviewBackstitch.show()
+	
+	$CursorSprite.hide()
+
+## Updates preview with data.
+func update_preview(points: Array[Vector2]) -> void:
+	$PreviewBackstitch.points = points
+
+## Ends preview and hides its node.
+func end_preview() -> void:
+	$PreviewBackstitch.points.clear()
+	$PreviewBackstitch.hide()
+	
+	update_cursor()
+	$CursorSprite.show()
