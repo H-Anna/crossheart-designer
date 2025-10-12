@@ -42,6 +42,10 @@ func _ready() -> void:
 func is_active():
 	return Globals.canvas.active_layer == self
 
+## Returns [constant true] if a command is being built.
+func has_command_in_progress() -> bool:
+	return _cmd != null
+
 ## Returns the cell under the mouse pointer.
 func get_current_cell() -> Vector2i:
 	return get_active_sublayer().get_mouse_position()
@@ -83,8 +87,6 @@ func remove_stitches(thread: XStitchThread) -> Dictionary:
 ## Updates a command that needs continuous data, such as a
 ## [BrushStrokeCommand] or [EraseCommand].
 func update_command() -> void:
-	if !_cmd:
-		return
 	if _cmd is BrushStrokeCommand:
 		update_brush_stroke_command()
 	if _cmd is EraseCommand:
@@ -127,12 +129,7 @@ func create_erase_command(brush_size: int) -> void:
 
 ## Sends a finished command.
 func finalize_command() -> void:
-	if _cmd:
-		if _cmd is AddBackstitchCommand:
-			_cmd.layer.set_preview_backstitch_visible(false)
-			# Command is discarded if line is not rendered
-			# TODO: add this method to all other commands?
-		
+	if has_command_in_progress():
 		SignalBus.command_created.emit(_cmd)
 		_cmd = null
 
