@@ -3,6 +3,7 @@ extends Node
 var app: Node
 var canvas: XStitchCanvas
 var palette_controller: PaletteController
+var xstitch_tool_controller: XStitchToolController
 
 const MIN_BRUSH_SIZE := 1
 const MAX_BRUSH_SIZE := 8
@@ -16,6 +17,9 @@ const BRUSH_CENTER_POINT: Dictionary = {
 	7: Vector2i(3,3),
 	8: Vector2i(3,3),
 }
+
+## The size of a single cell on the tilemap.
+const CELL_SIZE := Vector2i(16, 16)
 
 const DATA_PATH_DELIMITER = "."
 const DATA_EQ_DELIMITER = ":"

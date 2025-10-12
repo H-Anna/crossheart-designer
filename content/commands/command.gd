@@ -11,7 +11,18 @@ func execute() -> void:
 func undo() -> void:
 	push_warning("Override this undo method!")
 
+## Called before the command is discarded and freed from memory.
+## Deletes command data such as references to other nodes.
+func discard() -> void:
+	push_warning("Discarded this command!")
+
 ## Prints a string associated with this command.
 ## Can be used to push debug messages.
 func get_string() -> String:
 	return "Override this method!"
+
+## Checks if the command is valid based on its data.
+## If not, the command manager discards it.
+## True by default.
+func is_valid() -> bool:
+	return true

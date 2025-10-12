@@ -97,6 +97,7 @@ func select_thread(index: int = -1) -> void:
 	palette.selected = index
 	var thread = get_selected_thread()
 	ui_palette_container.select_thread(thread)
+	SignalBus.thread_selected.emit(thread)
 	
 	if index == -1:
 		print_debug("No thread selected.")
@@ -106,7 +107,7 @@ func select_thread(index: int = -1) -> void:
 ## Removes a thread from the palette.
 ## Prompts [member ui_palette_container] to remove its button.
 func remove_thread(thread: XStitchThread) -> void:
-	#select_thread()
+	select_thread()
 	palette.threads.erase(thread)
 	ui_palette_container.remove_thread(thread)
 

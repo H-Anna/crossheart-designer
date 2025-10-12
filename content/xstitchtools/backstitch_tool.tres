@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="XStitchTool" load_steps=3 format=3 uid="uid://dllm0mpnox777"]
+
+[ext_resource type="Texture2D" uid="uid://fwp3ktlqj1sw" path="res://content/xstitchtools/drawing_pencil.png" id="1_aaf4r"]
+[ext_resource type="Script" uid="uid://cryxn80ljfkle" path="res://content/xstitchtools/cross_stitch_tool.gd" id="1_gbahq"]
+
+[resource]
+script = ExtResource("1_gbahq")
+method = 3
+enable_cursor_layer = false
+cursor_image = ExtResource("1_aaf4r")
+cursor_hotspot = Vector2(5, 5)
+metadata/_custom_type_script = "uid://cryxn80ljfkle"

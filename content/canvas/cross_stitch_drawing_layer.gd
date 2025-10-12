@@ -76,11 +76,11 @@ func draw_cell(cell: Vector2i, thread: XStitchThread, tile: Vector2i = CURSOR_TI
 
 ## Erases all tiles that were drawn with the [param thread].
 ## Returns the erased cell positions.
-func _erase_cells_with_thread(thread: XStitchThread) -> Array[Vector2i]:
+func erase_with_thread(thread: XStitchThread) -> Array[Vector2i]:
 	var used_cells : Array[Vector2i]
 	
 	# If the cache contains this thread, get all cells that use it,
-	# and erase them. Then erase the 
+	# and erase them. Then erase the thread from the cache.
 	if _modulated_tile_cache.has(thread):
 		var alt_id = _modulated_tile_cache[thread]
 		used_cells = get_used_cells_by_id(0, CURSOR_TILE, alt_id)
@@ -128,6 +128,8 @@ func get_contiguous_area(start: Vector2i, is_in_boundary: Callable) -> Array[Vec
 		
 	return result
 
+func update_cursor() -> void:
+	pass
 
 func serialize():
 	var data = []

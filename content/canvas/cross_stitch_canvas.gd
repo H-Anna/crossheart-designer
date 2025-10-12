@@ -33,7 +33,7 @@ func _ready() -> void:
 	SignalBus.brush_size_changed.connect(func(size): brush_size = size)
 	
 	SignalBus.layer_selected.connect(select_layer)
-	%XStitchToolController.tool_selected.connect(update_tool)
+	SignalBus.tool_selected.connect(update_tool)
 	
 	# TODO: ability for custom size or resize canvas
 	bounding_rect = $BackgroundLayer.get_used_rect()
@@ -53,7 +53,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	match tool.method:
 		XStitchTool.Method.DRAW_ERASE:
 			if event is InputEventMouseMotion:
-				active_layer.update_command()
+				if active_layer.has_command_in_progress():
+					active_layer.update_command()
+				else:
+					active_layer.update_cursor(event)
 			handle_draw_input(event)
 			handle_erase_input(event)
 			
@@ -62,9 +65,17 @@ func _unhandled_input(event: InputEvent) -> void:
 			
 		XStitchTool.Method.FILL:
 			handle_fill_input(event)
+		
+		XStitchTool.Method.BACKSTITCH:
+			if event is InputEventMouseMotion:
+				if active_layer.has_command_in_progress():
+					active_layer.update_command()
+				else:
+					active_layer.update_cursor(event)
+			handle_backstitch_draw_input(event)
+			handle_backstitch_erase_input(event)
 		_:
 			pass
-	pass
 
 ## Handles brush stroke input.
 func handle_draw_input(event: InputEvent) -> void:
@@ -105,6 +116,23 @@ func handle_fill_input(event: InputEvent) -> void:
 	if event.is_action_pressed("draw"):
 		active_layer.create_fill_command(get_current_thread())
 		pass
+
+## Handles backstitch draw input.
+func handle_backstitch_draw_input(event: InputEvent) -> void:
+	if event.is_action_pressed("draw"):
+		active_layer.create_backstitch_draw_command(get_current_thread())
+	if event.is_action_released("draw"):
+		active_layer.finalize_command()
+
+## Handles backstitch erase input.
+func handle_backstitch_erase_input(event: InputEvent) -> void:
+	if event.is_action_pressed("erase"):
+		active_layer.create_backstitch_erase_command()
+		active_layer.update_command()
+	if event.is_action_released("erase"):
+		active_layer.finalize_command()
+	if event.is_action_pressed("ui_cancel"):
+		active_layer.discard_command()
 
 ## Returns true or false depending on if the canvas accepts input.
 ## The canvas only accepts input if it receives mouse focus and if a thread

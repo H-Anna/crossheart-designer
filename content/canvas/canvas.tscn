@@ -1,11 +1,54 @@
-[gd_scene load_steps=7 format=4 uid="uid://dj1tyn5td2irm"]
+[gd_scene load_steps=19 format=4 uid="uid://dj1tyn5td2irm"]
 
 [ext_resource type="TileSet" uid="uid://bpejnnnkx57tt" path="res://content/canvas/background_tileset.tres" id="1_4o8a3"]
 [ext_resource type="Script" uid="uid://35w8lt5sew6y" path="res://content/canvas/cross_stitch_canvas.gd" id="1_ncd2v"]
 [ext_resource type="Script" uid="uid://ii0oylecxeb5" path="res://content/camera.gd" id="2_o3cl0"]
-[ext_resource type="PackedScene" uid="uid://nxbfjf30u43n" path="res://content/canvas/cursor_layer.tscn" id="4_e8dy0"]
 [ext_resource type="PackedScene" uid="uid://mqe0068ic2xw" path="res://content/canvas/master_layer.tscn" id="4_gu1yr"]
+[ext_resource type="Script" uid="uid://dq7xjxa5jowqr" path="res://content/canvas/cursor_layer.gd" id="5_d7ey4"]
+[ext_resource type="Script" uid="uid://d2a0te282sf4m" path="res://content/canvas/cross_stitch_drawing_layer.gd" id="6_t8dkx"]
 [ext_resource type="Script" uid="uid://bt73cm1myly62" path="res://content/canvas/grid_elements.gd" id="6_xs5af"]
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_78hhg"]
+tile_data = PackedInt32Array(0, 0, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_kte4v"]
+tile_data = PackedInt32Array(0, 0, 0, 65536, 0, 0, 1, 0, 0, 65537, 0, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_qqf6s"]
+tile_data = PackedInt32Array(65536, 0, 0, 1, 0, 0, 65537, 0, 0, 131073, 0, 0, 65538, 0, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_w6uqa"]
+tile_data = PackedInt32Array(0, 0, 0, 65536, 0, 0, 131072, 0, 0, 1, 0, 0, 65537, 0, 0, 131073, 0, 0, 2, 0, 0, 65538, 0, 0, 131074, 0, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_vqjqa"]
+tile_data = PackedInt32Array(131072, 0, 0, 65537, 0, 0, 131073, 0, 0, 196609, 0, 0, 2, 0, 0, 65538, 0, 0, 131074, 0, 0, 196610, 0, 0, 262146, 0, 0, 65539, 0, 0, 131075, 0, 0, 196611, 0, 0, 131076, 0, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_1hvwv"]
+tile_data = PackedInt32Array(65536, 0, 0, 131072, 0, 0, 196608, 0, 0, 1, 0, 0, 65537, 0, 0, 131073, 0, 0, 196609, 0, 0, 262145, 0, 0, 2, 0, 0, 65538, 0, 0, 131074, 0, 0, 196610, 0, 0, 262146, 0, 0, 3, 0, 0, 65539, 0, 0, 131075, 0, 0, 196611, 0, 0, 262147, 0, 0, 65540, 0, 0, 131076, 0, 0, 196612, 0, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_y1nw1"]
+tile_data = PackedInt32Array(131072, 0, 0, 196608, 0, 0, 262144, 0, 0, 65537, 0, 0, 131073, 0, 0, 196609, 0, 0, 262145, 0, 0, 327681, 0, 0, 2, 0, 0, 65538, 0, 0, 131074, 0, 0, 196610, 0, 0, 262146, 0, 0, 327682, 0, 0, 393218, 0, 0, 3, 0, 0, 65539, 0, 0, 131075, 0, 0, 196611, 0, 0, 262147, 0, 0, 327683, 0, 0, 393219, 0, 0, 4, 0, 0, 65540, 0, 0, 131076, 0, 0, 196612, 0, 0, 262148, 0, 0, 327684, 0, 0, 393220, 0, 0, 65541, 0, 0, 131077, 0, 0, 196613, 0, 0, 262149, 0, 0, 327685, 0, 0, 131078, 0, 0, 196614, 0, 0, 262150, 0, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_7w1ms"]
+tile_data = PackedInt32Array(131072, 0, 0, 196608, 0, 0, 262144, 0, 0, 327680, 0, 0, 393216, 0, 0, 65537, 0, 0, 131073, 0, 0, 196609, 0, 0, 262145, 0, 0, 327681, 0, 0, 393217, 0, 0, 458753, 0, 0, 2, 0, 0, 65538, 0, 0, 131074, 0, 0, 196610, 0, 0, 262146, 0, 0, 327682, 0, 0, 393218, 0, 0, 458754, 0, 0, 524290, 0, 0, 3, 0, 0, 65539, 0, 0, 131075, 0, 0, 196611, 0, 0, 262147, 0, 0, 327683, 0, 0, 393219, 0, 0, 458755, 0, 0, 524291, 0, 0, 4, 0, 0, 65540, 0, 0, 131076, 0, 0, 196612, 0, 0, 262148, 0, 0, 327684, 0, 0, 393220, 0, 0, 458756, 0, 0, 524292, 0, 0, 5, 0, 0, 65541, 0, 0, 131077, 0, 0, 196613, 0, 0, 262149, 0, 0, 327685, 0, 0, 393221, 0, 0, 458757, 0, 0, 524293, 0, 0, 6, 0, 0, 65542, 0, 0, 131078, 0, 0, 196614, 0, 0, 262150, 0, 0, 327686, 0, 0, 393222, 0, 0, 458758, 0, 0, 524294, 0, 0, 65543, 0, 0, 131079, 0, 0, 196615, 0, 0, 262151, 0, 0, 327687, 0, 0, 393223, 0, 0, 458759, 0, 0, 131080, 0, 0, 196616, 0, 0, 262152, 0, 0, 327688, 0, 0, 393224, 0, 0)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0wrci"]
+load_path = "res://.godot/imported/tile16.png-0bf6b6ffe1a045bdb9589cfbee448925.ctex"
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uash4"]
+texture = SubResource("CompressedTexture2D_0wrci")
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_d62i2"]
+sources/0 = SubResource("TileSetAtlasSource_uash4")
+pattern_0 = SubResource("TileMapPattern_78hhg")
+pattern_1 = SubResource("TileMapPattern_kte4v")
+pattern_2 = SubResource("TileMapPattern_qqf6s")
+pattern_3 = SubResource("TileMapPattern_w6uqa")
+pattern_4 = SubResource("TileMapPattern_vqjqa")
+pattern_5 = SubResource("TileMapPattern_1hvwv")
+pattern_6 = SubResource("TileMapPattern_y1nw1")
+pattern_7 = SubResource("TileMapPattern_7w1ms")
 
 [node name="Canvas" type="Node2D"]
 script = ExtResource("1_ncd2v")
@@ -25,7 +68,15 @@ navigation_enabled = false
 
 [node name="LayersContainer" type="Node2D" parent="."]
 
-[node name="CursorLayer" parent="." instance=ExtResource("4_e8dy0")]
+[node name="CursorLayer" type="Node2D" parent="."]
+script = ExtResource("5_d7ey4")
+
+[node name="FullStitchLayer" type="TileMapLayer" parent="CursorLayer"]
+unique_name_in_owner = true
+tile_set = SubResource("TileSet_d62i2")
+collision_enabled = false
+navigation_enabled = false
+script = ExtResource("6_t8dkx")
 
 [node name="GridElements" type="Node2D" parent="." node_paths=PackedStringArray("markers")]
 script = ExtResource("6_xs5af")

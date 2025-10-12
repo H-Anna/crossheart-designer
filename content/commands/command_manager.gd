@@ -13,6 +13,7 @@ var current_command_idx : int = -1
 ## Sets up signal connection that lets commands be created anywhere in code.
 func _ready() -> void:
 	SignalBus.command_created.connect(execute_command)
+	SignalBus.command_discarded.connect(discard_command)
 
 ## Listens for [kbd]ui_undo[/kbd] and [kbd]ui_redo[/kbd] input events.
 func _unhandled_input(event: InputEvent) -> void:
@@ -23,6 +24,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 ## Executes the incoming command and saves it to the command history.
 func execute_command(cmd: Command) -> void:
+	if !cmd.is_valid():
+		return
+	
 	if current_command_idx < command_history.size() - 1:
 		command_history.resize(current_command_idx + 1)
 	cmd.execute()
@@ -44,6 +48,12 @@ func redo() -> void:
 		command_history[current_command_idx].execute();
 	else:
 		print("Nothing to redo.")
+
+## Runs [method Command.discard]. Ideally this is the last place the command is
+## referenced, meaning that once the method is executed, no references remain,
+## and Godot frees the resource.
+func discard_command(cmd: Command) -> void:
+	cmd.discard()
 
 ## Clears the command history.
 func clear_history() -> void:

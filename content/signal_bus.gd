@@ -12,6 +12,9 @@ signal canvas_focus_changed(focused: bool)
 signal toast_notification(message: String)
 signal thread_button_clicked(thread: XStitchThread, button: ThreadButton, container: ThreadButtonContainer)
 
+## Thread signals
+signal thread_selected(thread: XStitchThread)
+
 ## Tool signals
 signal brush_size_changed(size: int)
 
@@ -25,3 +28,7 @@ signal layer_selected(layer: XStitchMasterLayer)
 
 ## Command signals
 signal command_created(command: Command)
+signal command_discarded(command: Command)
+
+## Emitted when an [XStitchTool] is selected.
+signal tool_selected(tool: XStitchTool)

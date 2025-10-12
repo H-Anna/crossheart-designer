@@ -6,7 +6,7 @@ extends Resource
 ## cursor looks.
 
 ## Helps identify the purpose of the selected tool.
-enum Method { DRAW_ERASE, COLOR_PICK, FILL }
+enum Method { DRAW_ERASE, COLOR_PICK, FILL, BACKSTITCH }
 
 ## The method this tool uses.
 ## Classes that interact with tools can query this property
