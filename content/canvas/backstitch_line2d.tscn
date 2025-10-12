@@ -1,10 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bbkg7of2awyhm"]
-
-[ext_resource type="Script" uid="uid://bbhh3qig3xah7" path="res://content/canvas/backstitch_line_2d.gd" id="1_iuak3"]
+[gd_scene format=3 uid="uid://bbkg7of2awyhm"]
 
 [node name="Line2D" type="Line2D"]
 width = 5.0
 joint_mode = 2
 begin_cap_mode = 2
 end_cap_mode = 2
-script = ExtResource("1_iuak3")

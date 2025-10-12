@@ -42,6 +42,7 @@ func undo() -> void:
 func get_string() -> String:
 	return "Override this method!"
 
+## This command is only valid if the backstitch has at least 2 points that are not the same.
 func is_valid() -> bool:
 	if points.size() <= 1:
 		return false

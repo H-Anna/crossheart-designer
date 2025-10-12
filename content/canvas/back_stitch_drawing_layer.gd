@@ -3,6 +3,7 @@ extends Node2D
 
 ## A drawing layer meant to hold [Line2D] data, to replicate a backstitch layer.
 ## Maintains a 'preview line' for user feedback.
+## @experimental: This class needs refactoring in the method names.
 
 enum CursorSnap { GRID = 0, DENSE = 1, FREEFORM = 2}
 
@@ -18,6 +19,9 @@ enum CursorSnap { GRID = 0, DENSE = 1, FREEFORM = 2}
 
 ## Dictionary with [XStitchThread] keys and arrays of [Line2D] for values.
 var _modulated_stitches_cache: Dictionary[XStitchThread, Array] = {}
+
+## Array of backstitch [Line2D]s the layer keeps track of.
+var tracked_lines: Array[Line2D]
 
 ## Returns the current mouse position.
 func get_mouse_position() -> Vector2:
@@ -37,17 +41,7 @@ func get_mouse_position() -> Vector2:
 func get_line2ds_near_point(point: Vector2) -> Array[Line2D]:
 	var result : Array[Line2D] = []
 	
-	var lines = get_children()
-	lines.erase($PreviewBackstitch)
-	for line in lines:
-		# Heuristics: a point MAY be close enough to a line if it is
-		# within an enclosing rectangle.
-		var backstitch = line as BackstitchLine2D
-		
-		var enclosure = backstitch.enclosure.grow(maximum_erase_distance)
-		if !enclosure.has_point(point):
-			continue
-		
+	for line in tracked_lines:
 		# Take the closest point to the cursor position along the Line2D.
 		var closest_point = Geometry2D.get_closest_point_to_segment(point, line.points[0], line.points[-1])
 		
@@ -92,6 +86,7 @@ func add_stitches(thread: XStitchThread, context: Array):
 	for line in context:
 		add_child(line)
 		_modulated_stitches_cache[thread].push_back(line)
+		tracked_lines.push_back(line)
 
 ### Erases backstitches made with the given [param thread].
 func erase_with_thread(thread: XStitchThread) -> Array:
@@ -104,6 +99,7 @@ func erase_with_thread(thread: XStitchThread) -> Array:
 		
 		for line in used_lines:
 			remove_child(line)
+			tracked_lines.erase(line)
 			
 		_modulated_stitches_cache.erase(thread)
 	
