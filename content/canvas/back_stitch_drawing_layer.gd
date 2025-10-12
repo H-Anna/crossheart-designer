@@ -12,6 +12,8 @@ enum CursorSnap { GRID = 0, DENSE = 1, FREEFORM = 2}
 ## The color of this layer when the backstitch tool is not in use.
 @export var unfocused_modulate: Color
 
+## The maximum distance the cursor can be from a stitch,
+## while erasing backstitches.
 @export var maximum_erase_distance: float = 2.0
 
 ## Dictionary with [XStitchThread] keys and arrays of [Line2D] for values.
@@ -31,15 +33,18 @@ func get_mouse_position() -> Vector2:
 			print_debug("ERROR: Value ", snap, " does not exist in enum CursorSnap")
 			return get_global_mouse_position()
 
+## Returns an array of [Line2D] near a specific point.
 func get_line2ds_near_point(point: Vector2) -> Array[Line2D]:
 	var result : Array[Line2D] = []
 	
 	var lines = get_children()
 	lines.erase($PreviewBackstitch)
 	for line in lines:
-		# Heuristics: a point MAY be close enough to a line if it is within an enclosing rectangle.
-		# TODO: create script for line and move it there
-		var enclosure = get_enclosure(line)
+		# Heuristics: a point MAY be close enough to a line if it is
+		# within an enclosing rectangle.
+		var backstitch = line as BackstitchLine2D
+		
+		var enclosure = backstitch.enclosure.grow(maximum_erase_distance)
 		if !enclosure.has_point(point):
 			continue
 		
@@ -103,13 +108,3 @@ func erase_with_thread(thread: XStitchThread) -> Array:
 		_modulated_stitches_cache.erase(thread)
 	
 	return used_lines
-
-## Returns an enclosing rectangle for a [param line].
-func get_enclosure(line: Line2D) -> Rect2:
-	var min_x = minf(line.points[0].x, line.points[-1].x)
-	var min_y = minf(line.points[0].y, line.points[-1].y)
-	var max_x = maxf(line.points[0].x, line.points[-1].x)
-	var max_y = maxf(line.points[0].y, line.points[-1].y)
-	var width = max_x - min_x
-	var height = max_y - min_y
-	return Rect2(min_x, min_y, width, height).grow(maximum_erase_distance)

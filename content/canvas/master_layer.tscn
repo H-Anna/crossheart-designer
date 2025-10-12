@@ -18,8 +18,12 @@ line_scene = ExtResource("5_qwayn")
 unfocused_modulate = Color(1, 1, 1, 0.392157)
 maximum_erase_distance = 4.0
 
-[node name="PreviewBackstitch" parent="BackStitchLayer" instance=ExtResource("5_qwayn")]
+[node name="PreviewBackstitch" type="Line2D" parent="BackStitchLayer"]
 visible = false
+width = 5.0
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
 
 [node name="FullStitchLayer" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
