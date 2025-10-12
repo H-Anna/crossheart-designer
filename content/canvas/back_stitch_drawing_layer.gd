@@ -12,6 +12,8 @@ enum CursorSnap { GRID = 0, DENSE = 1, FREEFORM = 2}
 ## The color of this layer when the backstitch tool is not in use.
 @export var unfocused_modulate: Color
 
+@export var maximum_erase_distance: float = 2.0
+
 ## Dictionary with [XStitchThread] keys and arrays of [Line2D] for values.
 var _modulated_stitches_cache: Dictionary[XStitchThread, Array] = {}
 
@@ -28,6 +30,29 @@ func get_mouse_position() -> Vector2:
 		_:
 			print_debug("ERROR: Value ", snap, " does not exist in enum CursorSnap")
 			return get_global_mouse_position()
+
+func get_line2ds_near_point(point: Vector2) -> Array[Line2D]:
+	var result : Array[Line2D] = []
+	
+	var lines = get_children()
+	lines.erase($PreviewBackstitch)
+	for line in lines:
+		# Heuristics: a point MAY be close enough to a line if it is within an enclosing rectangle.
+		# TODO: create script for line and move it there
+		var enclosure = get_enclosure(line)
+		if !enclosure.has_point(point):
+			continue
+		
+		# Take the closest point to the cursor position along the Line2D.
+		var closest_point = Geometry2D.get_closest_point_to_segment(point, line.points[0], line.points[-1])
+		
+		# If the distance between two points is closer than some arbitrary number,
+		# it is "close enough".
+		var distance = point.distance_to(closest_point)
+		if distance <= maximum_erase_distance:
+			result.push_back(line)
+	
+	return result
 
 ## Sets the preview line visibility.
 func set_preview_backstitch_visible(show: bool) -> void:
@@ -78,3 +103,13 @@ func erase_with_thread(thread: XStitchThread) -> Array:
 		_modulated_stitches_cache.erase(thread)
 	
 	return used_lines
+
+## Returns an enclosing rectangle for a [param line].
+func get_enclosure(line: Line2D) -> Rect2:
+	var min_x = minf(line.points[0].x, line.points[-1].x)
+	var min_y = minf(line.points[0].y, line.points[-1].y)
+	var max_x = maxf(line.points[0].x, line.points[-1].x)
+	var max_y = maxf(line.points[0].y, line.points[-1].y)
+	var width = max_x - min_x
+	var height = max_y - min_y
+	return Rect2(min_x, min_y, width, height).grow(maximum_erase_distance)

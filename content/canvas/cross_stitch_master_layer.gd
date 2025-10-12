@@ -91,6 +91,8 @@ func update_command() -> void:
 		update_erase_command()
 	if _cmd is AddBackstitchCommand:
 		update_backstitch_draw_command()
+	if _cmd is EraseBackstitchCommand:
+		update_backstitch_erase_command()
 
 ## Updates a [BrushStrokeCommand] with cell data.
 func update_brush_stroke_command() -> void:
@@ -170,6 +172,8 @@ func create_fill_command(thread: XStitchThread) -> void:
 	finalize_command()
 	pass
 
+# TODO: maybe these updates should happen in a method 
+# within the cmd?
 ## Creates an [AddBackstitchCommand].
 func create_backstitch_draw_command(thread: XStitchThread) -> void:
 	_cmd = AddBackstitchCommand.new()
@@ -189,6 +193,19 @@ func update_backstitch_draw_command() -> void:
 		_cmd.points.pop_back()
 	_cmd.points.push_back(point)
 	_cmd.layer.set_preview_backstitch_points(_cmd.points)
+
+## Creates an [EraseBackstitchCommand].
+func create_backstitch_erase_command() -> void:
+	_cmd = EraseBackstitchCommand.new()
+	_cmd.layer = get_active_sublayer()
+
+## Updates an [EraseBackstitchCommand] using mouse pointer data.
+func update_backstitch_erase_command() -> void:
+	var point = get_global_mouse_position()
+	var lines = _cmd.layer.get_line2ds_near_point(point)
+	for line in lines:
+		_cmd.lines.push_back(line)
+		_cmd.layer.remove_child(line)
 
 func serialize():
 	var data = {}
