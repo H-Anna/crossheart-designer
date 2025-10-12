@@ -11,7 +11,7 @@ var lines : Array[Line2D]
 
 ## Whether the command has already had a preview.
 ## Prevents executing on initial creation, as this is handled by separate logic.
-var preview : bool
+var preview : bool = true
 
 ## Used to perform a series of operations associated with the command.
 func execute() -> void:
