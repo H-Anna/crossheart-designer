@@ -131,6 +131,8 @@ func handle_backstitch_erase_input(event: InputEvent) -> void:
 		active_layer.update_command()
 	if event.is_action_released("erase"):
 		active_layer.finalize_command()
+	if event.is_action_pressed("ui_cancel"):
+		active_layer.discard_command()
 
 ## Returns true or false depending on if the canvas accepts input.
 ## The canvas only accepts input if it receives mouse focus and if a thread

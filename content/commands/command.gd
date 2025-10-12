@@ -11,6 +11,9 @@ func execute() -> void:
 func undo() -> void:
 	push_warning("Override this undo method!")
 
+func discard() -> void:
+	push_warning("Discarded this command!")
+
 ## Prints a string associated with this command.
 ## Can be used to push debug messages.
 func get_string() -> String:

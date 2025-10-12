@@ -38,6 +38,14 @@ func execute() -> void:
 func undo() -> void:
 	layer.remove_line(line)
 
+## Drops all references and clears all values.
+func discard() -> void:
+	layer.end_preview()
+	
+	points.clear()
+	thread = null
+	layer = null
+
 ## Prints a string associated with this command.
 ## Can be used to push debug messages.
 func get_string() -> String:

@@ -136,6 +136,11 @@ func finalize_command() -> void:
 		SignalBus.command_created.emit(_cmd)
 		_cmd = null
 
+func discard_command() -> void:
+	if has_command_in_progress():
+		SignalBus.command_discarded.emit(_cmd)
+		_cmd = null
+
 ## Returns true if the given cell position is within the bounding rectangle
 ## of the canvas.
 func cell_is_in_canvas(p: Vector2i) -> bool:
