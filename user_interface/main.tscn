@@ -148,6 +148,7 @@ layout_mode = 2
 [node name="MenuBar" type="MenuBar" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+flat = true
 
 [node name="File" type="PopupMenu" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/MenuBar"]
 item_count = 4
@@ -303,6 +304,7 @@ text = "Mode:"
 [node name="OptionButton" type="OptionButton" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/DrawEraseToolSettings/ModeSetting"]
 layout_mode = 2
 tooltip_text = "Mode: the type of stitch currently being drawn."
+disabled = true
 selected = 0
 item_count = 6
 popup/item_0/text = "Full stitch"
@@ -356,6 +358,7 @@ text = "Mode:"
 [node name="BackstitchModeOptionButton" type="OptionButton" parent="UserInterface/VBoxContainer/PanelContainer/VBoxContainer/ToolBar/BackstitchToolSettings/ModeSetting"]
 layout_mode = 2
 tooltip_text = "Mode: the type of stitch currently being drawn."
+disabled = true
 selected = 0
 item_count = 3
 popup/item_0/text = "Single line"
