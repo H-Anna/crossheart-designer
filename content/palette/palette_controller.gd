@@ -126,3 +126,12 @@ func swap_thread(old_thread: XStitchThread, new_thread: XStitchThread) -> void:
 	
 	remove_thread(old_thread)
 	print_debug("Swapped %s with %s" % [old_thread.id, new_thread.id])
+
+
+## YAML serialization.
+func serialize() -> Dictionary:
+	return palette.serialize()
+
+## YAML deserialization.
+func deserialize(data: Variant) -> void:
+	palette = PaletteModel.deserialize(data)

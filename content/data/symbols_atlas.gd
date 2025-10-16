@@ -22,10 +22,14 @@ func load_files() -> void:
 	for file in ResourceLoader.list_directory(PATH):
 		if !file.ends_with(SUFFIX):
 			continue;
-		var s = XStitchSymbol.new();
-		s.id = file.trim_suffix(SUFFIX)
-		s.symbol_name = file.trim_suffix(SUFFIX)
-		s.data = load(PATH + file)
+		
+		var id = file.trim_suffix(SUFFIX)
+		var symbol_name = file.trim_suffix(SUFFIX)
+		var load_path = PATH + file
+		var s = XStitchSymbol.new(id, symbol_name, load_path);
+		#s.id = file.trim_suffix(SUFFIX)
+		#s.symbol_name = file.trim_suffix(SUFFIX)
+		#s.data = load(PATH + file)
 		symbols.get_or_add(s.get_identifying_name(), s)
 	return
 
