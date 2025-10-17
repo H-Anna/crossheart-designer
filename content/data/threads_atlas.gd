@@ -25,7 +25,10 @@ func _load_data():
 	# Load color information
 	for entry in content["colors"]:
 		var brand = str(content["brand"])
+		
+		#TODO: this casting will fail if there is ever a non-digit character in this value...
 		var id: String = str(int(entry["floss"]))
+		
 		var color_name = str(entry["name"])
 		var r = int(entry["r"]) / 255.0
 		var g = int(entry["g"]) / 255.0

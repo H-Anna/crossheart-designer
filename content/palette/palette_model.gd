@@ -31,12 +31,9 @@ static func deserialize(data: Variant):
 	if !dict.has("threads"):
 		return YAMLResult.error("Missing threads field")
 	
+	#TODO: wait for engine and addon update to remove this workaround...
 	var array: Array = dict.get("threads")
-	
 	var p_threads: Array[XStitchThread]
 	p_threads.append_array(array)
-	#for elem in array:
-		#var thread = elem as XStitchThread
-		#p_threads.push_back(thread)
 	
 	return PaletteModel.new(p_threads)

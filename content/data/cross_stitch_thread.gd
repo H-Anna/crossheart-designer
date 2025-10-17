@@ -70,7 +70,7 @@ static func deserialize(data: Variant):
 		return YAMLResult.error("Missing color field")
 	
 	var p_brand: String = dict.get("brand")
-	var p_id: String = str(dict.get("id"))
+	var p_id: String = str(dict.get("id")) #TODO: remove this workaround once addon gets updated
 	var p_color_name: String = dict.get("color_name")
 	var p_color: Color = dict.get("color")
 	
