@@ -618,7 +618,7 @@ size = Vector2i(889, 500)
 ok_button_text = "Open"
 file_mode = 0
 access = 2
-filters = PackedStringArray("*.json;JSON files")
+filters = PackedStringArray("*.yaml;YAML files")
 
 [node name="SchemeParser" type="Node" parent="."]
 script = ExtResource("26_g38wn")

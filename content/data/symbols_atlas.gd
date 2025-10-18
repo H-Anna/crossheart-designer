@@ -26,10 +26,7 @@ func load_files() -> void:
 		var id = file.trim_suffix(SUFFIX)
 		var symbol_name = file.trim_suffix(SUFFIX)
 		var load_path = PATH + file
-		var s = XStitchSymbol.new(id, symbol_name, load_path);
-		#s.id = file.trim_suffix(SUFFIX)
-		#s.symbol_name = file.trim_suffix(SUFFIX)
-		#s.data = load(PATH + file)
+		var s = XStitchSymbol.new(id, symbol_name, load_path)
 		symbols.get_or_add(s.get_identifying_name(), s)
 	return
 

@@ -14,6 +14,9 @@ extends Resource
 ## The SVG image of the symbol.
 @export var data : CompressedTexture2D
 
+## The path to the SVG symbol on disk.
+@export var load_path : String
+
 ## Whether this symbol is already assigned to an [XStitchThread].
 var assigned := false
 
@@ -21,6 +24,7 @@ var assigned := false
 func _init(p_id := "", p_symbol_name := "", p_load_path := "") -> void:
 	id = p_id
 	symbol_name = p_symbol_name
+	load_path = p_load_path
 	data = load(p_load_path)
 
 ## Returns the full unique name for this symbol. (Currently only returns the [member id].)
@@ -32,7 +36,7 @@ func serialize() -> Dictionary:
 	return {
 		"id": id,
 		"symbol_name": symbol_name,
-		"load_path": data.load_path
+		"load_path": load_path
 	}
 
 ## YAML deserialization.
