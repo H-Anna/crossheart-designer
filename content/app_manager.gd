@@ -3,7 +3,7 @@ extends Node
 ## Manages file saving and loading.
 
 ## The path to the schema in use.
-const _schema_path := "res://schemas/schema.yaml"
+const _schema_path := "res://content/serialization/schema.yaml"
 
 ## Cached file path for quick saving.
 var _cached_filepath := ""

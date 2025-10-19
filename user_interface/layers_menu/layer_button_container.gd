@@ -40,6 +40,7 @@ func remove_layer(layer: XStitchMasterLayer) -> void:
 	for btn in _buttons:
 		if btn.data == layer:
 			btn.queue_free()
+	_buttons.clear()
 
 ## Deletes all of its buttons and creates new ones.
 func _change_layers() -> void:
