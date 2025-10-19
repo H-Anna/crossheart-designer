@@ -3,6 +3,35 @@ extends Resource
 
 ## Represents a cross stitch thread with a color and an assigned symbol.
 
+#region Serialization schema
+## Serialization schema.
+const _schema: String = """
+type: object
+properties:
+	brand:
+		type: string
+		minimum: 2
+	id:
+		type: string
+		minimum: 2
+	global_id:
+		type: string
+	color_name:
+		type: string
+	color:
+		type: object
+		x-yaml-tag: Color
+	symbol_id:
+		type: string
+		minimum: 2
+required:
+- brand
+- id
+- color_name
+- color
+"""
+#endregion
+
 ## The thread brand.
 @export var brand : String
 
@@ -41,6 +70,7 @@ func set_symbol(value: XStitchSymbol) -> void:
 		value.assigned = true
 	symbol = value
 
+#region Serialization
 ## YAML serialization.
 func serialize() -> Dictionary:
 	return {
@@ -54,6 +84,27 @@ func serialize() -> Dictionary:
 
 ## YAML deserialization.
 static func deserialize(data: Variant):
+	var schema = YAML.load_schema_from_string(_schema)
+	if !schema:
+		push_error("Failed to parse schema!")
+		return
+	
+	#var string_data = data as String
+	var result = YAML.parse_and_validate(data, schema)
+	
+	if result.has_error():
+		push_error("Parse error: %s" % result.get_error())
+		return
+	
+	if result.has_validation_errors():
+		push_error(result.get_validation_summary())
+		return
+	
+	var thread_data = result.get_data()
+	print(thread_data.color_name)
+	return
+	
+	
 	if typeof(data) != TYPE_DICTIONARY:
 		return YAMLResult.error("Deserializing MyCustomClass expects Dictionary, received %s" % [type_string(typeof(data))])
 	
@@ -84,6 +135,7 @@ static func deserialize(data: Variant):
 		p_color,
 		p_symbol
 	)
+#endregion
 
 func _to_string() -> String:
 	return get_identifying_name()

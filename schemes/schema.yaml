@@ -1,0 +1,9 @@
+type: object
+properties:
+    palette:
+        type: object
+    canvas:
+        type: object
+required:
+- palette
+- canvas
