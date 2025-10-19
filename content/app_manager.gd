@@ -7,12 +7,8 @@ var _cached_filepath := ""
 
 ## Registers custom classes with YAML addon.
 func _enter_tree() -> void:
-	#YAML.register_class(XStitchSymbol)
 	YAML.register_class(XStitchThread)
 	YAML.register_class(PaletteModel)
-	#YAML.register_class(XStitchMasterLayer)
-	#YAML.register_class(XStitchDrawingLayer)
-	#YAML.register_class(BackStitchDrawingLayer)
 
 ## Adds self to globals. Connects signals.
 func _ready() -> void:
@@ -20,14 +16,6 @@ func _ready() -> void:
 	SignalBus.save_requested.connect(_save_to_file)
 	SignalBus.load_requested.connect(_load_from_file)
 
-## Unregisters custom classes with YAML.
-func _exit_tree() -> void:
-	#YAML.unregister_class(XStitchSymbol)
-	YAML.unregister_class(XStitchThread)
-	YAML.unregister_class(PaletteModel)
-	#YAML.unregister_class(XStitchMasterLayer)
-	#YAML.unregister_class(XStitchDrawingLayer)
-	#YAML.unregister_class(BackStitchDrawingLayer)
 
 func has_cached_filepath():
 	return !_cached_filepath.is_empty()
