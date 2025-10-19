@@ -1,4 +1,4 @@
-prep-job:
+prep-linux:
     stage: .pre
     tags:
         - linux
@@ -8,16 +8,41 @@ prep-job:
         - chmod +x script.sh
         - ./script.sh
 
-build-job:
+prep-windows:
+    stage: .pre
+    tags:
+        - windows
+        - godot
+    script:
+        - echo $env:path
+        - C:\Users\gitlab\Downloads\wget https://gitlab.home.petras/Sparrow/godotenv/-/raw/master/winscript.ps1 --no-check-certificate
+        - ./winscript.ps1
+
+build-linux:
     stage: build
     tags:
         - linux
         - godot
     script:
         - mkdir builds
+        - /home/gitlab-runner/Godot_v4.4.1-stable_linux.x86_64 -v --headless --export-debug "Linux"
+    artifacts:
+        paths:
+            - builds/
+        when: on_success
+        access: all
+        expire_in: never
+
+build-windows:
+    stage: build
+    tags:
+        - windows
+        - godot
+    script:
+        - mkdir builds
         - pwd
         - ls
-        - /home/gitlab-runner/Godot_v4.4.1-stable_linux.x86_64 -v --headless --export-debug "Linux"
+        - C:/Users/gitlab/Godot_v4.4.1-stable_win64_console.exe -v --headless --export-debug "Windows Desktop"
     artifacts:
         paths:
             - builds/
