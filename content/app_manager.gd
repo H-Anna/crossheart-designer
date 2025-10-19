@@ -38,11 +38,13 @@ func _load_from_file(filename: String):
 	var schema = YAML.load_schema_from_file(_schema_path)
 	if !schema:
 		push_error("Failed to parse schema!")
+		SignalBus.toast_notification.emit("Failed to parse save schema!")
 		return
 	
 	var result = YAML.load_file_and_validate(filename, schema)
 	if result.has_error():
 		push_error(result.get_error())
+		SignalBus.toast_notification.emit("Failed to load save file!")
 		return
 	
 	var data = result.get_data()
