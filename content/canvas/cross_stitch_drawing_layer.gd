@@ -135,36 +135,40 @@ func update_cursor() -> void:
 	pass
 
 ## YAML serialization.
-func serialize() -> Dictionary:
-	var data = {}
+func serialize() -> Array:
+	var data = []
 	for thread in _modulated_tile_cache:
 		var alt_id = _modulated_tile_cache[thread]
-		var key = thread.get_identifying_name()
-		var value = {
-			"tile": CURSOR_TILE,
-			"coordinates": get_used_cells_by_id(0, CURSOR_TILE, alt_id)
-		}
-		data.get_or_add(key, value)
+		var used_cells = get_used_cells_by_id(0, CURSOR_TILE, alt_id)
+		
+		if !used_cells.is_empty():
+			var obj = {
+				"thread": thread.get_identifying_name(),
+				"tile": CURSOR_TILE,
+				"coordinates": get_used_cells_by_id(0, CURSOR_TILE, alt_id)
+			}
+			data.push_back(obj)
+	
 	return data
-		#var threads_coords_dict = {}
-		#var alt_id = _modulated_tile_cache[thread]
-		#threads_coords_dict.get_or_add("thread_id", thread.get_identifying_name())
-		#threads_coords_dict.get_or_add("tile", CURSOR_TILE)
-		#threads_coords_dict.get_or_add("coordinates", get_used_cells_by_id(0, CURSOR_TILE, alt_id))
-		#data.append(threads_coords_dict)
-	#return data
 
 ## YAML deserialization.
-func deserialize(data: Dictionary):
+func deserialize(data: Array) -> void:
 	clear()
 	_modulated_tile_cache.clear()
 	
-	for thread_id in data:
-		var value: Dictionary = data.get(thread_id)
-		
-		var tile: Vector2i = value.get("tile")
-		var coordinates: Array = value.get("coordinates")
-		var thread = ThreadsAtlas.get_thread_by_global_id(thread_id)
-		
+	for elem in data:
+		var thread = ThreadsAtlas.get_thread_by_global_id(elem.get("thread"))
+		var tile: Vector2i = elem.get("tile")
+		var coordinates: Array = elem.get("coordinates")
 		for cell in coordinates:
 			draw_cell(cell, thread, tile)
+	
+	#for thread_id in data:
+		#var value: Dictionary = data.get(thread_id)
+		#
+		##var tile: Vector2i = value.get("tile")
+		##var coordinates: Array = value.get("coordinates")
+		#var thread = ThreadsAtlas.get_thread_by_global_id(thread_id)
+		#
+		#for cell in coordinates:
+			#draw_cell(cell, thread, tile)

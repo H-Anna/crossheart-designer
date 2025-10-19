@@ -149,29 +149,39 @@ func end_preview() -> void:
 
 
 ## YAML serialization.
-func serialize() -> Dictionary:
-	var data := {}
-	
+func serialize() -> Array:
+	var array := []
 	for thread in _modulated_stitches_cache:
-		var key = thread.get_identifying_name()
-		var value = []
+		var lines = []
 		for elem in _modulated_stitches_cache.get(thread):
 			var line = elem as Line2D
-			value.push_back(line.points)
-		if !value.is_empty():
-			data.get_or_add(key, value)
+			lines.push_back(line.points)
+		if !lines.is_empty():
+			var obj = {
+				"thread": thread.get_identifying_name(),
+				"lines": lines
+			}
+			array.push_back(obj)
 	
-	return data
+	return array
 
 ## YAML deserialization.
-func deserialize(data: Dictionary):
+func deserialize(data: Array) -> void:
 	remove_lines(tracked_lines)
 	_modulated_stitches_cache.clear()
 	
-	for key in data:
-		var thread = ThreadsAtlas.get_thread_by_global_id(key)
-		var points: Array = data.get(key)
-		for point in points:
-			var from_to: Array[Vector2] = []
-			from_to.append_array(point)
-			draw_stitch(thread, from_to)
+	for elem in data:
+		var thread = ThreadsAtlas.get_thread_by_global_id(elem.get("thread"))
+		var lines: Array = elem.get("lines")
+		for line in lines:
+			var points: Array[Vector2] = []
+			points.append_array(line)
+			draw_stitch(thread, points)
+	#
+	#for key in data:
+		#var thread = ThreadsAtlas.get_thread_by_global_id(key)
+		#var points: Array = data.get(key)
+		#for point in points:
+			#var from_to: Array[Vector2] = []
+			#from_to.append_array(point)
+			#draw_stitch(thread, from_to)

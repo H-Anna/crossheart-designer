@@ -25,14 +25,10 @@ func serialize() -> Dictionary:
 static func deserialize(data: Variant):
 	if typeof(data) != TYPE_DICTIONARY:
 		return YAMLResult.error("Deserializing MyCustomClass expects Dictionary, received %s" % [type_string(typeof(data))])
-	
 	var dict: Dictionary = data
 	
-	if !dict.has("threads"):
-		return YAMLResult.error("Missing threads field")
-	
 	#TODO: wait for engine and addon update to remove this workaround...
-	var array: Array = dict.get("threads")
+	var array: Array = dict.get("threads", [])
 	var p_threads: Array[XStitchThread]
 	p_threads.append_array(array)
 	

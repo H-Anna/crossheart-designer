@@ -1,9 +1,93 @@
+$defs:
+  xstitchthread:
+    type: object
+    x-yaml-tag: XStitchThread
+    properties:
+      brand:
+        type: string
+        minimum: 2
+      id:
+        type: string
+        minimum: 1
+      global_id:
+        type: string
+      color_name:
+        type: string
+      color:
+        type: object
+        x-yaml-tag: Color
+      symbol_id:
+        type: string
+        minimum: 2
+    required: [brand, id, color_name, color]
+  
+  backstitch-group:
+    type: object
+    properties:
+      thread:
+        type: string
+        minimum: 2
+      lines:
+        type: array
+        x-yaml-tag: PackedVector2Array
+    required: [thread, lines]
+  
+  fullstitch-group:
+    type: object
+    properties:
+      thread:
+        type: string
+        minimum: 2
+      tile:
+        type: object
+        x-yaml-tag: Vector2i
+      coordinates:
+        type: array
+        items:
+          x-yaml-tag: Vector2i
+    required: [thread, lines]
+
+
 type: object
 properties:
     palette:
         type: object
+        properties:
+          threads:
+            type: array
+            items:
+              $ref: "#/$defs/xstitchthread"
+        required: [threads]
     canvas:
         type: object
-required:
-- palette
-- canvas
+        properties:
+          size:
+            type: object
+            x-yaml-tag: Vector2i
+          layers:
+            type: object
+            properties:
+              id:
+                type: string
+                minimum: 1
+              display_name:
+                type: string
+                minimum: 1
+                default: "New Layer"
+              visible:
+                type: boolean
+                default: true
+              locked:
+                type: boolean
+                default: false
+              BackStitchLayer:
+                type: array
+                items:
+                  $ref: "#/$defs/backstitch-group"
+              FullStitchLayer:
+                type: array
+                items:
+                  $ref: "#/$defs/fullstitch-group"
+            required: [id, display_name, visible, locked]
+        required: [size, layers]
+required: [palette, canvas]

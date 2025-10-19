@@ -235,4 +235,6 @@ func deserialize(data: Dictionary) -> void:
 	visible = data.get("visible", true)
 	locked = data.get("locked", false)
 	for child in get_children():
-		child.deserialize(data.get(child.name))
+		var _name = child.name
+		var _data = data.get(_name)
+		child.deserialize(_data)
