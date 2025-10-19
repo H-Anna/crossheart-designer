@@ -32,7 +32,8 @@ func execute() -> void:
 ## Deletes the brush stroke.
 func undo() -> void:
 	for cell in previous_stitches:
-		if previous_stitches[cell]:
-			layer.draw_cell(cell, thread)
+		var previous_thread = previous_stitches[cell]
+		if previous_thread:
+			layer.draw_cell(cell, previous_thread)
 		else:
 			layer.erase_cell(cell)
