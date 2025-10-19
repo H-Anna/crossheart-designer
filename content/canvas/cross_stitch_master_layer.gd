@@ -26,10 +26,6 @@ var locked : bool = false
 ## The stored command.
 var _cmd : Command
 
-## The size and position of the canvas.
-## Used to restrict drawing within the canvas.
-var bounding_rect : Rect2i
-
 ## Generates a unique ID for itself.
 func _ready() -> void:
 	id = Extensions.generate_unique_string()
@@ -150,8 +146,11 @@ func discard_command() -> void:
 func cell_is_in_canvas(p: Vector2i) -> bool:
 	if p.x < 0 || p.y < 0:
 		return false
+		
+	var bounding_rect = Globals.canvas.get_bounding_rect()
 	if p.x >= bounding_rect.size.x || p.y >= bounding_rect.size.y:
 		return false
+	
 	return true
 
 ## Returns the [XStitchThread] used at the mouse position.

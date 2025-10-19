@@ -160,7 +160,6 @@ func _focus_changed(_focused: bool) -> void:
 func add_layer(layer: XStitchMasterLayer = null) -> XStitchMasterLayer:
 	if !layer:
 		layer = layer_scene.instantiate() as XStitchMasterLayer
-		layer.bounding_rect = bounding_rect
 	$LayersContainer.add_child(layer)
 	
 	if !active_layer:
@@ -192,6 +191,9 @@ func get_top_layer() -> XStitchMasterLayer:
 ## Returns the current thread used by the [PaletteController].
 func get_current_thread() -> XStitchThread:
 	return Globals.palette_controller.get_selected_thread()
+
+func get_bounding_rect() -> Rect2i:
+	return bounding_rect
 
 #region Commands actions
 ## Adds stitches with [param thread] to multiple layers, described by
@@ -230,25 +232,21 @@ func serialize() -> Dictionary:
 
 ## @experimental: File I/O is not done yet.
 ## Deserializes the canvas.
-func deserialize(data: Variant):
+func deserialize(data: Variant) -> void:
 	if typeof(data) != TYPE_DICTIONARY:
 		return YAMLResult.error("Deserializing MyCustomClass expects Dictionary, received %s" % [type_string(typeof(data))])
 	
 	var dict: Dictionary = data
-	if !dict.has("size"):
-		return YAMLResult.error("Missing size field")
-	if !dict.has("layers"):
-		return YAMLResult.error("Missing layers field")
 	
 	active_layer = null
 	for layer in $LayersContainer.get_children():
 		remove_layer(layer)
 	
-	var size: Vector2i = dict.get("size")
+	var size: Vector2i = dict.get("size", Vector2i.ZERO)
 	bounding_rect = Rect2i(Vector2i.ZERO, size)
 	
-	var layers: Array = dict.get("layers")
-	for layer in layers:		
+	var layers: Array = dict.get("layers", [])
+	for layer in layers:
 		var child = layer_scene.instantiate() as XStitchMasterLayer
 		child.deserialize(layer)
 		add_layer(child)

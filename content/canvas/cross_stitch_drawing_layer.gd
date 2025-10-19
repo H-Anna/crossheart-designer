@@ -162,13 +162,3 @@ func deserialize(data: Array) -> void:
 		var coordinates: Array = elem.get("coordinates")
 		for cell in coordinates:
 			draw_cell(cell, thread, tile)
-	
-	#for thread_id in data:
-		#var value: Dictionary = data.get(thread_id)
-		#
-		##var tile: Vector2i = value.get("tile")
-		##var coordinates: Array = value.get("coordinates")
-		#var thread = ThreadsAtlas.get_thread_by_global_id(thread_id)
-		#
-		#for cell in coordinates:
-			#draw_cell(cell, thread, tile)
