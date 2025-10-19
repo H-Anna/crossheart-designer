@@ -14,15 +14,18 @@ func _ready() -> void:
 
 ## Loads data from the [constant FILE].
 func _load_data():
-	FileHandler.load_file(FileHandler.Format.FORMAT_JSON, FILE)
-	if FileHandler.get_error() != OK:
-		# Fallback
-		print_debug("Unable to get file contents: %s" % error_string(FileHandler.get_error()))
+	# Load JSON file
+	var json = FileAccess.open(FILE, FileAccess.READ)
+	if FileAccess.get_open_error() != OK:
+		push_error("Failed to open file: ", FileAccess.get_open_error())
 		return
 	
-	var content = FileHandler.get_result()
+	var content = JSON.parse_string(json.get_as_text())
+	if !content:
+		push_error("Failed to parse JSON string.")
+		return
 	
-	# Load color information
+	# Parse color information
 	for entry in content["colors"]:
 		var brand = str(content["brand"])
 		

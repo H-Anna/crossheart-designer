@@ -2,7 +2,8 @@ extends Node
 
 ## Manages file saving and loading.
 
-const _schema_path := "res://schemes/schema.yaml"
+## The path to the schema in use.
+const _schema_path := "res://schemas/schema.yaml"
 
 ## Cached file path for quick saving.
 var _cached_filepath := ""

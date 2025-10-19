@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://s1bmq54ffm5f"]
+[gd_scene load_steps=41 format=3 uid="uid://s1bmq54ffm5f"]
 
 [ext_resource type="Script" uid="uid://ba1jthx0oawo3" path="res://content/app_manager.gd" id="1_xyp5e"]
 [ext_resource type="Script" uid="uid://cc3vfh7yxmat1" path="res://user_interface/menu_bar/file_menu.gd" id="2_qsp4k"]
@@ -29,7 +29,6 @@
 [ext_resource type="Script" uid="uid://dgolg720vghup" path="res://user_interface/thread_button_container/swap_thread_confirmation_dialog.gd" id="24_uypp3"]
 [ext_resource type="Script" uid="uid://cknqpddqck2gf" path="res://user_interface/context_menu/thread_context_menu.gd" id="25_blkrb"]
 [ext_resource type="Script" uid="uid://dhraiic6maytg" path="res://user_interface/context_menu/layer_context_menu.gd" id="26_abqjc"]
-[ext_resource type="Script" uid="uid://38awyfbr7x0l" path="res://content/serialization/scheme_parser.gd" id="26_g38wn"]
 [ext_resource type="Script" uid="uid://dxogtraf2vgig" path="res://content/commands/command_manager.gd" id="27_1su37"]
 [ext_resource type="Script" uid="uid://bgk2h0b357aq2" path="res://content/palette/palette_controller.gd" id="28_gpc23"]
 [ext_resource type="Script" uid="uid://cv2dpwg8g8oc5" path="res://content/xstitchtools/cross_stitch_tool_controller.gd" id="29_w7kqq"]
@@ -619,11 +618,6 @@ ok_button_text = "Open"
 file_mode = 0
 access = 2
 filters = PackedStringArray("*.yaml;YAML files")
-
-[node name="SchemeParser" type="Node" parent="."]
-script = ExtResource("26_g38wn")
-latest_scheme_path = "res://schemes/latest.json"
-scheme_path = "res://schemes/scheme_0_5_0.json"
 
 [node name="CommandManager" type="Node" parent="."]
 script = ExtResource("27_1su37")
