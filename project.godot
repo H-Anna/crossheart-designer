@@ -35,6 +35,10 @@ window/size/viewport_width=1366
 window/size/viewport_height=768
 window/size/initial_position_type=3
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/GDSchema/plugin.cfg", "res://addons/yaml/plugin.cfg")
+
 [global_group]
 
 Persist=""
