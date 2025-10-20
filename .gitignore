@@ -75,3 +75,9 @@ data_*/
 mono_crash.*.json
 
 # End of https://www.toptal.com/developers/gitignore/api/godot,cmake,c++
+
+# CROSSHEART
+
+# addons (except examples folder)
+!addons/yaml/bin/*
+!addons/GDSchema/bin/*
