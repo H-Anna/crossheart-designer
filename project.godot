@@ -13,7 +13,7 @@ config_version=5
 config/name="CrossHeart Designer"
 config/description="Create a cross stitch pattern! Share your work with friends! Free and open source, forever. <3"
 config/version="0.1.0"
-run/main_scene="res://user_interface/main.tscn"
+run/main_scene="uid://s1bmq54ffm5f"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 
 [autoload]
