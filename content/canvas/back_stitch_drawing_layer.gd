@@ -120,7 +120,7 @@ func add_lines(lines: Array[Line2D]) -> void:
 ## Removes one backstitch.
 func remove_line(line: Line2D) -> void:
 	tracked_lines.erase(line)
-	remove_line(line)
+	remove_child(line)
 
 ## Removes multiple backstitches.
 func remove_lines(lines: Array[Line2D]) -> void:
@@ -146,3 +146,42 @@ func end_preview() -> void:
 	
 	update_cursor()
 	$CursorSprite.show()
+
+
+## YAML serialization.
+func serialize() -> Array:
+	var array := []
+	for thread in _modulated_stitches_cache:
+		var lines = []
+		for elem in _modulated_stitches_cache.get(thread):
+			var line = elem as Line2D
+			lines.push_back(line.points)
+		if !lines.is_empty():
+			var obj = {
+				"thread": thread.get_identifying_name(),
+				"lines": lines
+			}
+			array.push_back(obj)
+	
+	return array
+
+## YAML deserialization.
+func deserialize(data: Array) -> void:
+	remove_lines(tracked_lines)
+	_modulated_stitches_cache.clear()
+	
+	for elem in data:
+		var thread = ThreadsAtlas.get_thread_by_global_id(elem.get("thread"))
+		var lines: Array = elem.get("lines")
+		for line in lines:
+			var points: Array[Vector2] = []
+			points.append_array(line)
+			draw_stitch(thread, points)
+	#
+	#for key in data:
+		#var thread = ThreadsAtlas.get_thread_by_global_id(key)
+		#var points: Array = data.get(key)
+		#for point in points:
+			#var from_to: Array[Vector2] = []
+			#from_to.append_array(point)
+			#draw_stitch(thread, from_to)

@@ -14,24 +14,31 @@ func _ready() -> void:
 
 ## Loads data from the [constant FILE].
 func _load_data():
-	FileHandler.load_file(FileHandler.Format.FORMAT_JSON, FILE)
-	if FileHandler.get_error() != OK:
-		# Fallback
-		print_debug("Unable to get file contents: %s" % error_string(FileHandler.get_error()))
+	# Load JSON file
+	var json = FileAccess.open(FILE, FileAccess.READ)
+	if FileAccess.get_open_error() != OK:
+		push_error("Failed to open file: ", FileAccess.get_open_error())
 		return
 	
-	var content = FileHandler.get_result()
+	var content = JSON.parse_string(json.get_as_text())
+	if !content:
+		push_error("Failed to parse JSON string.")
+		return
 	
-	# Load color information
+	# Parse color information
 	for entry in content["colors"]:
-		var thread = XStitchThread.new()
-		thread.brand = str(content["brand"])
-		thread.id = str(entry["floss"])
-		thread.color_name = str(entry["name"])
+		var brand = str(content["brand"])
+		
+		#TODO: this casting will fail if there is ever a non-digit character in this value...
+		var id: String = str(int(entry["floss"]))
+		
+		var color_name = str(entry["name"])
 		var r = int(entry["r"]) / 255.0
 		var g = int(entry["g"]) / 255.0
 		var b = int(entry["b"]) / 255.0
-		thread.color = Color(r, g, b)
+		var color = Color(r, g, b)
+
+		var thread = XStitchThread.new(brand, id, color_name, color)
 		# Add thread to dictionary
 		threads.get_or_add(thread.get_identifying_name(), thread)
 

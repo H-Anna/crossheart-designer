@@ -73,8 +73,9 @@ func swap_thread_command(old_thread: XStitchThread, new_thread: XStitchThread) -
 ## @experimental: Unused.
 ## Deletes all threads from the palette.
 func clear_palette() -> void:
-	palette.threads.clear()
-	palette.select_thread(null)
+	var threads = palette.threads.duplicate()
+	for thread in threads:
+		remove_thread(thread)
 
 ## Adds a thread to the palette.
 ## Prompts [member ui_palette_container] to add it as a button to itself.
@@ -90,7 +91,10 @@ func add_thread(thread: XStitchThread, index: int = -1) -> int:
 
 ## Selects a thread by value instead of by index.
 func pick_thread(thread: XStitchThread) -> void:
-	select_thread(get_thread_index(thread))
+	if thread:
+		select_thread(get_thread_index(thread))
+	else:
+		select_thread()
 
 ## Selects a thread by index.
 func select_thread(index: int = -1) -> void:
@@ -126,3 +130,16 @@ func swap_thread(old_thread: XStitchThread, new_thread: XStitchThread) -> void:
 	
 	remove_thread(old_thread)
 	print_debug("Swapped %s with %s" % [old_thread.id, new_thread.id])
+
+
+## YAML serialization.
+func serialize() -> Dictionary:
+	return palette.serialize()
+
+## YAML deserialization.
+func deserialize(data: Variant) -> void:
+	clear_palette()
+	#TODO: ugly workaround to accidental recursion...
+	var p_palette = PaletteModel.deserialize(data)
+	for thread in p_palette.threads:
+		add_thread(thread)

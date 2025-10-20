@@ -160,7 +160,6 @@ func _focus_changed(_focused: bool) -> void:
 func add_layer(layer: XStitchMasterLayer = null) -> XStitchMasterLayer:
 	if !layer:
 		layer = layer_scene.instantiate() as XStitchMasterLayer
-		layer.bounding_rect = bounding_rect
 	$LayersContainer.add_child(layer)
 	
 	if !active_layer:
@@ -193,6 +192,9 @@ func get_top_layer() -> XStitchMasterLayer:
 func get_current_thread() -> XStitchThread:
 	return Globals.palette_controller.get_selected_thread()
 
+func get_bounding_rect() -> Rect2i:
+	return bounding_rect
+
 #region Commands actions
 ## Adds stitches with [param thread] to multiple layers, described by
 ## [param context].
@@ -218,31 +220,33 @@ func get_layer_count() -> int:
 
 ## @experimental: File I/O is not done yet.
 ## Serializes the canvas.
-func serialize():
-	var data = {}
-	
-	data.get_or_add("size_x", bounding_rect.size.x)
-	data.get_or_add("size_y", bounding_rect.size.y)
-	
+func serialize() -> Dictionary:
 	var layers = []
 	for child in $LayersContainer.get_children():
 		layers.append(child.serialize())
 	
-	data.get_or_add("layers", layers)
-	return data
+	return {
+		"size": bounding_rect.size,
+		"layers": layers
+	}
 
 ## @experimental: File I/O is not done yet.
 ## Deserializes the canvas.
-func deserialize(data: Dictionary):
+func deserialize(data: Variant) -> void:
+	if typeof(data) != TYPE_DICTIONARY:
+		return YAMLResult.error("Deserializing MyCustomClass expects Dictionary, received %s" % [type_string(typeof(data))])
+	
+	var dict: Dictionary = data
+	
 	active_layer = null
 	for layer in $LayersContainer.get_children():
 		remove_layer(layer)
 	
-	var size_x = data["size_x"]
-	var size_y = data["size_y"]
-	bounding_rect = Rect2i(0, 0, size_x, size_y)
+	var size: Vector2i = dict.get("size", Vector2i.ZERO)
+	bounding_rect = Rect2i(Vector2i.ZERO, size)
 	
-	for layer in data["layers"]:
+	var layers: Array = dict.get("layers", [])
+	for layer in layers:
 		var child = layer_scene.instantiate() as XStitchMasterLayer
 		child.deserialize(layer)
 		add_layer(child)

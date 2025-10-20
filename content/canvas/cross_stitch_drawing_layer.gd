@@ -57,14 +57,17 @@ func erase_all() -> void:
 ## Drawing with this thread for the first time, adds it to 
 ## the [member _modulated_tile_cache].
 func draw_cell(cell: Vector2i, thread: XStitchThread, tile: Vector2i = CURSOR_TILE) -> void:
+	# Set the cell to empty if the thread doesn't exist.
 	if thread == null:
 		set_cell(cell, 0, tile)
 		return
 	
+	# If the thread is already cached, find it and use it.
 	if thread in _modulated_tile_cache:
-		set_cell(cell, 0, tile, _modulated_tile_cache[thread])
+		set_cell(cell, 0, tile, _modulated_tile_cache.get(thread))
 		return
 	
+	# Cache the thread.
 	# Create an alternative tile, and modify the tile data,
 	# so that all tiles are modulated.
 	var source := tile_set.get_source(0) as TileSetAtlasSource
@@ -131,26 +134,31 @@ func get_contiguous_area(start: Vector2i, is_in_boundary: Callable) -> Array[Vec
 func update_cursor() -> void:
 	pass
 
-func serialize():
+## YAML serialization.
+func serialize() -> Array:
 	var data = []
 	for thread in _modulated_tile_cache:
-		var threads_coords_dict = {}
 		var alt_id = _modulated_tile_cache[thread]
-		threads_coords_dict.get_or_add("thread_id", thread.get_identifying_name())
-		threads_coords_dict.get_or_add("tile", CURSOR_TILE)
-		threads_coords_dict.get_or_add("coordinates", get_used_cells_by_id(0, CURSOR_TILE, alt_id))
-		data.append(threads_coords_dict)
+		var used_cells = get_used_cells_by_id(0, CURSOR_TILE, alt_id)
+		
+		if !used_cells.is_empty():
+			var obj = {
+				"thread": thread.get_identifying_name(),
+				"tile": CURSOR_TILE,
+				"coordinates": get_used_cells_by_id(0, CURSOR_TILE, alt_id)
+			}
+			data.push_back(obj)
+	
 	return data
 
-func deserialize(data: Array):
+## YAML deserialization.
+func deserialize(data: Array) -> void:
 	clear()
 	_modulated_tile_cache.clear()
 	
-	for stitches in data:
-		var thread_id = stitches.get("thread_id")
-		var tile = stitches.get("tile")
-		var coordinates = stitches.get("coordinates")
-		
-		var thread = ThreadsAtlas.get_thread_by_global_id(thread_id)
+	for elem in data:
+		var thread = ThreadsAtlas.get_thread_by_global_id(elem.get("thread"))
+		var tile: Vector2i = elem.get("tile")
+		var coordinates: Array = elem.get("coordinates")
 		for cell in coordinates:
 			draw_cell(cell, thread, tile)

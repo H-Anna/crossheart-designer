@@ -4,10 +4,8 @@ extends Node2D
 ## Manages multiple [XStitchDrawingLayer]s. Handles calls from [XStitchCanvas].
 
 ## The unique ID of the master layer.
-var id:
-	set(value):
-		id = value
-		name = value
+var id: String:
+	set = set_id
 
 ## The various sublayers managed by this master layer.
 @onready var sublayers : Dictionary = {
@@ -28,15 +26,16 @@ var locked : bool = false
 ## The stored command.
 var _cmd : Command
 
-## The size and position of the canvas.
-## Used to restrict drawing within the canvas.
-var bounding_rect : Rect2i
-
 ## Generates a unique ID for itself.
 func _ready() -> void:
 	id = Extensions.generate_unique_string()
 	
 	SignalBus.tool_selected.connect(on_tool_selected)
+
+## Setter for the layer ID.
+func set_id(value: String) -> void:
+	id = value
+	name = value
 
 ## Returns true if this is the active layer.
 func is_active():
@@ -147,8 +146,11 @@ func discard_command() -> void:
 func cell_is_in_canvas(p: Vector2i) -> bool:
 	if p.x < 0 || p.y < 0:
 		return false
+		
+	var bounding_rect = Globals.canvas.get_bounding_rect()
 	if p.x >= bounding_rect.size.x || p.y >= bounding_rect.size.y:
 		return false
+	
 	return true
 
 ## Returns the [XStitchThread] used at the mouse position.
@@ -210,27 +212,28 @@ func update_backstitch_erase_command() -> void:
 	var lines = _cmd.layer.get_line2ds_near_point(point)
 	for line in lines:
 		_cmd.lines.push_back(line)
-		_cmd.layer.remove_child(line)
+		_cmd.layer.remove_line(line)
 
-func serialize():
-	var data = {}
-	data.get_or_add("id", id)
-	data.get_or_add("display_name", display_name)
-	data.get_or_add("visible", visible)
-	data.get_or_add("locked", locked)
-	data.get_or_add("active", is_active())
+## YAML serialization.
+func serialize() -> Dictionary:
+	var data = {
+		"id": id,
+		"display_name": display_name,
+		"visible": visible,
+		"locked": locked,
+	}
+	
 	for child in get_children():
 		data.get_or_add(child.name, child.serialize())
 	return data
 
+## YAML deserialization.
 func deserialize(data: Dictionary) -> void:
-	id = data.get("id", "ERR")
-	name = id
+	id = data.get("id")
 	display_name = data.get("display_name")
 	visible = data.get("visible", true)
 	locked = data.get("locked", false)
-	var _active = data.get("active", false)
-	if _active:
-		Globals.canvas.select_layer(self)
 	for child in get_children():
-		child.deserialize(data.get(child.name))
+		var _name = child.name
+		var _data = data.get(_name)
+		child.deserialize(_data)

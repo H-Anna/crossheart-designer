@@ -12,15 +12,14 @@ config_version=5
 
 config/name="CrossHeart Designer"
 config/description="Create a cross stitch pattern! Share your work with friends! Free and open source, forever. <3"
-config/version="0.0.1"
-run/main_scene="res://user_interface/main.tscn"
+config/version="0.1.0"
+run/main_scene="uid://s1bmq54ffm5f"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 
 [autoload]
 
 Extensions="*res://content/extensions.gd"
 SignalBus="*res://content/signal_bus.gd"
-FileHandler="*res://content/serialization/file_handler.gd"
 ThreadsAtlas="*res://content/data/threads_atlas.gd"
 SymbolsAtlas="*res://content/data/symbols_atlas.gd"
 Globals="*res://content/globals.gd"
@@ -34,6 +33,10 @@ gdscript/warnings/unused_signal=0
 window/size/viewport_width=1366
 window/size/viewport_height=768
 window/size/initial_position_type=3
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/GDSchema/plugin.cfg", "res://addons/yaml/plugin.cfg")
 
 [global_group]
 
