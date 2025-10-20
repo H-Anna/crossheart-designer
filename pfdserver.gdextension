@@ -1,8 +1,0 @@
-[configuration]
-
-entry_symbol = "PdfServerGDExtensionInit"
-compatibility_minimum = "4.3"
-
-[libraries]
-
-linux.debug.x86_64 = "res://libpdfServerGDExtension.so"
