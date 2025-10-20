@@ -27,6 +27,7 @@ build-linux:
         - mkdir builds
         - /home/gitlab-runner/Godot_v4.4.1-stable_linux.x86_64 -v --headless --export-debug "Linux"
     artifacts:
+        name: "crossheart_linux_x86_64"
         paths:
             - builds/
         when: on_success
@@ -44,6 +45,7 @@ build-windows:
         - ls
         - C:/Users/gitlab/Godot_v4.4.1-stable_win64_console.exe -v --headless --export-debug "Windows Desktop"
     artifacts:
+        name: "crossheart_win_x86_64"
         paths:
             - builds/
         when: on_success
