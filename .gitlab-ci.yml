@@ -25,7 +25,7 @@ build-linux:
         - godot
     script:
         - mkdir builds
-        - /home/gitlab-runner/Godot_v4.4.1-stable_linux.x86_64 -v --headless --export-debug "Linux"# "builds/crossheart_v0.1.0.x86_64"
+        - /home/gitlab-runner/Godot_v4.4.1-stable_linux.x86_64 -v --headless --export-debug "Linux" "builds/crossheart_v0.1.0.x86_64"
     artifacts:
         paths:
             - builds/
@@ -42,7 +42,7 @@ build-windows:
         - mkdir builds
         - pwd
         - ls
-        - C:/Users/gitlab/Godot_v4.4.1-stable_win64_console.exe -v --headless --export-debug "Windows Desktop"# "builds/crossheart_v0.1.0_x86_64.exe"
+        - C:/Users/gitlab/Godot_v4.4.1-stable_win64_console.exe -v --headless --export-debug "Windows Desktop" "builds/crossheart_v0.1.0_x86_64.exe"
     artifacts:
         paths:
             - builds/
